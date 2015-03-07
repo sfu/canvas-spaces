@@ -1,0 +1,77 @@
+<h1>Welcome to Canvas Spaces</h1>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<style>
+fieldset {
+	width: 500px;
+}
+
+legend {
+	font-size: 20px;
+}
+
+label.field {
+	text-align: right;
+	width: 100px;
+	float: left;
+	font-weight: bold;
+}
+
+input.textbox-300 {
+	width: 300px;
+	float: left;
+}
+
+fieldset p {
+	clear: both;
+	padding: 5px;
+}
+
+</style>
+
+<form>
+
+<fieldset>
+	<legend>New Group</legend>
+	<p><label class="field" for="name">New Group Name:</label><input type="text" name="name">
+	<p><label class="field" for="description">Description:</label><input type="text" name="description">
+	<p><label class="field" for="membership_type">Membership restrictions:</label>
+	<p><input class="field" type="radio" name="membership_type" value="invite_only" checked><label for="membership_type"> Invite only.</label>
+	<p><input class="field" type="radio" name="membership_type" value="self_signup"><label for="membership_type"> Self signup.</label>
+	<p><label class="field" for="leader_id">Leader id: (sfu id)</label><input type="text" name="leader_id"></div>
+</fieldset>
+
+</form>
+<br>
+<div style="float: clear">
+<a href="" onClick="createGroup()">Create group.</a><br>
+<a href="" onClick="listGroups()">List groups.</a>
+</div>
+
+<script>
+function createGroup() 
+{
+  $.ajax('/api/v1/canvasspaces/groups', 
+               { 
+               	  type: "POST",
+                  data: {group_name: "newgroup11", join_level: 1, leader_id: null, desc: "Pump up the volume."},
+                  success: function (data, textStatus, jqXHR) {
+                    console.log(JSON.stringify(data));
+                    alert("Data received successfully!");
+		          }
+               });
+}
+
+function listGroups()
+{
+	$.ajax('/api/v1/canvasspaces/groups',
+			{
+				type: "GET",
+				success: function (data, textStatus, jqXKR) {
+					console.log(JSON.stringify(data));
+					alert("Data received successfully!");
+				}	
+			});
+}
+</script>
