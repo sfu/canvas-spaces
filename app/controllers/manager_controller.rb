@@ -4,14 +4,6 @@ GROUP_CAT_NAME = 'groupset1'
 class ManagerController < ApplicationController
   before_filter :require_user
 
-  def test
-    render json: { message: 'Hello' }
-  end
-
-  def get_test
-    render json: { message: 'Hello' }
-  end
-
   def login
     # the method by which to authenticate and get a token that will allow
     # us to call the REST api
@@ -67,8 +59,7 @@ class ManagerController < ApplicationController
 
     name_param = params[:name]
     leader_id_param = params[:leader_id]
-    # string, either 'free_to_join' or 'invite_only'
-    join_type_param = params[:join_type]
+    join_type_param = params[:join_type] # either 'free_to_join' or 'invite_only'
     desc_param = params[:desc]
 
     if name_param.nil? || name_param.blank?
@@ -82,7 +73,7 @@ class ManagerController < ApplicationController
     end
 
     if @current_user.account.site_admin?
-      if !leader_id_param.nil? && !leader_id_param.blank?
+      if leader_id_param && !leader_id_param.blank?
         leader = User.find_by_id(leader_id_param)
         if leader.nil?
           render json: { error: "Can't find user specified for leader." }, status: :bad_request
@@ -122,6 +113,11 @@ class ManagerController < ApplicationController
 
     group_id_param = params[:group_id]
 
+    if group_id_param.nil? || group_id_param.blank?
+      render json: { error: 'group_id not specified.' }, status: :bad_request
+      return
+    end
+
     group = group_cat
             .groups
             .where('groups.id = ?', group_id_param)
@@ -148,6 +144,11 @@ class ManagerController < ApplicationController
     group_id_param = params[:group_id]
     desc_param = params[:desc]
     join_type_param = params[:join_type]
+
+    if group_id_param.nil? || group_id_param.blank?
+      render json: { error: 'group_id not specified.' }, status: :bad_request
+      return
+    end
 
     group = group_cat.groups.where('groups.id = ?', group_id_param).first
     if group.nil?
@@ -180,6 +181,11 @@ class ManagerController < ApplicationController
 
     group_id_param = params[:group_id]
 
+    if group_id_param.nil? || group_id_param.blank?
+      render json: { error: 'group_id not specified.' }, status: :bad_request
+      return
+    end
+
     group = group_cat.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
@@ -204,6 +210,16 @@ class ManagerController < ApplicationController
 
     group_id_param = params[:group_id]
     user_id_param = params[:user_id] # sfu id
+
+    if group_id_param.nil? || group_id_param.blank?
+      render json: { error: 'group_id not specified.' }, status: :bad_request
+      return
+    end
+
+    if user_id_param.nil? || user_id_param.blank?
+      render json: { error: 'user_id not specified.' }, status: :bad_request
+      return
+    end
 
     user = User.find_by_id(user_id_param)
     if user.nil?
@@ -239,6 +255,16 @@ class ManagerController < ApplicationController
     group_id_param = params[:group_id]
     user_id_param = params[:user_id] # sfu id
 
+    if group_id_param.nil? || group_id_param.blank?
+      render json: { error: 'group_id not specified.' }, status: :bad_request
+      return
+    end
+
+    if user_id_param.nil? || user_id_param.blank?
+      render json: { error: 'user_id not specified.' }, status: :bad_request
+      return
+    end
+
     user = User.find_by_id(user_id_param)
     if user.nil?
       render json: { error: "Remove failed. Can't find user #{user_param}." }, status: :bad_request
@@ -271,6 +297,11 @@ class ManagerController < ApplicationController
     group_id_param = params[:group_id]
     leader_id_param = params[:leader_id]
 
+    if leader_id_param.nil? || leader_id_param.blank?
+      render json: { error: 'No leader_id supplied.' }, status: :bad_request
+      return
+    end
+
     # lookup canvas id by sfu-id
     leader = User.find_by_id(leader_id_param)
     if leader.nil?
@@ -297,7 +328,14 @@ class ManagerController < ApplicationController
   # Test method.
   def test_get_user_list
     ActiveRecord::Base.include_root_in_json = false
-
     render json: User.all.map { |user| user.as_json(only: [:id, :name]) }
   end
+
+  def test
+    render json: { message: 'Hello' }
+  end
+
+  def get_test
+    render json: { message: 'Hello' }
+  end  
 end
