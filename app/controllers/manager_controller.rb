@@ -71,9 +71,23 @@ class ManagerController < ApplicationController
     join_type_param = params[:join_type]
     desc_param = params[:desc]
 
+    if name_param.nil? || name_param.blank?
+      render json: { error: 'No name specified.' }, status: :bad_request
+      return
+    end
+
+    if join_type_param.nil? || join_type_param.blank?
+      render json: { error: 'No join_type specified.' }, status: :bad_request
+      return
+    end
+
     if @current_user.account.site_admin?
       if !leader_id_param.nil? && !leader_id_param.blank?
         leader = User.find_by_id(leader_id_param)
+        if leader.nil?
+          render json: { error: "Can't find user specified for leader." }, status: :bad_request
+          return
+        end
       else
         leader = nil
       end
