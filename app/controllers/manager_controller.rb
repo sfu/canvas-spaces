@@ -51,9 +51,9 @@ class ManagerController < ApplicationController
                     size: g.users.count }
     end
 
-    render json: { success: true,
-                   count: groups.count,
-                   groups: response }
+    render json: { count: groups.count,
+                   groups: response },
+           status: :ok
   end
 
   # Create a group.
@@ -89,7 +89,7 @@ class ManagerController < ApplicationController
     elsif join_type_param == 'invite_only'
       join_type = 'invitation_only'
     else
-      render json: { success: false, message: 'Invalid join_type value.' }
+      render json: { error: 'Invalid join_type value.' }, status: :bad_request
       return
     end
 
@@ -98,9 +98,11 @@ class ManagerController < ApplicationController
                                 leader: leader,
                                 join_level: join_type,
                                 description: desc_param )
-    render json: group
+    render json: group, status: :ok
   end
 
+  # Return info on a group.
+  # Anyone can access this information.
   def group_info
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
 
@@ -112,27 +114,19 @@ class ManagerController < ApplicationController
             .eager_load(:users)
             .first
     if group.nil?
-      render json: { success: false, message: 'No such group found.' }
+      render json: { error: 'No such group found.' }, status: :not_found
     else
-      # TODO: check if the user has permission to get group info
-      # for groups that are free to join, what if by invitation only?
-      if @current_user.account.site_admin? || group.leader_id == @current_user.id
-        render json: { success: true,
-                       group: { id: group.id,
-                                name: group.name,
-                                description: group.description,
-                                leader_id: group.leader_id,
-                                created_at: group.created_at,
-                                size: group.users.count
-                              }
-                     }
-      else
-        render json: { success: false, message: "Can't get group info. Not owner." }
-      end
+      render json: { id: group.id,
+                     name: group.name,
+                     description: group.description,
+                     leader_id: group.leader_id,
+                     created_at: group.created_at,
+                     size: group.users.count
+                   },
+             status: :ok
     end
   end
 
-  #
   # Change group property like description, join type.
   def modify_group
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
@@ -143,7 +137,7 @@ class ManagerController < ApplicationController
 
     group = group_cat.groups.where('groups.id = ?', group_id_param).first
     if group.nil?
-      render json: { success: false, message: 'No such group found.' }
+      render json: { error: 'No such group found.' }, status: :not_found
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
         
@@ -155,14 +149,14 @@ class ManagerController < ApplicationController
           elsif join_type_param == 'invite_only'
             group.join_level = 'invitation_only'
           else
-            render json: { success: false, message: 'Invalid join_type value.' }
+            render json: { error: 'Invalid join_type value.' }, status: :bad_request
             return
           end
         end
         group.save
-        render json: { success: true, message: 'Successfully modified group.' }
+        render json: { message: 'Successfully modified group.' }, status: :ok
       else
-        render json: { success: false, message: "Can't modify group. Not owner." }
+        render json: { error: "Can't modify group. Not owner." }, status: :forbidden
       end
     end
   end
@@ -174,13 +168,13 @@ class ManagerController < ApplicationController
 
     group = group_cat.groups.find_by_id(group_id_param)
     if group.nil?
-      render json: { success: false, message: 'No such group found.' }
+      render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
-        render json: { success: true, users: group.users.select('users.id, users.name') }
+        render json: { users: group.users.select('users.id, users.name') }, status: :ok
       else
         # doesn't have access to the group
-        render json: { success: false, message: "Can't list users. Not owner." }
+        render json: { error: "Can't list users. Not owner." }, status: :forbidden
       end
     end
   end
@@ -199,23 +193,23 @@ class ManagerController < ApplicationController
 
     user = User.find_by_id(user_id_param)
     if user.nil?
-      render json: { success: false, message: "Add failed. Can't find user #{user_id_param}." }
+      render json: { error: "Can't find user #{user_id_param}." }, status: :bad_request
       return
     end
 
     group = group_cat.groups.find_by_id(group_id_param)
     if group.nil?
-      render json: { success: false, message: 'No such group found.' }
+      render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? ||
          group.leader_id == @current_user.id ||
          @current_user.id == user.id
 
         group.add_user user
-        render json: { success: true, message: 'Successfully added user.' }
+        render json: { message: 'Successfully added user.' }, status: :ok
       else
         # doesn't have access to the group
-        render json: { success: false, message: "Can't add user. Not owner or adding self." }
+        render json: { error: "Can't add user. Not owner or not adding self." }, status: :forbidden
       end
     end
   end
@@ -233,22 +227,22 @@ class ManagerController < ApplicationController
 
     user = User.find_by_id(user_id_param)
     if user.nil?
-      render json: { success: false, message: "Remove failed. Can't find user #{user_param}." }
+      render json: { error: "Remove failed. Can't find user #{user_param}." }, status: :bad_request
       return
     end
 
     group = group_cat.groups.find_by_id(group_id_param)
     if group.nil?
-      render json: { success: false, message: 'No such group found.' }
+      render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id || @current_user.id == user.id
         membership = group.group_memberships.where(user_id: user).first
         membership.workflow_state = 'deleted'
         membership.save
-        render json: { success: true, message: 'Successfully removed user.' }
+        render json: { message: 'Successfully removed user.' }, status: :ok
       else
         # doesn't have access to the group
-        render json: { success: false, message: "Can't remove user. Not owner or adding self." }
+        render json: { error: "Can't remove user. Not owner or not adding self." }, status: :forbidden
       end
     end
   end
@@ -266,24 +260,22 @@ class ManagerController < ApplicationController
     # lookup canvas id by sfu-id
     leader = User.find_by_id(leader_id_param)
     if leader.nil?
-      render json: { success: false, message: "Leader change failed. Can't find user #{leader_id_param}." }
+      render json: { error: "Leader change failed. Can't find user #{leader_id_param}." }, status: :bad_request
       return
     end
 
     group = group_cat.groups.find_by_id(group_id_param)
     if group.nil?
-      render json: { success: false, message: 'No such group found.' }
+      render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
         # TODO: should new leader also be a member of the group?
         group.leader_id = leader.id
         group.save
-        render json: { success: true,
-                       message: 'Successfully changed leader.' }
+        render json: { message: 'Successfully changed leader.' }, status: :ok
       else
         # doesn't have access to the group
-        render json: { success: false,
-                       message: "Can't change leader. Not owner." }
+        render json: { error: "Can't change leader. Not owner." }, status: :forbidden
       end
     end
   end
