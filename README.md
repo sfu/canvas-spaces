@@ -6,11 +6,13 @@ REST API for managing Canvas Spaces (student organized groups)
 
   Show a test page and also lets the user authenticate. To be removed in the future.
   
-  get '/canvasspaces/login'
+  > get '/canvasspaces/login'
 
   List all the groups.
   
-  get '/api/v1/canvasspaces/groups'
+  > get '/api/v1/canvasspaces/groups'
+
+  Params: none
   
   Create a group.
 
@@ -47,20 +49,23 @@ REST API for managing Canvas Spaces (student organized groups)
 
 ##Installation instructions:
 
-- download gem source to a directory
-- edit Gemfile of Canvas rails application, add the following entry:
+1. Download the source to a directory
+2. Edit the Gemfile of the Canvas rails application, add the following entry:
 
-gem 'canvas_spaces', path: "/<path to canvas_spaces dir>/canvas_spaces"
+  gem 'canvas_spaces', path: "/<path to canvas_spaces dir>/canvas_spaces"
 
-- in the Canvas Web UI create groupset under Site Admin account
-- set groupset property in the rails console to allow students to join multiple groups in one groupset
+3. In the Canvas Web UI create a groupset under the Site Admin account.
+4. In the rails console set the groupset property to allow students to join multiple groups in one groupset:
 
 gs.role = "student_organized"
 gs.save
 
-- add config file to host rails config directory
-	- set groupset to hold created groups
-	- set account name that groupset lives under
+5. Add the config file to the host rails config directory
+The config file looks like the following:
+
+
+6. Set groupset to hold created groups
+7. Set account name that groupset lives under
 
 ##Configuration Notes:
 
