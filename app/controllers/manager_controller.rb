@@ -15,20 +15,13 @@ class ManagerController < ApplicationController
 
   # List all groups in the special group set that belongs to the
   # special account.
-  # TODO: Only expose fields needed by client.
+  # TODO: implement paging support
   def list_groups
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
 
-    if @current_user.account.site_admin?
-      groups = group_cat.groups
-               .where("groups.workflow_state != 'deleted'")
-               .eager_load(:users)
-    else
-      # find all groups owned by the student
-      groups = group_cat.groups
-               .where("groups.workflow_state != 'deleted' and leader_id = ?", @current_user.id)
-               .eager_load(:users)
-    end
+    groups = group_cat.groups
+             .where("groups.workflow_state != 'deleted'")
+             .eager_load(:users)
 
     # After looking at all the options of restricting json output and taking
     # into consideration that I include user-count in the result,
