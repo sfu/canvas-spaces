@@ -6,7 +6,9 @@ REST API for managing Canvas Spaces (student organized groups)
 
   Show a test page and also lets the user authenticate. To be removed in the future.
   
-  > get '/canvasspaces/login'
+  ```
+  get '/canvasspaces/login'
+  ```
 
   List all the groups.
   
