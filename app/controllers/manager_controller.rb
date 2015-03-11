@@ -94,7 +94,7 @@ class ManagerController < ApplicationController
     elsif join_type_param == 'invite_only'
       join_type = 'invitation_only'
     else
-      render json: { error: 'Invalid join_type value.' }, status: :bad_request
+      render json: { error: 'Invalid join_type value. Valid: free_to_join or invite_only.' }, status: :bad_request
       return
     end
 
@@ -164,7 +164,7 @@ class ManagerController < ApplicationController
           elsif join_type_param == 'invite_only'
             group.join_level = 'invitation_only'
           else
-            render json: { error: 'Invalid join_type value.' }, status: :bad_request
+            render json: { error: 'Invalid join_type value. Valid: free_to_join or invite_only.' }, status: :bad_request
             return
           end
         end
