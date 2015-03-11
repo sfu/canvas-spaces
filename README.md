@@ -1,8 +1,8 @@
-= CanvasSpaces
+#CanvasSpaces
 
 REST API for managing Canvas Spaces (student organized groups)
 
-Routes:
+##Routes:
 
   Show a test page and also lets the user authenticate. To be removed in the future.
   
@@ -45,7 +45,7 @@ Routes:
   get '/api/v1/canvasspaces/test/users'
 
 
-Installation instructions:
+##Installation instructions:
 
 - download gem source to a directory
 - edit Gemfile of Canvas rails application, add the following entry:
@@ -62,6 +62,6 @@ gs.save
 	- set groupset to hold created groups
 	- set account name that groupset lives under
 
-Configuration Notes:
+##Configuration Notes:
 
-Authentication Notes:
+##Authentication Notes:
