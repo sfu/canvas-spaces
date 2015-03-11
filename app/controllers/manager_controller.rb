@@ -1,5 +1,5 @@
-ACCT_NAME = 'Site Admin'
-GROUP_CAT_NAME = 'groupset1'
+ACCT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['acct_name']
+GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['group_cat_name']
 
 class ManagerController < ApplicationController
   before_filter :require_user
@@ -103,7 +103,7 @@ class ManagerController < ApplicationController
                                 leader: leader,
                                 join_level: join_type,
                                 description: desc_param )
-    render json: group, status: :ok
+    render json: group.as_json(include_root: false), status: :ok
   end
 
   # Return info on a group.
@@ -191,7 +191,7 @@ class ManagerController < ApplicationController
       render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
-        render json: { users: group.users.select('users.id, users.name') }, status: :ok
+        render json: { users: group.users.map { |user| user.as_json(only: [:id, :name], include_root: false) } }, status: :ok
       else
         # doesn't have access to the group
         render json: { error: "Can't list users. Not owner." }, status: :forbidden
@@ -327,15 +327,8 @@ class ManagerController < ApplicationController
 
   # Test method.
   def test_get_user_list
-    ActiveRecord::Base.include_root_in_json = false
-    render json: User.all.map { |user| user.as_json(only: [:id, :name]) }
+    if Rails.env.development?
+      render json: User.all.map { |user| user.as_json(only: [:id, :name], include_root: false) }
+    end
   end
-
-  def test
-    render json: { message: 'Hello' }
-  end
-
-  def get_test
-    render json: { message: 'Hello' }
-  end  
 end

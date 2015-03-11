@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   
   put '/api/v1/canvasspaces/groups/:group_id/leader', to: 'Manager#set_leader', constraints: { group_id: /\d+/ }
   
-  # test, test
-  get '/api/v1/canvasspaces/test/users', to: 'Manager#test_get_user_list' 
+  if Rails.env.development?
+    # test, test
+    get '/api/v1/canvasspaces/test/users', to: 'Manager#test_get_user_list'
+  end
 end
