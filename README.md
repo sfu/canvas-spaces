@@ -80,8 +80,7 @@ gs.role = "student_organized"
 gs.save
 ```
 
-5. Add the config file to the host rails config directory
-The config file looks like the following:
+5. Add the config file to the host rails config directory. The config file looks like the following:
 
 ```
 development:
