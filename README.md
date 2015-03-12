@@ -4,6 +4,13 @@ REST API for managing Canvas Spaces (student organized groups)
 
 ##Routes:
 
+
+
+----|----|-----
+ssss|ssss|sssss
+----|----|-----
+
+
   Show a test page and also lets the user authenticate. To be removed in the future.
   
   ```
@@ -12,7 +19,9 @@ REST API for managing Canvas Spaces (student organized groups)
 
   List all the groups.
   
-  > get '/api/v1/canvasspaces/groups'
+  ```
+  get '/api/v1/canvasspaces/groups'
+  ```
 
   Params: none
   
