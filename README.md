@@ -7,35 +7,25 @@ REST API for managing Canvas Spaces (student organized groups)
 
 Operation|Route|URL Params|Form Params
 ----|----|-----|----------|-----------
-ssss|ssss|sssss|sdfdsfsdfs|sdfsfsfsfsdf
+Show a test page and also lets the user authenticate. To be removed in the future.|get '/canvasspaces/login'|sssss|sdfdsfsdfs|sdfsfsfsfsdf
+List all the groups.|get '/api/v1/canvasspaces/groups'|none|sdsd|sdssdsdd
+Create a group.|post '/api/v1/canvasspaces/groups'|||
+Get group info.|get '/api/v1/canvasspaces/groups/:group_id'|||
+Modify group info (description or join type (invite_only or free_to_join) )|put '/api/v1/canvasspaces/groups/:group_id'|||
 ----|----|-----|----------|------------
 
-
-  Show a test page and also lets the user authenticate. To be removed in the future.
   
-  ```
-  get '/canvasspaces/login'
-  ```
-
-  List all the groups.
   
-  ```
-  get '/api/v1/canvasspaces/groups'
-  ```
 
-  Params: none
   
-  Create a group.
 
-  post '/api/v1/canvasspaces/groups'
-
-  Get group info.
-
-  get '/api/v1/canvasspaces/groups/:group_id'
   
-  Modify group info (description or join type (invite_only or free_to_join) )
 
-  put '/api/v1/canvasspaces/groups/:group_id'
+  
+  
+
+
+  
   
   List users in group.
 
