@@ -28,8 +28,11 @@ Test: get all users in the system (dev env only)|get '/api/v1/canvasspaces/test/
 3. In the Canvas Web UI create a groupset under the Site Admin account.
 4. In the rails console set the groupset property to allow students to join multiple groups in one groupset:
 
+```
+gs = GroupSet.find_by_name('<name of groupset>')
 gs.role = "student_organized"
 gs.save
+```
 
 5. Add the config file to the host rails config directory
 The config file looks like the following:
