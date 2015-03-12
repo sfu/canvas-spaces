@@ -5,10 +5,10 @@ REST API for managing Canvas Spaces (student organized groups)
 ##Routes:
 
 
-head|head|head
-----|----|-----
-ssss|ssss|sssss
-----|----|-----
+Operation|Route|URL Params|Form Params
+----|----|-----|----------|-----------
+ssss|ssss|sssss|sdfdsfsdfs|sdfsfsfsfsdf
+----|----|-----|----------|------------
 
 
   Show a test page and also lets the user authenticate. To be removed in the future.
