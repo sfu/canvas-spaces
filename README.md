@@ -5,7 +5,7 @@ REST API for managing Canvas Spaces (student organized groups)
 ##Routes:
 
 
-
+head|head|head
 ----|----|-----
 ssss|ssss|sssss
 ----|----|-----
