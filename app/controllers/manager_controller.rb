@@ -197,12 +197,12 @@ class ManagerController < ApplicationController
   # The leader of the group may add any user. TODO: Should this be allowed?
   # What if the user doesn't want to be a member of the group?
   # A user may add himself/herself to a group.
-  # user = email address/id of student
+  # user = Canvas id of student
   def add_user
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
     group_id_param = params[:group_id]
-    user_id_param = params[:user_id] # sfu id
+    user_id_param = params[:user_id]
 
     if group_id_param.nil? || group_id_param.blank?
       render json: { error: 'group_id not specified.' }, status: :bad_request
