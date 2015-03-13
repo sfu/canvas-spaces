@@ -23,21 +23,11 @@ class ManagerController < ApplicationController
              .where("groups.workflow_state != 'deleted'")
              .eager_load(:users)
 
-    # After looking at all the options of restricting json output and taking
-    # into consideration that I include user-count in the result,
-    # this code seemed the clearest.
-    response = []
-    groups.each do |g|
-      response << { id: g.id,
-                    name: g.name,
-                    leader_id: g.leader_id,
-                    created_at: g.created_at,
-                    description: g.description,
-                    size: g.users.count }
-    end
-
     render json: { count: groups.count,
-                   groups: response },
+                   groups: groups.map { |g| g.as_json(only: [:id, :name, :leader_id, :created_at, :description], 
+                                                      include_root: false)
+                                             .merge({size: g.users.count}) }
+                 },
            status: :ok
   end
 
@@ -96,7 +86,9 @@ class ManagerController < ApplicationController
                                 leader: leader,
                                 join_level: join_type,
                                 description: desc_param )
-    render json: group.as_json(include_root: false), status: :ok
+    render json: group.as_json(only: [ :id, :name, :description, :leader_id, :created_at ], 
+                               include_root: false)
+                      .merge({ size: 0, join_type: join_type_param }), status: :ok
   end
 
   # Return info on a group.

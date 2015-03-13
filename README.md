@@ -28,27 +28,30 @@ Params:
 Returns:
 
 	{
-	 "count":3,
-	 "groups":[{"id":40,
-	 			  "name":"newgroup3",
-	 			  "leader_id":12,
-	 			  "created_at":"2015-02-25T23:11:52Z",
-	 			  "description":"STP.",
-	 			  "size":4},
-	 	        {"id":41,
-	 	         "name":"newgroup4",
-	 	         "leader_id":11,
-	 	         "created_at":"2015-02-26T01:36:27Z",
-	 	         "description":"This is the sound.","size":1},
-	 	        {"id":42,
-	 	        "name":"newgroup5",
-	 	        "leader_id":11,
-	 	        "created_at":"2015-02-27T00:36:07Z",
-	 	        "description":"This is the sound.",
-	 	        "size":2}
-	 	       ]
-	 }
-
+		"count":29,
+		"groups":[
+					{"created_at":"2015-02-25T23:11:52Z",
+					 "description":"Updated description.",
+					 "id":40,
+					 "leader_id":3,
+					 "name":"newgroup3",
+					 "size":4},
+					{"created_at":"2015-02-26T01:36:27Z",
+					 "description":"This is the sound.",
+					 "id":41,
+					 "leader_id":11,
+					 "name":"newgroup4",
+					 "size":1},
+					{"created_at":"2015-02-27T00:36:07Z",
+					 "description":"This is the sound.",
+					 "id":42,
+					 "leader_id":11,
+					 "name":"newgroup5",
+					 "size":2}
+		]
+	}
+	
+	
 ###Create a group.
 
 	POST /api/v1/canvasspaces/groups
@@ -63,14 +66,15 @@ Form Params:
 Returns:
 
 	{
-		"created_at":"2015-03-13T23:38:32Z",
+		"created_at":"2015-03-13T23:48:36Z",
 		"description":"pizza party group",
-		"id":64,
-		"leader_id":4,
-		"name":"vancity5"
+		"id":67,
+		"leader_id":3,
+		"name":"vancity7",
+		"size":0,
+		"join_type":"free_to_join"
 	}
 	
-
 ###Get group info.
 
 	GET /api/v1/canvasspaces/groups/:group_id
@@ -82,13 +86,12 @@ Url Params:
 Returns (Note: all successful operations return HTTP status 200 OK):
 
     {
-    "id":40,
-    "name":
-    "newgroup3",
-    "description":"STP.",
-    "leader_id":12,
-    "created_at":"2015-02-25T23:11:52Z",
-    "size":4
+	 	"id":40,
+   		"name":"newgroup3",
+ 		"description":"STP.",
+	 	"leader_id":12,
+   	 	"created_at":"2015-02-25T23:11:52Z",
+    	"size":4
     }
 
 ###Modify group info (description or join type (invite_only or free_to_join) )
