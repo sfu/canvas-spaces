@@ -29,28 +29,30 @@ Returns:
 
 	{
 		"count":29,
-		"groups":[
-					{"created_at":"2015-02-25T23:11:52Z",
-					 "description":"Updated description.",
-					 "id":40,
-					 "leader_id":3,
-					 "name":"newgroup3",
-					 "size":4},
-					{"created_at":"2015-02-26T01:36:27Z",
-					 "description":"This is the sound.",
-					 "id":41,
-					 "leader_id":11,
-					 "name":"newgroup4",
-					 "size":1},
-					{"created_at":"2015-02-27T00:36:07Z",
-					 "description":"This is the sound.",
-					 "id":42,
-					 "leader_id":11,
-					 "name":"newgroup5",
-					 "size":2}
+		"groups":
+			[{"created_at":"2015-02-25T23:11:52Z",
+				"description":"Updated description.",
+				"id":40,
+				"leader_id":3,
+				"name":"newgroup3",
+				"size":4,
+				"join_type":"invite_only"},
+			{"created_at":"2015-02-26T01:36:27Z",
+				"description":"This is the sound.",
+				"id":41,
+				"leader_id":11,
+				"name":"newgroup4",
+				"size":1,
+				"join_type":"invite_only"},
+			{"created_at":"2015-03-11T17:31:59Z",
+				"description":"Pump up the volume.",
+				"id":57,
+				"leader_id":null,
+				"name":"newgroup11",
+				"size":0,
+				"join_type":"free_to_join"}
 		]
-	}
-	
+	}	
 	
 ###Create a group.
 
