@@ -13,6 +13,19 @@ class ManagerController < ApplicationController
     # destroy the session
   end
 
+  def display_join_type(join_level)
+    case join_level
+      when "invitation_only"
+        "invite_only"
+      when "parent_context_auto_join"
+        "free_to_join"
+      when "parent_context_request"
+        "request"
+      else
+        "unknown:" + join_level
+      end
+  end
+
   # List all groups in the special group set that belongs to the
   # special account.
   # TODO: implement paging support
@@ -25,38 +38,29 @@ class ManagerController < ApplicationController
 
     render json: { count: groups.count,
                    groups: groups.map do |g|
-                        join_type = 
-                          case g.join_level
-                          when "invitation_only"
-                            "invite_only"
-                          when "parent_context_auto_join"
-                            "free_to_join"
-                          when "parent_context_request"
-                            "request"
-                          else
-                            "unknown:" + g.join_level
-                          end
-                            
                         g.as_json(only: [:id, :name, :leader_id, :created_at, :description], 
                                   include_root: false)
-                         .merge({size: g.users.count, join_type: join_type}) 
+                         .merge({ size: g.users.count, join_type: display_join_type(g.join_level) }) 
                    end
                  },
            status: :ok
   end
 
+  #
   # Create a group.
   # If called by a non-admin user then the user will be made leader of the group. 
   # Any specified leader is ignored.
   # If called by an admin a leader may be specified.
   # leader is canvas id
+  # join_type is either: 'request', free_to_join' or 'invite_only'
+  #
   def create_group
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
     acct = Account.find_by_name(ACCT_NAME)
 
     name_param = params[:name]
     leader_id_param = params[:leader_id]
-    join_type_param = params[:join_type] # either 'free_to_join' or 'invite_only'
+    join_type_param = params[:join_type] 
     desc_param = params[:desc]
 
     if name_param.nil? || name_param.blank?
@@ -88,10 +92,12 @@ class ManagerController < ApplicationController
 
     if join_type_param == 'free_to_join'
       join_type = 'parent_context_auto_join'
+    elsif join_type_param == 'request'
+      join_type = 'parent_context_request'
     elsif join_type_param == 'invite_only'
       join_type = 'invitation_only'
     else
-      render json: { error: 'Invalid join_type value. Valid: free_to_join or invite_only.' }, status: :bad_request
+      render json: { error: 'Invalid join_type value. Valid: request, free_to_join, invite_only.' }, status: :bad_request
       return
     end
 
@@ -130,6 +136,7 @@ class ManagerController < ApplicationController
                      description: group.description,
                      leader_id: group.leader_id,
                      created_at: group.created_at,
+                     join_type: display_join_type(group.join_level),
                      size: group.users.count
                    },
              status: :ok
@@ -160,10 +167,12 @@ class ManagerController < ApplicationController
         if join_type_param && !join_type_param.blank?
           if join_type_param == 'free_to_join'
             group.join_level = 'parent_context_auto_join'
+          elsif join_type_param == 'request'
+            group.join_level = 'parent_context_request'                
           elsif join_type_param == 'invite_only'
             group.join_level = 'invitation_only'
           else
-            render json: { error: 'Invalid join_type value. Valid: free_to_join or invite_only.' }, status: :bad_request
+            render json: { error: 'Invalid join_type value. Valid: request, free_to_join, invite_only.' }, status: :bad_request
             return
           end
         end
@@ -204,6 +213,7 @@ class ManagerController < ApplicationController
   # What if the user doesn't want to be a member of the group?
   # A user may add himself/herself to a group.
   # user = Canvas id of student
+  # TODO: How is this affected by the join_level?
   def add_user
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
