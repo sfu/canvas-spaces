@@ -24,9 +24,23 @@ class ManagerController < ApplicationController
              .eager_load(:users)
 
     render json: { count: groups.count,
-                   groups: groups.map { |g| g.as_json(only: [:id, :name, :leader_id, :created_at, :description], 
-                                                      include_root: false)
-                                             .merge({size: g.users.count}) }
+                   groups: groups.map do |g|
+                        join_type = 
+                          case g.join_level
+                          when "invitation_only"
+                            "invite_only"
+                          when "parent_context_auto_join"
+                            "free_to_join"
+                          when "parent_context_request"
+                            "request"
+                          else
+                            "unknown:" + g.join_level
+                          end
+                            
+                        g.as_json(only: [:id, :name, :leader_id, :created_at, :description], 
+                                  include_root: false)
+                         .merge({size: g.users.count, join_type: join_type}) 
+                   end
                  },
            status: :ok
   end
@@ -73,7 +87,7 @@ class ManagerController < ApplicationController
     end
 
     if join_type_param == 'free_to_join'
-      join_type = 'parental_context_auto_join'
+      join_type = 'parent_context_auto_join'
     elsif join_type_param == 'invite_only'
       join_type = 'invitation_only'
     else
@@ -145,7 +159,7 @@ class ManagerController < ApplicationController
 
         if join_type_param && !join_type_param.blank?
           if join_type_param == 'free_to_join'
-            group.join_level = 'parental_context_auto_join'
+            group.join_level = 'parent_context_auto_join'
           elsif join_type_param == 'invite_only'
             group.join_level = 'invitation_only'
           else
