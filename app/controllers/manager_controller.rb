@@ -8,16 +8,12 @@ class ManagerController < ApplicationController
   # Routes to the CAS login page automatically if the
   # authentication cookie hasn't been set.
   #
+  # User must login to Canvas the normal way before accessing this API and logout the usual way
+  # through the Canvas REST API.
+  # So this will be removed eventually.
   def login
     # the method by which to authenticate and get a token that will allow
     # us to call the REST api
-  end
-
-  #
-  # Destroys the session.
-  #
-  def logout
-    # TODO
   end
 
   #
