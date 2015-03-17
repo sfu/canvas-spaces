@@ -4,15 +4,26 @@ GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.
 class ManagerController < ApplicationController
   before_filter :require_user
 
+  #
+  # Routes to the CAS login page automatically if the
+  # authentication cookie hasn't been set.
+  #
   def login
     # the method by which to authenticate and get a token that will allow
     # us to call the REST api
   end
 
+  #
+  # Destroys the session.
+  #
   def logout
-    # destroy the session
+    # TODO
   end
 
+  #
+  # Convert from internal value to user-friendly type used
+  # by our API.
+  #
   def display_join_type(join_level)
     case join_level
       when "invitation_only"
@@ -26,9 +37,11 @@ class ManagerController < ApplicationController
       end
   end
 
+  #
   # List all groups in the special group set that belongs to the
   # special account.
   # TODO: implement paging support
+  #
   def list_groups
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
 
@@ -36,7 +49,7 @@ class ManagerController < ApplicationController
              .where("groups.workflow_state != 'deleted'")
              .eager_load(:users)
 
-    render json: { count: groups.count,
+    render json: { size: groups.count,
                    groups: groups.map do |g|
                         g.as_json(only: [:id, :name, :leader_id, :created_at, :description], 
                                   include_root: false)
@@ -106,13 +119,18 @@ class ManagerController < ApplicationController
                                 leader: leader,
                                 join_level: join_type,
                                 description: desc_param )
+    group.add_user(leader) if !leader.nil?
+    group.save
+
     render json: group.as_json(only: [ :id, :name, :description, :leader_id, :created_at ], 
                                include_root: false)
                       .merge({ size: 0, join_type: join_type_param }), status: :ok
   end
 
+  #
   # Return info on a group.
   # Anyone can access this information.
+  #
   def group_info
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
 
@@ -143,7 +161,9 @@ class ManagerController < ApplicationController
     end
   end
 
-  # Change group property like description, join type.
+  #
+  # Change group properties: description or join type.
+  #
   def modify_group
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
 
@@ -176,6 +196,7 @@ class ManagerController < ApplicationController
             return
           end
         end
+
         group.save
         render json: { message: 'Successfully modified group.' }, status: :ok
       else
@@ -184,6 +205,9 @@ class ManagerController < ApplicationController
     end
   end
 
+  #
+  # List the users in the group as well as the number of users.
+  #
   def list_users
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
 
@@ -199,7 +223,7 @@ class ManagerController < ApplicationController
       render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
-        render json: { users: group.users.map { |user| user.as_json(only: [:id, :name], include_root: false) } }, status: :ok
+        render json: { size: group.users.count, users: group.users.map { |user| user.as_json(only: [:id, :name], include_root: false) } }, status: :ok
       else
         # doesn't have access to the group
         render json: { error: "Can't list users. Not owner." }, status: :forbidden
@@ -207,6 +231,7 @@ class ManagerController < ApplicationController
     end
   end
 
+  #
   # Add user to a group.
   # The site admin can add any user to a group.
   # The leader of the group may add any user. TODO: Should this be allowed?
@@ -214,6 +239,7 @@ class ManagerController < ApplicationController
   # A user may add himself/herself to a group.
   # user = Canvas id of student
   # TODO: How is this affected by the join_level?
+  #
   def add_user
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
@@ -245,6 +271,8 @@ class ManagerController < ApplicationController
          @current_user.id == user.id
 
         group.add_user user
+        group.save
+
         render json: { message: 'Successfully added user.' }, status: :ok
       else
         # doesn't have access to the group
@@ -253,16 +281,19 @@ class ManagerController < ApplicationController
     end
   end
 
+  #
   # Remove user from a group.
   # The site admin can remove any user from a group.
   # The leader of the group may remove any user.
   # A user may remove himself/herself to a group.
   # user_id = canvas id of user to remove
+  # Can't remove user if he/she is the leader. Someone else must be made leader first.
+  #
   def remove_user
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
     group_id_param = params[:group_id]
-    user_id_param = params[:user_id] # sfu id
+    user_id_param = params[:user_id]
 
     if group_id_param.nil? || group_id_param.blank?
       render json: { error: 'group_id not specified.' }, status: :bad_request
@@ -285,6 +316,11 @@ class ManagerController < ApplicationController
       render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id || @current_user.id == user.id
+        if group.leader_id == user.id
+          render json: { error: "Can't remove user that is the leader of the group." }, status: :bad_request
+          return
+        end
+
         membership = group.group_memberships.where(user_id: user).first
         membership.workflow_state = 'deleted'
         membership.save
@@ -296,10 +332,12 @@ class ManagerController < ApplicationController
     end
   end
 
+  #
   # Change leadership of the group.
   # Admin may set anyone as leader of the group.
   # Leader of the group may set anyone as leader of the group.
   # I don't check to see if the new leader is a member of the group.
+  #
   def set_leader
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
@@ -323,7 +361,8 @@ class ManagerController < ApplicationController
       render json: { error: 'No such group found.' }, status: :bad_request
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
-        # TODO: should new leader also be a member of the group?
+        # New leader must be a member of the group.
+        group.add_user(leader) # this call is idempotent so we can call it even if the user is already a member
         group.leader_id = leader.id
         group.save
         render json: { message: 'Successfully changed leader.' }, status: :ok
@@ -334,7 +373,10 @@ class ManagerController < ApplicationController
     end
   end
 
+  #
   # Test method.
+  # Returns a list of all the users in the db.
+  #
   def test_get_user_list
     if Rails.env.development?
       render json: User.all.map { |user| user.as_json(only: [:id, :name], include_root: false) }
