@@ -245,7 +245,7 @@ Returns:
 	 {"id":5,"name":"patchin+canvastwo@gmail.com"},
 	 {"id":4,"name":"patchin+canvas2@gmail.com"}]
 
-##Errors
+##Errors:
 
 The REST call will return with a non-200 OK status code. And the body will contain a JSON message with more information like the following:
 
