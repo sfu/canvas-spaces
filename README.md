@@ -52,7 +52,7 @@ Params:
 Returns:
 
 	{
-		"size":29,
+		"size":3,
 		"groups":
 			[{"created_at":"2015-02-25T23:11:52Z",
 				"description":"Updated description.",
@@ -276,8 +276,12 @@ The REST call will return with a non-200 OK status code. And the body will conta
     group_cat_name: 'groupset1'
   ```
   There is an example config file in the canvas\_spaces directory called canvas\_spaces.yml.example.
-	- acct_name is the account name that the groupset lives under
-	- group_cat_name is the name of the GroupSet that contains the created groups
+	- acct\_name is the account name that the groupset lives under
+	- group\_cat_name is the name of the GroupSet that contains the created groups
+
+Notes:
+
+- No change is needed to the Canvas config/routes.rb file.
 
 ##Authentication Notes:
 
