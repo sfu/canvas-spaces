@@ -112,10 +112,6 @@ Notes:
 Url Params:
 	
 	:group_id (int) - Canvas id of the group to be deleted.
-	
-Form Params:
-
-	foo (string) - "bar" (this is needed for now because Rails can't handle empty bodies for DELETEs, I'm looking into it)
 
 Returns:
 	
@@ -198,10 +194,6 @@ Url Params:
 
 	:group_id (int) - Canvas id of group
 	:user_id (int) - Canvas id of user to remove from the group.
-	
-Form Params:
-
-	foo (string) - "bar" (this is needed for now because Rails can't handle empty bodies for DELETEs, I'm looking into it)
 
 Returns:
 
