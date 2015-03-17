@@ -8,9 +8,11 @@ Rails.application.routes.draw do
   get '/api/v1/canvasspaces/groups', to: 'Manager#list_groups'
   post '/api/v1/canvasspaces/groups', to: 'Manager#create_group'
   
+
   get '/api/v1/canvasspaces/groups/:group_id', to: 'Manager#group_info', constraints: { group_id: /\d+/ }
   put '/api/v1/canvasspaces/groups/:group_id', to: 'Manager#modify_group', constraints: { group_id: /\d+/ }
-  
+  delete '/api/v1/canvasspaces/groups/:group_id', to: 'Manager#delete_group', constraints: { group_id: /\d+/ }
+
   # Using constraints solves the problem with missing :group_id.
   # /api/v1/canvasspaces/groups/:group_id/users becomes /api/v1/canvasspaces/groups//users
   # which matches route for group_info when not using constraints.

@@ -206,6 +206,32 @@ class ManagerController < ApplicationController
   end
 
   #
+  # Delete the group.
+  #
+  def delete_group
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+
+    group_id_param = params[:group_id]
+
+    if group_id_param.nil? || group_id_param.blank?
+      render json: { error: 'group_id not specified.' }, status: :bad_request
+      return
+    end
+
+    group = group_cat.groups.where('groups.id = ?', group_id_param).first
+    if group.nil?
+      render json: { error: 'No such group found.' }, status: :not_found
+    else
+      if @current_user.account.site_admin? || group.leader_id == @current_user.id
+        group.destroy
+        render json: { message: "Group is destroyed." }, status: :ok
+      else
+        render json: { error: "Can't delete group. Not owner." }, status: :forbidden
+      end
+    end
+  end
+
+  #
   # List the users in the group as well as the number of users.
   #
   def list_users
