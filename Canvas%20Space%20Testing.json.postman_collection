@@ -1,0 +1,351 @@
+{
+	"id": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+	"name": "Canvas Space Testing",
+	"description": "",
+	"order": [
+		"c186d786-74d1-9319-2ae1-1b261a200138",
+		"81dd4499-7378-806f-a976-3809b87d8320",
+		"90fb2a1d-2e59-4bd4-99d8-3fac8e3b50de",
+		"6dbca76b-502a-1c1b-8ba8-f9ebcb654827",
+		"3cd16d5a-a967-1257-d9fd-ddc14ae64fd6",
+		"dfb18aa4-a802-e300-b838-b68370f88cc6",
+		"bf890083-3efc-f86c-57bb-18b2609f051d",
+		"51738e77-d78a-807d-9f02-02359c859fc1",
+		"aec651b0-69b5-003f-7227-b6d360111f9a",
+		"a7778775-6058-9b14-3519-d168794bd9d6"
+	],
+	"folders": [],
+	"timestamp": 1424818191110,
+	"synced": false,
+	"owner": "",
+	"subscribed": false,
+	"remoteLink": "",
+	"public": false,
+	"write": true,
+	"requests": [
+		{
+			"id": "3cd16d5a-a967-1257-d9fd-ddc14ae64fd6",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/users",
+			"preRequestScript": "",
+			"pathVariables": {
+				"group_id": "40"
+			},
+			"method": "POST",
+			"data": [
+				{
+					"key": "user_id",
+					"value": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426023015540,
+			"name": "add user to group",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "51738e77-d78a-807d-9f02-02359c859fc1",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id",
+			"preRequestScript": "",
+			"pathVariables": {
+				"group_id": ""
+			},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "desc",
+					"value": "Updated description.",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "join_type",
+					"value": "invite_only",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1425683394165,
+			"name": "set group properties",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "6dbca76b-502a-1c1b-8ba8-f9ebcb654827",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id",
+			"preRequestScript": "",
+			"pathVariables": {
+				"group_id": ""
+			},
+			"method": "GET",
+			"data": [
+				{
+					"key": "name",
+					"value": "pizza1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "join_type",
+					"value": "free_to_join",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "leader",
+					"value": "patchin@sfu.ca",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "desc",
+					"value": "pizza party group",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426022942397,
+			"name": "get group info",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "81dd4499-7378-806f-a976-3809b87d8320",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "name",
+					"value": "pizza1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "join_type",
+					"value": "free_to_join",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "leader",
+					"value": "patchin@sfu.ca",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "desc",
+					"value": "pizza party group",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426022841253,
+			"name": "get list of groups",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "90fb2a1d-2e59-4bd4-99d8-3fac8e3b50de",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/users",
+			"preRequestScript": "",
+			"pathVariables": {
+				"group_id": ""
+			},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426022894186,
+			"name": "get list of users",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "a7778775-6058-9b14-3519-d168794bd9d6",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id",
+			"preRequestScript": "",
+			"pathVariables": {
+				"group_id": ""
+			},
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426636825106,
+			"name": "delete group",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "aec651b0-69b5-003f-7227-b6d360111f9a",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/test/users",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "user",
+					"value": "pch4101@hotmail.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1425692240466,
+			"name": "get all users",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "bf890083-3efc-f86c-57bb-18b2609f051d",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/leader",
+			"preRequestScript": "",
+			"pathVariables": {
+				"group_id": "40"
+			},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "leader_id",
+					"value": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426023322221,
+			"name": "set group leader",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "c186d786-74d1-9319-2ae1-1b261a200138",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups",
+			"preRequestScript": "",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "name",
+					"value": "group1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "join_type",
+					"value": "free_to_join",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "leader_id",
+					"value": "3",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "desc",
+					"value": "desc1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426545304312,
+			"name": "create group",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "dfb18aa4-a802-e300-b838-b68370f88cc6",
+			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
+			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/users/:user_id",
+			"preRequestScript": "",
+			"pathVariables": {
+				"group_id": "40",
+				"user_id": ""
+			},
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1426636813339,
+			"name": "remove user from group",
+			"description": "",
+			"collectionId": "ec71b6cc-94b4-4fa2-ac85-950e0f7a2b6e",
+			"responses": [],
+			"synced": false
+		}
+	]
+}
