@@ -1,5 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+AUTH_TOKEN = File.open('authtoken.txt', 'r') { |file| file.read }
+AUTH_TOKEN = AUTH_TOKEN.strip
+
 describe ManagerController, type: :controller do
 
   it "list groups" do
@@ -10,7 +13,7 @@ describe ManagerController, type: :controller do
     group_names_1.sort { |w1,w2| w1.casecmp(w2) }
     count1 = groups1.count
 
-    request.env['HTTP_AUTHORIZATION'] = "Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0" 
+    request.env['HTTP_AUTHORIZATION'] =  AUTH_TOKEN
     get 'list_groups'
     h = JSON.parse(response.body)
     size = h["size"].to_i
@@ -25,7 +28,7 @@ describe ManagerController, type: :controller do
   end
 
   it "create a group" do
-    request.env['HTTP_AUTHORIZATION'] = "Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0" 
+    request.env['HTTP_AUTHORIZATION'] = AUTH_TOKEN
     post 'create_group', { name: "New group 1", leader_id: 4, join_type: "free_to_join", desc: "created by rspec" }
 
     #Check internally.
@@ -44,7 +47,7 @@ describe ManagerController, type: :controller do
     group_id = groups.first.id
     count1 = groups.count
 
-    request.env['HTTP_AUTHORIZATION'] = "Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0" 
+    request.env['HTTP_AUTHORIZATION'] = AUTH_TOKEN
     post 'delete_group', { group_id: group_id }
 
     expect(groups.count).to eq(count1 - 1) 
@@ -59,7 +62,7 @@ describe ManagerController, type: :controller do
     user = User.find_by_name("user1")
     user_id = user.id
 
-    request.env['HTTP_AUTHORIZATION'] = "Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0" 
+    request.env['HTTP_AUTHORIZATION'] = AUTH_TOKEN
     post 'add_user', { group_id: group_id, user_id: user_id  }
 
     expect(group.users.count).to eq(count+1)
@@ -78,7 +81,7 @@ describe ManagerController, type: :controller do
     non_leaders = group.users.select {|x| x.id != group.leader_id}
     user = non_leaders.first
 
-    request.env['HTTP_AUTHORIZATION'] = "Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0" 
+    request.env['HTTP_AUTHORIZATION'] = AUTH_TOKEN
     delete 'remove_user', { group_id: group_id, user_id: user.id }
 
     expect(group.users.count).to eq(count-1)
