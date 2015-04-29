@@ -7,13 +7,11 @@ require "canvas_spaces/version"
 Gem::Specification.new do |s|
   s.name        = "canvas_spaces"
   s.version     = CanvasSpaces::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of CanvasSpaces."
-  s.description = "TODO: Description of CanvasSpaces."
+  s.authors     = ["Patrick Chin"]
+  s.email       = ["patchin@sfu.ca"]
+  s.description = "Canvas Spaces manager plugin for canvas-lms"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.21"
