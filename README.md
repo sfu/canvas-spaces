@@ -5,82 +5,82 @@ REST API for managing Canvas Spaces (student organized groups)
 ##Routes Summary:
 
 ####[Show login page.](#show-login-page)
-	GET /canvasspaces/login
+  GET /canvasspaces/login
 ####[List all the groups.](#list-all-groups)
-	GET /api/v1/canvasspaces/groups
+  GET /api/v1/canvasspaces/groups
 ####[Create a group.](#create-group)
-	POST /api/v1/canvasspaces/groups
+  POST /api/v1/canvasspaces/groups
 ####[Delete a group.](#delete-group)
-	DELETE /api/v1/canvasspaces/groups/:group_id
+  DELETE /api/v1/canvasspaces/groups/:group_id
 ####[Get group info.](#get-group-info)
-	GET /api/v1/canvasspaces/groups/:group_id
+  GET /api/v1/canvasspaces/groups/:group_id
 ####[Modify group info](#modify-group)
-	PUT /api/v1/canvasspaces/groups/:group_id
+  PUT /api/v1/canvasspaces/groups/:group_id
 ####[List users in group.](#list-users)
-	GET /api/v1/canvasspaces/groups/:group_id/users
+  GET /api/v1/canvasspaces/groups/:group_id/users
 ####[Add user to group.](#add-user)
-	POST /api/v1/canvasspaces/groups/:group_id/users
+  POST /api/v1/canvasspaces/groups/:group_id/users
 ####[Remove user from group.](#remove-user)
-	DELETE /api/v1/canvasspaces/groups/:group_id/users/:user_id
+  DELETE /api/v1/canvasspaces/groups/:group_id/users/:user_id
 ####[Set leader of a group.](#set-leader)
-	PUT /api/v1/canvasspaces/groups/:group_id/leader
+  PUT /api/v1/canvasspaces/groups/:group_id/leader
 ####[Test: get all users in the system](#get-all-users)
-	GET /api/v1/canvasspaces/test/users
+  GET /api/v1/canvasspaces/test/users
 ##Routes:
 
 ###<a name="show-login-page"></a>Show a login page and also let the user authenticate. Test page. To be removed in the future.
 
 
-	GET /canvasspaces/login
+  GET /canvasspaces/login
 
 Params:
 
-	None
+  None
 
 Returns:
 
-	HTML
+  HTML
 
 ###<a name="list-all-groups"></a>List all the groups.
 
-	GET /api/v1/canvasspaces/groups
+  GET /api/v1/canvasspaces/groups
 
 Params:
 
-	None
+  None
 
 Returns:
 
-	{
-		"size":3,
-		"groups":
-			[{"created_at":"2015-02-25T23:11:52Z",
-				"description":"Updated description.",
-				"id":40,
-				"leader_id":3,
-				"name":"newgroup3",
-				"size":4,
-				"join_type":"invite_only"},
-			{"created_at":"2015-02-26T01:36:27Z",
-				"description":"This is the sound.",
-				"id":41,
-				"leader_id":11,
-				"name":"newgroup4",
-				"size":1,
-				"join_type":"request"},
-			{"created_at":"2015-03-11T17:31:59Z",
-				"description":"Pump up the volume.",
-				"id":57,
-				"leader_id":null,
-				"name":"newgroup11",
-				"size":0,
-				"join_type":"free_to_join"}
-		]
-	}
+  {
+    "size":3,
+    "groups":
+      [{"created_at":"2015-02-25T23:11:52Z",
+        "description":"Updated description.",
+        "id":40,
+        "leader_id":3,
+        "name":"newgroup3",
+        "size":4,
+        "join_type":"invite_only"},
+      {"created_at":"2015-02-26T01:36:27Z",
+        "description":"This is the sound.",
+        "id":41,
+        "leader_id":11,
+        "name":"newgroup4",
+        "size":1,
+        "join_type":"request"},
+      {"created_at":"2015-03-11T17:31:59Z",
+        "description":"Pump up the volume.",
+        "id":57,
+        "leader_id":null,
+        "name":"newgroup11",
+        "size":0,
+        "join_type":"free_to_join"}
+    ]
+  }
 
 ###<a name="create-group"></a>Create a group.
 
-	POST /api/v1/canvasspaces/groups
+  POST /api/v1/canvasspaces/groups
 
 Form Params:
 
@@ -91,15 +91,15 @@ Form Params:
 
 Returns:
 
-	{
-		"created_at":"2015-03-13T23:48:36Z",
-		"description":"pizza party group",
-		"id":67,
-		"leader_id":3,
-		"name":"vancity7",
-		"size":1,
-		"join_type":"free_to_join"
-	}
+  {
+    "created_at":"2015-03-13T23:48:36Z",
+    "description":"pizza party group",
+    "id":67,
+    "leader_id":3,
+    "name":"vancity7",
+    "size":1,
+    "join_type":"free_to_join"
+  }
 
 Notes:
 
@@ -107,19 +107,19 @@ Notes:
 
 ###<a name="delete-group"></a>Delete a group.
 
-	DELETE /api/v1/canvasspaces/groups/:group_id
+  DELETE /api/v1/canvasspaces/groups/:group_id
 
 Url Params:
 
-	:group_id (int) - Canvas id of the group to be deleted.
+  :group_id (int) - Canvas id of the group to be deleted.
 
 Returns:
 
-	{"message":"Group is destroyed."}
+  {"message":"Group is destroyed."}
 
 ###<a name="get-group-info"></a>Get group info.
 
-	GET /api/v1/canvasspaces/groups/:group_id
+  GET /api/v1/canvasspaces/groups/:group_id
 
 Url Params:
 
@@ -128,17 +128,17 @@ Url Params:
 Returns (Note: all successful operations return HTTP status 200 OK):
 
     {
-	 	"id":40,
-   		"name":"newgroup3",
- 		"description":"STP.",
-	 	"leader_id":12,
-   	 	"created_at":"2015-02-25T23:11:52Z",
-    	"size":4
+    "id":40,
+      "name":"newgroup3",
+    "description":"STP.",
+    "leader_id":12,
+      "created_at":"2015-02-25T23:11:52Z",
+      "size":4
     }
 
 ###<a name="modify-group"></a>Modify group info (description or join type (invite\_only, request, free\_to_join) )
 
-	PUT /api/v1/canvasspaces/groups/:group_id
+  PUT /api/v1/canvasspaces/groups/:group_id
 
 Url Params:
 
@@ -155,7 +155,7 @@ Returns:
 
 ###<a name="list-users"></a>List users in group.
 
-	GET /api/v1/canvasspaces/groups/:group_id/users
+  GET /api/v1/canvasspaces/groups/:group_id/users
 
 Url Params:
 
@@ -163,16 +163,16 @@ Url Params:
 
 Returns:
 
-	{"size": 4,
-	 "users":[{"id":12,"name":"user1"},
-				{"id":3,"name":"patchin+canvas@gmail.com"},
-				{"id":2,"name":"Patrick Chin"},
-				{"id":10,"name":"user1"}]
-	}
+  {"size": 4,
+   "users":[{"id":12,"name":"user1"},
+        {"id":3,"name":"patchin+canvas@gmail.com"},
+        {"id":2,"name":"Patrick Chin"},
+        {"id":10,"name":"user1"}]
+  }
 
 ###<a name="add-user"></a>Add user to group.
 
-	POST /api/v1/canvasspaces/groups/:group_id/users
+  POST /api/v1/canvasspaces/groups/:group_id/users
 
 Url Params:
 
@@ -184,20 +184,20 @@ Form Params:
 
 Returns:
 
-	{"message":"Successfully added user."}
+  {"message":"Successfully added user."}
 
 ###<a name="remove-user"></a>Remove user from group.
 
-	DELETE /api/v1/canvasspaces/groups/:group_id/users/:user_id
+  DELETE /api/v1/canvasspaces/groups/:group_id/users/:user_id
 
 Url Params:
 
-	:group_id (int) - Canvas id of group
-	:user_id (int) - Canvas id of user to remove from the group.
+  :group_id (int) - Canvas id of group
+  :user_id (int) - Canvas id of user to remove from the group.
 
 Returns:
 
-	{"message":"Successfully removed user."
+  {"message":"Successfully removed user."
 
 Notes:
 
@@ -205,19 +205,19 @@ Notes:
 
 ###<a name="set-leader"></a>Set leader of a group.
 
-	PUT /api/v1/canvasspaces/groups/:group_id/leader
+  PUT /api/v1/canvasspaces/groups/:group_id/leader
 
 Url Params:
 
-	:group_id (int) - Canvas id of the group.
+  :group_id (int) - Canvas id of the group.
 
 Form Params:
 
-	leader_id (int) - Canvas id of the new leader.
+  leader_id (int) - Canvas id of the new leader.
 
 Returns:
 
-	{"message":"Successfully changed leader."}
+  {"message":"Successfully changed leader."}
 
 Notes:
 
@@ -225,23 +225,23 @@ Notes:
 
 ###<a name="get-all-users"></a>Test: get all users in the system (dev environment only)
 
-	GET /api/v1/canvasspaces/test/users
+  GET /api/v1/canvasspaces/test/users
 
 Params:
 
-	None
+  None
 
 Returns:
 
-	[{"id":3,"name":"patchin+canvas@gmail.com"},
-	 {"id":5,"name":"patchin+canvastwo@gmail.com"},
-	 {"id":4,"name":"patchin+canvas2@gmail.com"}]
+  [{"id":3,"name":"patchin+canvas@gmail.com"},
+   {"id":5,"name":"patchin+canvastwo@gmail.com"},
+   {"id":4,"name":"patchin+canvas2@gmail.com"}]
 
 ##Errors:
 
 The REST call will return with a non-200 OK status code. And the body will contain a JSON message with more information like the following:
 
-	{ "error":"Something bad happened." }
+  { "error":"Something bad happened." }
 
 ##Installation:
 
@@ -268,8 +268,8 @@ The REST call will return with a non-200 OK status code. And the body will conta
     group_cat_name: 'groupset1'
   ```
   There is an example config file in the canvas\_spaces directory called canvas\_spaces.yml.example.
-	- acct\_name is the account name that the groupset lives under
-	- group\_cat_name is the name of the GroupSet that contains the created groups
+  - acct\_name is the account name that the groupset lives under
+  - group\_cat_name is the name of the GroupSet that contains the created groups
 
 Notes:
 
