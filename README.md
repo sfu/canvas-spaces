@@ -203,7 +203,7 @@ Url Params:
 
 Returns:
 
-  {"message":"Successfully removed user."
+  {"message":"Successfully removed user."}
 
 Notes:
 
