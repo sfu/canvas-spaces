@@ -1,5 +1,7 @@
 ACCT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['acct_name']
 GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['group_cat_name']
+require Pathname("#{Rails.root}/vendor/plugins/sfu_api/app/model/sfu/sfu")
+require 'uri'
 
 class ManagerController < ApplicationController
   before_filter :require_user
@@ -415,6 +417,32 @@ class ManagerController < ApplicationController
                    },
              status: :ok
     end
+  end
+
+  #
+  # Validate that a given SFU Computing ID or alias is valid
+  # without leaking any other information about the user
+  #
+  def validate_sfu_user
+    group_category = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    sfu_username = URI.unescape(params[:username])
+    invalid_user_response = { valid_user: false }
+
+    info = SFU::User.info sfu_username
+    sfuid = info['sfuid'] rescue nil
+
+    if sfuid.nil?
+      render json: invalid_user_response, status: :ok
+      return
+    end
+
+    user = Pseudonym.find_by_sis_user_id sfuid
+    if user.nil?
+      render json: invalid_user_response, status: :ok
+      return
+    end
+
+    render json: { valid_user: true }, status: :ok
   end
 
   # Test method.

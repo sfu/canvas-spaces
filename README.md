@@ -27,6 +27,8 @@ REST API for managing Canvas Spaces (student organized groups)
 ####[Test: get all users in the system](#get-all-users)
 ####[Validate group name.](#validate-group-name)
   GET /api/v1/canvasspaces/validate/name/:name
+####[Validate SFU Username is a valid Canvas user.](#validate-sfu-user)
+  GET /api/v1/canvasspaces/validate/user/:username
   GET /api/v1/canvasspaces/test/users
 ##Routes:
 
@@ -237,6 +239,18 @@ Returns:
 
   Valid group name: { "valid_group_name": true }
   Invalid group name: { "valid_group_name": false, "message": "Some error message that describes the problem" }
+
+###<a name="validate-sfu-user"></a>Validate that a given SFU computing ID or alias is a valid Canvas user
+
+  GET /api/v1/canvasspaces/validate/user/:username
+
+Url Params:
+
+  :username (string) - SFU Computing ID or Alias to verify
+
+Returns:
+
+  { "valid_user": boolean }
 
 ###<a name="get-all-users"></a>Test: get all users in the system (dev environment only)
 
