@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Patrick Chin"]
   s.email       = ["patchin@sfu.ca"]
   s.description = "Canvas Spaces manager plugin for canvas-lms"
+  s.summary = "Canvas Spaces manager plugin for canvas-lms"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
