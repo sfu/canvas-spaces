@@ -183,14 +183,14 @@ class ManagerController < ApplicationController
       render json: { error: 'No such group found.' }, status: :not_found
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
-        
+
         group.description = desc_param if desc_param && !desc_param.blank?
 
         if join_type_param && !join_type_param.blank?
           if join_type_param == 'free_to_join'
             group.join_level = 'parent_context_auto_join'
           elsif join_type_param == 'request'
-            group.join_level = 'parent_context_request'                
+            group.join_level = 'parent_context_request'
           elsif join_type_param == 'invite_only'
             group.join_level = 'invitation_only'
           else
