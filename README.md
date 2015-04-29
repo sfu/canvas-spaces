@@ -252,10 +252,10 @@ The REST call will return with a non-200 OK status code. And the body will conta
   gem 'canvas_spaces', path: "<absolute path to canvas_spaces dir>"
   ```
 3. In the Canvas Web UI create a groupset under the Site Admin account.
-4. In the rails console set the groupset property to allow students to join multiple groups in one groupset:
+4. In the rails console set the role property to allow students to join multiple groups in one GroupCategory:
 
   ```
-  gs = GroupSet.find_by_name('<name of groupset>')
+  gs = GroupCategory.find_by_name('<name of groupset>')
   gs.role = "student_organized"
   gs.save
   ```
