@@ -1,6 +1,10 @@
 ACCT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['acct_name']
 GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['group_cat_name']
+MAILLIST_TOKEN = YAML.load_file("#{Rails.root}/config/sfu.yml")['maillist_ckid_token']
+
 require Pathname("#{Rails.root}/vendor/plugins/sfu_api/app/model/sfu/sfu")
+
+require "rest-client"
 require 'uri'
 
 class ManagerController < ApplicationController
@@ -445,6 +449,24 @@ class ManagerController < ApplicationController
     render json: { valid_user: true }, status: :ok
   end
 
+  #
+  # Validate that a given SFU Maillist name is valid
+  #
+  def validate_maillist
+    listname = params[:maillist]
+    rest_url = "https://rest.maillist.sfu.ca/maillists?sfu_token=#{MAILLIST_TOKEN}&name=#{listname}"
+    # TODO remove SSL verify none when fixed
+    client = RestClient::Resource.new(rest_url, :verify_ssl => OpenSSL::SSL::VERIFY_NONE)
+    client.get do | response, request, result |
+      list_valid = response.code == 200 ? true : false
+      render json: { valid_maillist: list_valid }, status: :ok
+    end
+
+  end
+
+
+
+  #
   # Test method.
   # Returns a list of all the users in the db.
   #

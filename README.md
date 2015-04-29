@@ -24,11 +24,13 @@ REST API for managing Canvas Spaces (student organized groups)
   DELETE /api/v1/canvasspaces/groups/:group_id/users/:user_id
 ####[Set leader of a group.](#set-leader)
   PUT /api/v1/canvasspaces/groups/:group_id/leader
-####[Test: get all users in the system](#get-all-users)
 ####[Validate group name.](#validate-group-name)
   GET /api/v1/canvasspaces/validate/name/:name
 ####[Validate SFU Username is a valid Canvas user.](#validate-sfu-user)
   GET /api/v1/canvasspaces/validate/user/:username
+####[Validate SFU Maillist name.](#validate-maillist)
+  GET /api/v1/canvasspaces/validate/maillist/:maillist
+####[Test: get all users in the system.](#get-all-users)
   GET /api/v1/canvasspaces/test/users
 ##Routes:
 
@@ -251,6 +253,18 @@ Url Params:
 Returns:
 
   { "valid_user": boolean }
+
+###<a name="validate-maillist"></a>Validate that a given SFU maillist name is a valid maillist
+
+  GET /api/v1/canvasspaces/validate/maillist/:maillist
+
+Url Params:
+
+  :maillist (string) - SFU Maillist name to validate
+
+Returns:
+
+  { "valid_maillist": boolean }
 
 ###<a name="get-all-users"></a>Test: get all users in the system (dev environment only)
 

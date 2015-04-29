@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   # Validation routes for Create New Space form
   get '/api/v1/canvasspaces/validate/name/:group_name', to: 'Manager#validate_group_name'
   get '/api/v1/canvasspaces/validate/user/:username', to: 'Manager#validate_sfu_user'
+  get '/api/v1/canvasspaces/validate/maillist/:maillist', to: 'Manager#validate_maillist'
+
   if Rails.env.development?
     # test, test
     get '/api/v1/canvasspaces/test/users', to: 'Manager#test_get_user_list'
