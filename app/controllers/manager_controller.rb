@@ -417,7 +417,7 @@ class ManagerController < ApplicationController
       render json: { valid_group_name: true }, status: :ok
     else
       render json: { valid_group_name: false,
-                     message: "A group named \"#{group_name_param}\" already exists"
+                     message: "A Space named \"#{group_name_param}\" already exists"
                    },
              status: :ok
     end
