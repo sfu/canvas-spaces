@@ -402,6 +402,21 @@ class ManagerController < ApplicationController
   end
 
   #
+  # Validate that a group name is unique
+  #
+  def validate_group_name
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_name_param = URI.unescape(params[:group_name])
+    if group_cat.groups.first(conditions: [ "lower(name) = ?", group_name_param.downcase ]).nil?
+      render json: { valid_group_name: true }, status: :ok
+    else
+      render json: { valid_group_name: false,
+                     message: "A group named \"#{group_name_param}\" already exists"
+                   },
+             status: :ok
+    end
+  end
+
   # Test method.
   # Returns a list of all the users in the db.
   #

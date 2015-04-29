@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   delete '/api/v1/canvasspaces/groups/:group_id/users/:user_id', to: 'Manager#remove_user', constraints: { group_id: /\d+/, user_id: /\d+/ }
 
   put '/api/v1/canvasspaces/groups/:group_id/leader', to: 'Manager#set_leader', constraints: { group_id: /\d+/ }
+
+  # Validation routes for Create New Space form
+  get '/api/v1/canvasspaces/validate/name/:group_name', to: 'Manager#validate_group_name'
   if Rails.env.development?
     # test, test
     get '/api/v1/canvasspaces/test/users', to: 'Manager#test_get_user_list'

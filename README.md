@@ -25,6 +25,8 @@ REST API for managing Canvas Spaces (student organized groups)
 ####[Set leader of a group.](#set-leader)
   PUT /api/v1/canvasspaces/groups/:group_id/leader
 ####[Test: get all users in the system](#get-all-users)
+####[Validate group name.](#validate-group-name)
+  GET /api/v1/canvasspaces/validate/name/:name
   GET /api/v1/canvasspaces/test/users
 ##Routes:
 
@@ -222,6 +224,19 @@ Returns:
 Notes:
 
 - If leader is not a member of the group then he/she is added to the group.
+
+###<a name="validate-group-name"></a>Check that a group name is valid (e.g. unique)
+
+  GET /api/v1/canvasspaces/validate/name/:name
+
+Url Params:
+
+  name (string) - a propsed group name
+
+Returns:
+
+  Valid group name: { "valid_group_name": true }
+  Invalid group name: { "valid_group_name": false, "message": "Some error message that describes the problem" }
 
 ###<a name="get-all-users"></a>Test: get all users in the system (dev environment only)
 
