@@ -4,6 +4,12 @@ GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.
 class ManagerController < ApplicationController
   before_filter :require_user
 
+
+  #
+  # Render the entry point for the UI
+  def index
+  end
+
   #
   # Routes to the CAS login page automatically if the
   # authentication cookie hasn't been set.
