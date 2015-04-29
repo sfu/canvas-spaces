@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  # Render the entry point for the UI
+  get '/canvasspaces', to: 'Manager#index'
+
   # Authenticate in the browser using this route.
   # Will take you to the CAS login page if you don't have the right auth cookies.
   get '/canvasspaces/login', to: 'Manager#login'
