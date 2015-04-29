@@ -6,12 +6,12 @@ Rails.application.routes.draw do
   # Authenticate in the browser using this route.
   # Will take you to the CAS login page if you don't have the right auth cookies.
   get '/canvasspaces/login', to: 'manager#login'
-  
+
   # Canvas looks for '/api/v' to determine if this is an api request.
   # We could override the bool method for determining if the route is an api call or not.
   get '/api/v1/canvasspaces/groups', to: 'manager#list_groups'
   post '/api/v1/canvasspaces/groups', to: 'manager#create_group'
-  
+
 
   get '/api/v1/canvasspaces/groups/:group_id', to: 'manager#group_info', constraints: { group_id: /\d+/ }
   put '/api/v1/canvasspaces/groups/:group_id', to: 'manager#modify_group', constraints: { group_id: /\d+/ }
@@ -24,13 +24,13 @@ Rails.application.routes.draw do
 
   post '/api/v1/canvasspaces/groups/:group_id/users', to: 'manager#add_user', constraints: { group_id: /\d+/ }
   delete '/api/v1/canvasspaces/groups/:group_id/users/:user_id', to: 'manager#remove_user', constraints: { group_id: /\d+/, user_id: /\d+/ }
-  
+
   put '/api/v1/canvasspaces/groups/:group_id/leader', to: 'manager#set_leader', constraints: { group_id: /\d+/ }
 
   # Validation routes for Create New Space form
-  get '/api/v1/canvasspaces/validate/name/:group_name', to: 'Manager#validate_group_name'
-  get '/api/v1/canvasspaces/validate/user/:username', to: 'Manager#validate_sfu_user'
-  get '/api/v1/canvasspaces/validate/maillist/:maillist', to: 'Manager#validate_maillist'
+  get '/api/v1/canvasspaces/validate/name/:group_name', to: 'manager#validate_group_name'
+  get '/api/v1/canvasspaces/validate/user/:username', to: 'manager#validate_sfu_user'
+  get '/api/v1/canvasspaces/validate/maillist/:maillist', to: 'manager#validate_maillist'
 
   if Rails.env.development?
     # test, test
