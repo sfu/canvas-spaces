@@ -36,7 +36,7 @@ REST API for managing Canvas Spaces (student organized groups)
 Params:
 
 	None
-	
+
 Returns:
 
 	HTML
@@ -45,10 +45,10 @@ Returns:
 
 	GET /api/v1/canvasspaces/groups
 
-Params: 
-	
+Params:
+
 	None
-	
+
 Returns:
 
 	{
@@ -76,14 +76,14 @@ Returns:
 				"size":0,
 				"join_type":"free_to_join"}
 		]
-	}	
-	
+	}
+
 ###<a name="create-group"></a>Create a group.
 
 	POST /api/v1/canvasspaces/groups
 
 Form Params:
-   
+
     name (string) - Name of the group.
     leader_id (int) - Canvas id of the leader of the group.
     join_type (string) - Determines how users can join group. Value is: 'free_to_join', 'request' or 'invite_only'.
@@ -100,23 +100,23 @@ Returns:
 		"size":1,
 		"join_type":"free_to_join"
 	}
-	
+
 Notes:
 
 - Any leader chosen for the group automatically becomes a member of the group.
-	
+
 ###<a name="delete-group"></a>Delete a group.
 
 	DELETE /api/v1/canvasspaces/groups/:group_id
-	
+
 Url Params:
-	
+
 	:group_id (int) - Canvas id of the group to be deleted.
 
 Returns:
-	
+
 	{"message":"Group is destroyed."}
-	
+
 ###<a name="get-group-info"></a>Get group info.
 
 	GET /api/v1/canvasspaces/groups/:group_id
@@ -141,16 +141,16 @@ Returns (Note: all successful operations return HTTP status 200 OK):
 	PUT /api/v1/canvasspaces/groups/:group_id
 
 Url Params:
-  
+
     :group_id (int) - Canvas id of the group.
-  
+
 Form Params:
-  
+
     desc (string) - New description of the group.
     join_type (string) - Determines how users can join group. Value is:  'free_to_join', 'request' or 'invite_only'.
 
 Returns:
-    
+
     {"message":"Successfully modified group."}
 
 ###<a name="list-users"></a>List users in group.
@@ -210,7 +210,7 @@ Notes:
 Url Params:
 
 	:group_id (int) - Canvas id of the group.
-	
+
 Form Params:
 
 	leader_id (int) - Canvas id of the new leader.
