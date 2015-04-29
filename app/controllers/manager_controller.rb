@@ -53,9 +53,9 @@ class ManagerController < ApplicationController
 
     render json: { size: groups.count,
                    groups: groups.map do |g|
-                        g.as_json(only: [:id, :name, :leader_id, :created_at, :description], 
+                        g.as_json(only: [:id, :name, :leader_id, :created_at, :description],
                                   include_root: false)
-                         .merge({ size: g.users.count, join_type: display_join_type(g.join_level) }) 
+                         .merge({ size: g.users.count, join_type: display_join_type(g.join_level) })
                    end
                  },
            status: :ok
@@ -63,7 +63,7 @@ class ManagerController < ApplicationController
 
   #
   # Create a group.
-  # If called by a non-admin user then the user will be made leader of the group. 
+  # If called by a non-admin user then the user will be made leader of the group.
   # Any specified leader is ignored.
   # If called by an admin a leader may be specified.
   # leader is canvas id
@@ -75,7 +75,7 @@ class ManagerController < ApplicationController
 
     name_param = params[:name]
     leader_id_param = params[:leader_id]
-    join_type_param = params[:join_type] 
+    join_type_param = params[:join_type]
     desc_param = params[:desc]
 
     if name_param.nil? || name_param.blank?
@@ -124,7 +124,7 @@ class ManagerController < ApplicationController
     group.add_user(leader) if !leader.nil?
     group.save
 
-    render json: group.as_json(only: [ :id, :name, :description, :leader_id, :created_at ], 
+    render json: group.as_json(only: [ :id, :name, :description, :leader_id, :created_at ],
                                include_root: false)
                       .merge({ size: 0, join_type: join_type_param }), status: :ok
   end
