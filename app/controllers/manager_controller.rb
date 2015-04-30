@@ -116,6 +116,17 @@ class ManagerController < ApplicationController
       user
     end
     members.uniq!
+
+    # all maillists must be valid
+    maillists_param.each do | maillist |
+      if (!maillist_is_valid? maillist)
+        render json: { field: 'maillists', error: "\"#{maillist}\" is not a valid maillist" }, status: :bad_request
+        return
+      end
+    end
+    maillists_param.uniq!
+
+
     if @current_user.account.site_admin?
       if leader_id_param && !leader_id_param.blank?
         leader = User.find_by_id(leader_id_param)
