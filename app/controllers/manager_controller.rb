@@ -138,7 +138,7 @@ class ManagerController < ApplicationController
                                 group_category: group_cat,
                                 leader: leader,
                                 join_level: join_type,
-                                description: desc_param )
+                                description: description_param )
     group.add_user(leader) if !leader.nil?
     group.save
 
@@ -188,7 +188,7 @@ class ManagerController < ApplicationController
     group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
 
     group_id_param = params[:group_id]
-    desc_param = params[:desc]
+    description_param = params[:desc]
     join_type_param = params[:join_type]
 
     if group_id_param.nil? || group_id_param.blank?
