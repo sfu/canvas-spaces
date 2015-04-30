@@ -81,8 +81,8 @@ class ManagerController < ApplicationController
 
     name_param = params[:name]
     description_param = params[:description]
-    members_param = params[:members]
-    maillists_param = params[:maillists]
+    members_param = params[:members] || []
+    maillists_param = params[:maillists] || []
     leader_id_param = params[:leader_id]
     join_type_param = params[:join_type]
 
