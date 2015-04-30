@@ -1,5 +1,6 @@
 ACCT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['acct_name']
 GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['group_cat_name']
+GROUP_CATEGORY = GroupCategory.find_by_name(GROUP_CAT_NAME)
 MAILLIST_TOKEN = YAML.load_file("#{Rails.root}/config/sfu.yml")['maillist_ckid_token']
 
 require Pathname("#{Rails.root}/vendor/plugins/sfu_api/app/model/sfu/sfu")
@@ -51,9 +52,7 @@ class ManagerController < ApplicationController
   # TODO: implement paging support
   #
   def list_groups
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
-    groups = group_cat.groups
+    groups = GROUP_CATEGORY.groups
              .where("groups.workflow_state != 'deleted'")
              .eager_load(:users)
 
@@ -76,7 +75,6 @@ class ManagerController < ApplicationController
   # join_type is either: 'request', free_to_join' or 'invite_only'
   #
   def create_group
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
     acct = Account.find_by_name(ACCT_NAME)
 
     name_param = params[:name]
@@ -156,7 +154,7 @@ class ManagerController < ApplicationController
     end
 
     group = acct.groups.create( name: name_param,
-                                group_category: group_cat,
+                                group_category: GROUP_CATEGORY,
                                 leader: leader,
                                 join_level: join_type,
                                 description: description_param )
@@ -173,8 +171,6 @@ class ManagerController < ApplicationController
   # Anyone can access this information.
   #
   def group_info
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
     group_id_param = params[:group_id]
 
     if group_id_param.nil? || group_id_param.blank?
@@ -182,7 +178,7 @@ class ManagerController < ApplicationController
       return
     end
 
-    group = group_cat
+    group = GROUP_CATEGORY
             .groups
             .where('groups.id = ?', group_id_param)
             .eager_load(:users)
@@ -206,8 +202,6 @@ class ManagerController < ApplicationController
   # Change group properties: description or join type.
   #
   def modify_group
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
     group_id_param = params[:group_id]
     description_param = params[:desc]
     join_type_param = params[:join_type]
@@ -217,7 +211,7 @@ class ManagerController < ApplicationController
       return
     end
 
-    group = group_cat.groups.where('groups.id = ?', group_id_param).first
+    group = GROUP_CATEGORY.groups.where('groups.id = ?', group_id_param).first
     if group.nil?
       render json: { error: 'No such group found.' }, status: :not_found
     else
@@ -250,8 +244,6 @@ class ManagerController < ApplicationController
   # Delete the group.
   #
   def delete_group
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
     group_id_param = params[:group_id]
 
     if group_id_param.nil? || group_id_param.blank?
@@ -259,7 +251,7 @@ class ManagerController < ApplicationController
       return
     end
 
-    group = group_cat.groups.where('groups.id = ?', group_id_param).first
+    group = GROUP_CATEGORY.groups.where('groups.id = ?', group_id_param).first
     if group.nil?
       render json: { error: 'No such group found.' }, status: :not_found
     else
@@ -276,8 +268,6 @@ class ManagerController < ApplicationController
   # List the users in the group as well as the number of users.
   #
   def list_users
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
     group_id_param = params[:group_id]
 
     if group_id_param.nil? || group_id_param.blank?
@@ -285,7 +275,7 @@ class ManagerController < ApplicationController
       return
     end
 
-    group = group_cat.groups.find_by_id(group_id_param)
+    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -308,8 +298,6 @@ class ManagerController < ApplicationController
   # TODO: How is this affected by the join_level?
   #
   def add_user
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
     group_id_param = params[:group_id]
     user_id_param = params[:user_id]
 
@@ -329,7 +317,7 @@ class ManagerController < ApplicationController
       return
     end
 
-    group = group_cat.groups.find_by_id(group_id_param)
+    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -357,8 +345,6 @@ class ManagerController < ApplicationController
   # Can't remove user if he/she is the leader. Someone else must be made leader first.
   #
   def remove_user
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
     group_id_param = params[:group_id]
     user_id_param = params[:user_id]
 
@@ -378,7 +364,7 @@ class ManagerController < ApplicationController
       return
     end
 
-    group = group_cat.groups.find_by_id(group_id_param)
+    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -406,8 +392,6 @@ class ManagerController < ApplicationController
   # I don't check to see if the new leader is a member of the group.
   #
   def set_leader
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-
     group_id_param = params[:group_id]
     leader_id_param = params[:leader_id]
 
@@ -423,7 +407,7 @@ class ManagerController < ApplicationController
       return
     end
 
-    group = group_cat.groups.find_by_id(group_id_param)
+    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -460,7 +444,6 @@ class ManagerController < ApplicationController
   # without leaking any other information about the user
   #
   def validate_sfu_user
-    group_category = GroupCategory.find_by_name(GROUP_CAT_NAME)
     sfu_username = URI.unescape(params[:username])
     invalid_user_response = { valid_user: false }
     render json: { valid_user: sfu_user_is_valid?(sfu_username) }, status: :ok
@@ -497,8 +480,7 @@ class ManagerController < ApplicationController
   end
 
   def group_name_is_unique?(name)
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
-    group_cat.groups.first(conditions: [ "lower(name) = ?", name.downcase ]).nil?
+    GROUP_CATEGORY.groups.first(conditions: [ "lower(name) = ?", name.downcase ]).nil?
   end
 
   def sfu_user_is_valid?(sfu_username)
