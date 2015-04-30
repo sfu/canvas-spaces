@@ -130,7 +130,7 @@ class ManagerController < ApplicationController
     elsif join_type_param == 'invite_only'
       join_type = 'invitation_only'
     else
-      render json: { error: 'Invalid join_type value. Valid: request, free_to_join, invite_only.' }, status: :bad_request
+      render json: { field: 'join_type', error: 'Invalid join_type value. Valid: request, free_to_join, invite_only' }, status: :bad_request
       return
     end
 
