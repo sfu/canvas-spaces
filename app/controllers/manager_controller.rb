@@ -160,6 +160,7 @@ class ManagerController < ApplicationController
                                 description: description_param )
     group.add_user(leader) if !leader.nil?
     group.save
+    members.each { |member| group.add_user(member) } unless members.empty?
 
     render json: group.as_json(only: [ :id, :name, :description, :leader_id, :created_at ],
                                include_root: false)
