@@ -423,9 +423,8 @@ class ManagerController < ApplicationController
   # Validate that a group name is unique
   #
   def validate_group_name
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
-    group_name_param = URI.unescape(params[:group_name])
-    if group_cat.groups.first(conditions: [ "lower(name) = ?", group_name_param.downcase ]).nil?
+    group_name_param = params[:group_name]
+    if group_name_is_unique?(group_name_param)
       render json: { valid_group_name: true }, status: :ok
     else
       render json: { valid_group_name: false,
@@ -443,22 +442,7 @@ class ManagerController < ApplicationController
     group_category = GroupCategory.find_by_name(GROUP_CAT_NAME)
     sfu_username = URI.unescape(params[:username])
     invalid_user_response = { valid_user: false }
-
-    info = SFU::User.info sfu_username
-    sfuid = info['sfuid'] rescue nil
-
-    if sfuid.nil?
-      render json: invalid_user_response, status: :ok
-      return
-    end
-
-    user = Pseudonym.find_by_sis_user_id sfuid
-    if user.nil?
-      render json: invalid_user_response, status: :ok
-      return
-    end
-
-    render json: { valid_user: true }, status: :ok
+    render json: { valid_user: sfu_user_is_valid?(sfu_username) }, status: :ok
   end
 
   #
@@ -466,17 +450,8 @@ class ManagerController < ApplicationController
   #
   def validate_maillist
     listname = params[:maillist]
-    rest_url = "https://rest.maillist.sfu.ca/maillists?sfu_token=#{MAILLIST_TOKEN}&name=#{listname}"
-    # TODO remove SSL verify none when fixed
-    client = RestClient::Resource.new(rest_url, :verify_ssl => OpenSSL::SSL::VERIFY_NONE)
-    client.get do | response, request, result |
-      list_valid = response.code == 200 ? true : false
-      render json: { valid_maillist: list_valid }, status: :ok
-    end
-
+    render json: { valid_maillist: maillist_is_valid?(listname) }, status: :ok
   end
-
-
 
   #
   # Test method.
@@ -487,4 +462,35 @@ class ManagerController < ApplicationController
       render json: User.all.map { |user| user.as_json(only: [:id, :name], include_root: false) }
     end
   end
+
+  private
+
+  def user_for_sfu_username(sfu_username)
+    info = SFU::User.info sfu_username
+    begin
+      sfuid = info['sfuid']
+    rescue
+     return nil
+    end
+    Pseudonym.find_by_sis_user_id(sfuid)
+  end
+
+  def group_name_is_unique?(name)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat.groups.first(conditions: [ "lower(name) = ?", name.downcase ]).nil?
+  end
+
+  def sfu_user_is_valid?(sfu_username)
+    return !user_for_sfu_username(sfu_username).nil?
+  end
+
+  def maillist_is_valid?(maillist)
+    rest_url = "https://rest.maillist.sfu.ca/maillists?sfu_token=#{MAILLIST_TOKEN}&name=#{maillist}"
+    # TODO remove SSL verify none when fixed
+    client = RestClient::Resource.new(rest_url, :verify_ssl => OpenSSL::SSL::VERIFY_NONE)
+    client.get do | response, request, result |
+      return response.code == 200 ? true : false
+    end
+  end
+
 end
