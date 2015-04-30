@@ -80,6 +80,8 @@ class ManagerController < ApplicationController
     acct = Account.find_by_name(ACCT_NAME)
 
     name_param = params[:name]
+    members_param = params[:members]
+    maillists_param = params[:maillists]
     leader_id_param = params[:leader_id]
     join_type_param = params[:join_type]
     desc_param = params[:desc]
