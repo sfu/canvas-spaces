@@ -88,10 +88,12 @@ Returns:
 
   POST /api/v1/canvasspaces/groups
 
-Form Params:
+Form Params or JSON:
 
-    name (string) - Name of the group.
+    name (string, required, unique) - Name of the group.
     description (string, required) - Description of the group.
+    members (array, optional) - Initial members of the group.
+    maillists (array, optional) - Maillists to sync with the group.
     leader_id (int) - Canvas id of the leader of the group.
     join_type (string) - Determines how users can join group. Value is: 'free_to_join', 'request' or 'invite_only'.
 
