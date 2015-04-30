@@ -106,6 +106,16 @@ class ManagerController < ApplicationController
       return
     end
 
+    # all users must be valid
+    members = members_param.map do | member |
+      user = user_for_sfu_username(member)
+      if user.nil?
+        render json: { field: 'members', error: "\"#{member}\" is not a valid Canvas user" }, status: :bad_request
+        return
+      end
+      user
+    end
+    members.uniq!
     if @current_user.account.site_admin?
       if leader_id_param && !leader_id_param.blank?
         leader = User.find_by_id(leader_id_param)
