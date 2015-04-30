@@ -197,7 +197,7 @@ class ManagerController < ApplicationController
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
 
-        group.description = desc_param if desc_param && !desc_param.blank?
+        group.description = description_param if description_param && !description_param.blank?
 
         if join_type_param && !join_type_param.blank?
           if join_type_param == 'free_to_join'
