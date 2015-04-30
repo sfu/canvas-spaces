@@ -87,17 +87,22 @@ class ManagerController < ApplicationController
     join_type_param = params[:join_type]
 
     if name_param.nil? || name_param.blank?
-      render json: { error: 'No name specified.' }, status: :bad_request
+      render json: { field: 'name', error: 'You must provide a name for your space' }, status: :bad_request
+      return
+    end
+
+    unless group_name_is_unique? name_param
+      render json: { field: 'name', error: "A Space named \"#{name_param}\" already exists" }, status: :bad_request
+      return
+    end
+
+    if description_param.nil? || description_param.blank?
+      render json: { field: 'description', error: 'No description specified' }, status: :bad_request
       return
     end
 
     if join_type_param.nil? || join_type_param.blank?
-      render json: { error: 'No join_type specified.' }, status: :bad_request
-    if description_param.nil? || description_param.blank?
-      render json: { error: 'No description specified.' }, status: :bad_request
-      return
-    end
-
+      render json: { field: 'join_type', error: 'No join_type specified' }, status: :bad_request
       return
     end
 
@@ -105,7 +110,7 @@ class ManagerController < ApplicationController
       if leader_id_param && !leader_id_param.blank?
         leader = User.find_by_id(leader_id_param)
         if leader.nil?
-          render json: { error: "Can't find user specified for leader." }, status: :bad_request
+          render json: { error: "Can't find user specified for leader" }, status: :bad_request
           return
         end
       else
