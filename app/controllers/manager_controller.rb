@@ -80,11 +80,11 @@ class ManagerController < ApplicationController
     acct = Account.find_by_name(ACCT_NAME)
 
     name_param = params[:name]
+    description_param = params[:description]
     members_param = params[:members]
     maillists_param = params[:maillists]
     leader_id_param = params[:leader_id]
     join_type_param = params[:join_type]
-    desc_param = params[:desc]
 
     if name_param.nil? || name_param.blank?
       render json: { error: 'No name specified.' }, status: :bad_request
@@ -93,6 +93,11 @@ class ManagerController < ApplicationController
 
     if join_type_param.nil? || join_type_param.blank?
       render json: { error: 'No join_type specified.' }, status: :bad_request
+    if description_param.nil? || description_param.blank?
+      render json: { error: 'No description specified.' }, status: :bad_request
+      return
+    end
+
       return
     end
 

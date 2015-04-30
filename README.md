@@ -91,9 +91,9 @@ Returns:
 Form Params:
 
     name (string) - Name of the group.
+    description (string, required) - Description of the group.
     leader_id (int) - Canvas id of the leader of the group.
     join_type (string) - Determines how users can join group. Value is: 'free_to_join', 'request' or 'invite_only'.
-    desc (string) - Description of the group.
 
 Returns:
 
@@ -152,7 +152,7 @@ Url Params:
 
 Form Params:
 
-    desc (string) - New description of the group.
+    description (string) - New description of the group.
     join_type (string) - Determines how users can join group. Value is:  'free_to_join', 'request' or 'invite_only'.
 
 Returns:
