@@ -51,7 +51,7 @@ class ManagerController < ApplicationController
   # TODO: implement paging support
   #
   def list_groups
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
     groups = group_cat.groups
              .where("groups.workflow_state != 'deleted'")
@@ -76,7 +76,7 @@ class ManagerController < ApplicationController
   # join_type is either: 'request', free_to_join' or 'invite_only'
   #
   def create_group
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
     acct = Account.find_by_name(ACCT_NAME)
 
     name_param = params[:name]
@@ -173,7 +173,7 @@ class ManagerController < ApplicationController
   # Anyone can access this information.
   #
   def group_info
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
     group_id_param = params[:group_id]
 
@@ -206,7 +206,7 @@ class ManagerController < ApplicationController
   # Change group properties: description or join type.
   #
   def modify_group
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
     group_id_param = params[:group_id]
     description_param = params[:desc]
@@ -250,7 +250,7 @@ class ManagerController < ApplicationController
   # Delete the group.
   #
   def delete_group
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
     group_id_param = params[:group_id]
 
@@ -276,7 +276,7 @@ class ManagerController < ApplicationController
   # List the users in the group as well as the number of users.
   #
   def list_users
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
 
     group_id_param = params[:group_id]
 
@@ -497,7 +497,7 @@ class ManagerController < ApplicationController
   end
 
   def group_name_is_unique?(name)
-    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME)
+    group_cat = GroupCategory.find_by_name(GROUP_CAT_NAME) # TODO: refactor this since it's used everywhere
     group_cat.groups.first(conditions: [ "lower(name) = ?", name.downcase ]).nil?
   end
 
@@ -507,7 +507,7 @@ class ManagerController < ApplicationController
 
   def maillist_is_valid?(maillist)
     rest_url = "https://rest.maillist.sfu.ca/maillists?sfu_token=#{MAILLIST_TOKEN}&name=#{maillist}"
-    # TODO remove SSL verify none when fixed
+    # TODO: remove SSL verify none when fixed
     client = RestClient::Resource.new(rest_url, :verify_ssl => OpenSSL::SSL::VERIFY_NONE)
     client.get do | response, request, result |
       return response.code == 200 ? true : false
