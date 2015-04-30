@@ -106,12 +106,12 @@ class ManagerController < ApplicationController
 
     # all users must be valid
     members = members_param.map do | member |
-      user = user_for_sfu_username(member)
-      if user.nil?
+      pseudonym = user_for_sfu_username(member)
+      if pseudonym.nil?
         render json: { field: 'members', error: "\"#{member}\" is not a valid Canvas user" }, status: :bad_request
         return
       end
-      user
+      pseudonym.user
     end
     members.uniq!
 
