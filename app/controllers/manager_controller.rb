@@ -49,21 +49,15 @@ class ManagerController < ApplicationController
   #
   # List all groups in the special group set that belongs to the
   # special account.
-  # TODO: implement paging support
   #
   def list_groups
-    groups = GROUP_CATEGORY.groups
-             .where("groups.workflow_state != 'deleted'")
-             .eager_load(:users)
-
-    render json: { size: groups.count,
-                   groups: groups.map do |g|
-                        g.as_json(only: [:id, :name, :leader_id, :created_at, :description],
-                                  include_root: false)
-                         .merge({ size: g.users.count, join_type: display_join_type(g.join_level) })
-                   end
-                 },
-           status: :ok
+    groups = GROUP_CATEGORY.groups.active.order(:name)
+    # filter out non-public groups for non-admins
+    groups = groups.where(join_level: 'parent_context_auto_join') unless @current_user.account.site_admin?
+    groups_json = Api.paginate(groups, self, api_v1_canvasspaces_groups_url).map do |g|
+      g.as_json(only: [:id, :name, :leader_id, :created_at, :description], include_root: false).merge({ member_count: g.users.count, join_type: display_join_type(g.join_level) })
+    end
+    render :json => groups_json
   end
 
   #

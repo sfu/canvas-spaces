@@ -57,32 +57,38 @@ Params:
 
 Returns:
 
-    {
-      "size":3,
-      "groups":
-        [{"created_at":"2015-02-25T23:11:52Z",
+    [
+        {
+          "created_at":"2015-02-25T23:11:52Z",
           "description":"Updated description.",
           "id":40,
           "leader_id":3,
           "name":"newgroup3",
-          "size":4,
-          "join_type":"invite_only"},
-        {"created_at":"2015-02-26T01:36:27Z",
+          "member_count":4,
+          "join_type":"invite_only"
+        },
+        {
+          "created_at":"2015-02-26T01:36:27Z",
           "description":"This is the sound.",
           "id":41,
           "leader_id":11,
-          "name":"newgroup4",
+          "member_count":"newgroup4",
           "size":1,
-          "join_type":"request"},
-        {"created_at":"2015-03-11T17:31:59Z",
+          "join_type":"request"
+        },
+        {
+          "created_at":"2015-03-11T17:31:59Z",
           "description":"Pump up the volume.",
           "id":57,
           "leader_id":null,
-          "name":"newgroup11",
+          "member_count":"newgroup11",
           "size":0,
           "join_type":"free_to_join"}
-      ]
-    }
+    ]
+
+Notes:
+  * when called by a non-admin user, this endpoint only returns public groups (`join_level: 'parent_context_auto_join'`)
+
 ###<a name="create-group"></a>Create a group.
 
     POST /api/v1/canvasspaces/groups
