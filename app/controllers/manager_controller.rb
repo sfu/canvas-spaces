@@ -60,6 +60,19 @@ class ManagerController < ApplicationController
     render :json => groups_json
   end
 
+  def list_groups_for_user
+    Rails.logger.info("*** USER #{@current_user.inspect}")
+    unless params[:user_id].to_i == @current_user.id || @current_user.account.site_admin?
+      render_json_unauthorized
+      return
+    end
+    groups = User.find(params[:user_id]).groups.where(group_category_id: GROUP_CATEGORY.id)
+    groups_json = Api.paginate(groups, self, api_v1_canvasspaces_groups_url).map do |g|
+      g.as_json(only: [:id, :name, :leader_id, :created_at, :description], include_root: false).merge({ member_count: g.users.count, join_type: display_join_type(g.join_level) })
+    end
+    render :json => groups_json
+  end
+
   #
   # Create a group.
   # If called by a non-admin user then the user will be made leader of the group.

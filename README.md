@@ -8,6 +8,7 @@ REST API for managing Canvas Spaces (student organized groups)
   GET /canvasspaces/login
 ####[List all the groups.](#list-all-groups)
   GET /api/v1/canvasspaces/groups
+####[List all groups for a user](#list-all-groups-for-user)
 ####[Create a group.](#create-group)
   POST /api/v1/canvasspaces/groups
 ####[Delete a group.](#delete-group)
@@ -88,6 +89,42 @@ Returns:
 
 Notes:
   * when called by a non-admin user, this endpoint only returns public groups (`join_level: 'parent_context_auto_join'`)
+
+###<a name="list-all-groups-for-user"></a>List all groups for a user.
+
+    GET /api/v1/canvasspaces/users/:user_id/groups
+
+Params:
+
+  None
+
+Returns:
+
+    [
+      {
+        "id" : 6,
+        "created_at" : "2015-04-30T23:46:23Z",
+        "leader_id" : null,
+        "member_count" : 4,
+        "join_type" : "invite_only",
+        "description" : "Testing the form",
+        "name" : "Test Group 3"
+      },
+      {
+        "id" : 1,
+        "created_at" : "2015-04-23T18:35:25Z",
+        "leader_id" : null,
+        "member_count" : 2,
+        "join_type" : "free_to_join",
+        "description" : null,
+        "name" : "Test"
+      }
+    ]
+
+Notes:
+
+  * a non-admin user can only retreive their own groups
+  * an admin user can retreive groups for any user
 
 ###<a name="create-group"></a>Create a group.
 
