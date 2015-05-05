@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   # Render the entry point for the UI
-  get '/canvasspaces', to: 'Manager#index'
+  get '/canvasspaces', to: 'manager#index'
 
   # Authenticate in the browser using this route.
   # Will take you to the CAS login page if you don't have the right auth cookies.
@@ -38,4 +38,7 @@ Rails.application.routes.draw do
     # test, test
     get '/api/v1/canvasspaces/test/users', to: 'manager#test_get_user_list'
   end
+
+  # catch-all for react-router to work right
+  match '*all', to: 'manager#index', via: [:get]
 end
