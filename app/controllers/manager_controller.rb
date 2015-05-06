@@ -488,7 +488,7 @@ class ManagerController < ApplicationController
   end
 
   def group_name_is_unique?(name)
-    GROUP_CATEGORY.groups.first(conditions: [ "lower(name) = ?", name.downcase ]).nil?
+    GROUP_CATEGORY.groups.first(conditions: [ "lower(name) = ? AND workflow_state != ?", name.downcase, 'deleted' ]).nil?
   end
 
   def sfu_user_is_valid?(sfu_username)
