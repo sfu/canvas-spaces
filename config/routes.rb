@@ -3,15 +3,10 @@ Rails.application.routes.draw do
   # Render the entry point for the UI
   get '/canvasspaces', to: 'manager#index'
 
-  # Authenticate in the browser using this route.
-  # Will take you to the CAS login page if you don't have the right auth cookies.
-  get '/canvasspaces/login', to: 'manager#login'
-
   # Canvas looks for '/api/v' to determine if this is an api request.
   # We could override the bool method for determining if the route is an api call or not.
   get '/api/v1/canvasspaces/groups', to: 'manager#list_groups'
   post '/api/v1/canvasspaces/groups', to: 'manager#create_group'
-
 
   get '/api/v1/canvasspaces/groups/:group_id', to: 'manager#group_info', constraints: { group_id: /\d+/ }
   put '/api/v1/canvasspaces/groups/:group_id', to: 'manager#modify_group', constraints: { group_id: /\d+/ }
