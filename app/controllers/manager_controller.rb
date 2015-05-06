@@ -48,12 +48,14 @@ class ManagerController < ApplicationController
   end
 
   def list_groups_for_user
-    Rails.logger.info("*** USER #{@current_user.inspect}")
-    unless params[:user_id].to_i == @current_user.id || @current_user.account.site_admin?
+    user_id = params[:user_id] == 'self' ? @current_user.id : params[:user_id]
+
+    unless user_id.to_i == @current_user.id || @current_user.account.site_admin?
       render_json_unauthorized
       return
     end
-    groups = User.find(params[:user_id]).groups.where(group_category_id: GROUP_CATEGORY.id)
+
+    groups = User.find(user_id).groups.where(group_category_id: GROUP_CATEGORY.id).order(:name)
     groups_json = Api.paginate(groups, self, api_v1_canvasspaces_user_groups_url).map do |g|
       g.as_json(only: [:id, :name, :leader_id, :created_at, :description], include_root: false).merge({ member_count: g.users.count, join_type: display_join_type(g.join_level) })
     end
@@ -286,8 +288,7 @@ class ManagerController < ApplicationController
   #
   # Add user to a group.
   # The site admin can add any user to a group.
-  # The leader of the group may add any user. TODO: Should this be allowed?
-  # What if the user doesn't want to be a member of the group?
+  # The leader of the group may add any user.
   # A user may add himself/herself to a group.
   # user = Canvas id of student
   # TODO: How is this affected by the join_level?
