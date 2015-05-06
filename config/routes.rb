@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   # Render the entry point for the UI
-  get '/canvasspaces', to: 'manager#index'
+  get '/canvasspaces(/:route)', to: 'manager#index'
 
   # Canvas looks for '/api/v' to determine if this is an api request.
   # We could override the bool method for determining if the route is an api call or not.
@@ -34,6 +34,4 @@ Rails.application.routes.draw do
     get '/api/v1/canvasspaces/test/users', to: 'manager#test_get_user_list'
   end
 
-  # catch-all for react-router to work right
-  match '*all', to: 'manager#index', via: [:get]
 end
