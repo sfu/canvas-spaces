@@ -57,7 +57,11 @@ class ManagerController < ApplicationController
 
     groups = User.find(user_id).groups.where(group_category_id: GROUP_CATEGORY.id).order(:name)
     groups_json = Api.paginate(groups, self, api_v1_canvasspaces_user_groups_url).map do |g|
-      g.as_json(only: [:id, :name, :leader_id, :created_at, :description], include_root: false).merge({ member_count: g.users.count, join_type: display_join_type(g.join_level) })
+      g.as_json(only: [:id, :name, :created_at, :description], include_root: false).merge({
+        member_count: g.users.count,
+        join_type: display_join_type(g.join_level),
+        is_leader: g.leader_id == user_id
+      })
     end
     render :json => groups_json
   end
