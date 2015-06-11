@@ -218,40 +218,31 @@ end
   # Change group properties: description or join type.
   #
   def modify_group
-    group_id_param = params[:group_id]
-    description_param = params[:desc]
-    join_type_param = params[:join_type]
+    attrs = params
+    group = Group.find_by_id attrs[:group_id]
 
-    if group_id_param.nil? || group_id_param.blank?
-      render json: { error: 'group_id not specified.' }, status: :bad_request
-      return
+    if attrs[:join_level]
+      attrs[:join_level] = convert_join_type_to_join_level(attrs[:join_type])
     end
 
-    group = GROUP_CATEGORY.groups.where('groups.id = ?', group_id_param).first
-    if group.nil?
-      render json: { error: 'No such group found.' }, status: :not_found
-    else
-      if @current_user.account.site_admin? || group.leader_id == @current_user.id
+    if attrs[:leader_id] && attrs[:leader_id] != group.leader_id
+      membership = group.group_memberships.where(user_id: attrs[:leader_id]).first
+      return render :json => {}, :status => :bad_request unless membership
+      attrs[:leader] = membership.user
+    end
 
-        group.description = description_param if description_param && !description_param.blank?
-
-        if join_type_param && !join_type_param.blank?
-          if join_type_param == 'free_to_join'
-            group.join_level = 'parent_context_auto_join'
-          elsif join_type_param == 'request'
-            group.join_level = 'parent_context_request'
-          elsif join_type_param == 'invite_only'
-            group.join_level = 'invitation_only'
-          else
-            render json: { error: 'Invalid join_type value. Valid: request, free_to_join, invite_only.' }, status: :bad_request
-            return
-          end
+    if authorized_action(group, @current_user, :update)
+      respond_to do |format|
+        group.transaction do
+          group.update_attributes(attrs.slice(*SETTABLE_GROUP_ATTRIBUTES))
         end
 
-        group.save
-        render json: { message: 'Successfully modified group.' }, status: :ok
-      else
-        render json: { error: "Can't modify group. Not owner." }, status: :forbidden
+        if !group.errors.any?
+          format.json { render :json => group_formatter(group), :status => :ok }
+          # render json: group_formatter(group), status: :ok
+        else
+          format.json { render :json => @group.errors, :status => :bad_request }
+        end
       end
     end
   end
