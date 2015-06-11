@@ -197,13 +197,14 @@ Url Params:
     :group_id (int) - Canvas id of the group.
 
 Form Params:
-
-    description (string) - New description of the group.
-    join_type (string) - Determines how users can join group. Value is:  'free_to_join', 'request' or 'invite_only'.
+    name (string) - New name for group
+    description (string) - New description of the group
+    join_level (string)
+    leader_id (int) - New leader for group
 
 Returns:
 
-    {"message":"Successfully modified group."}
+    the modified group object
 
 ###<a name="list-users"></a>List users in group.
 
