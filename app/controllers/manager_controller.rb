@@ -11,6 +11,10 @@ require 'uri'
 class ManagerController < ApplicationController
   before_filter :require_user
 
+  SETTABLE_GROUP_ATTRIBUTES = %w(
+    name description join_level leader
+  ).freeze
+
   #
   # Render the entry point for the UI
   def index
