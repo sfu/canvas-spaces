@@ -33,6 +33,19 @@ class ManagerController < ApplicationController
       end
   end
 
+def convert_join_type_to_join_level(join_type)
+  case join_type
+    when 'invite_only'
+      'invitation_only'
+    when 'free_to_join'
+      'parent_context_auto_join'
+    when 'request'
+      'parent_context_request'
+    else
+      "unknown #{join_level}"
+    end
+end
+
   #
   # List all groups in the special group set that belongs to the
   # special account.
