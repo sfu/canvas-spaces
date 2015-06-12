@@ -148,7 +148,7 @@ end
           return
         end
       else
-        leader = nil
+        leader = @current_user
       end
     else
       # if a non-admin is creating the group then
