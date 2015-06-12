@@ -221,7 +221,7 @@ end
     attrs = params
     group = Group.find_by_id attrs[:group_id]
 
-    if attrs[:join_level]
+    if attrs[:join_type]
       attrs[:join_level] = convert_join_type_to_join_level(attrs[:join_type])
     end
 
