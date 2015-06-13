@@ -119,6 +119,15 @@ end
       return
     end
 
+    # all maillists must be valid
+    maillists_param.each do | maillist |
+      if (!maillist_is_valid? maillist)
+        render json: { field: 'maillists', error: "\"#{maillist}\" is not a valid maillist" }, status: :bad_request
+        return
+      end
+    end
+    maillists_param.uniq!
+
     # all users must be valid
     members = members_param.map do | member |
       pseudonym = user_for_sfu_username(member)
@@ -129,16 +138,6 @@ end
       pseudonym.user
     end
     members.uniq!
-
-    # all maillists must be valid
-    maillists_param.each do | maillist |
-      if (!maillist_is_valid? maillist)
-        render json: { field: 'maillists', error: "\"#{maillist}\" is not a valid maillist" }, status: :bad_request
-        return
-      end
-    end
-    maillists_param.uniq!
-
 
     if @current_user.account.site_admin?
       if leader_id_param && !leader_id_param.blank?
