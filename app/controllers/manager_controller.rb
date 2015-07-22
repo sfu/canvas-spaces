@@ -497,6 +497,15 @@ end
     end
   end
 
+  def maillist_members(maillist)
+    rest_url = "https://rest.its.sfu.ca/cgi-bin/WebObjects/AOBRestServer.woa/rest/maillist/members.js?listname=#{maillist}&art=#{REST_TOKEN}"
+    client = RestClient::Resource.new(rest_url)
+    client.get do | response, request, result |
+      Rails.logger.info(response)
+      JSON.parse(response)
+    end
+  end
+
   def group_formatter(group, options = {})
     includes = options[:include] || []
     image = group.avatar_attachment
