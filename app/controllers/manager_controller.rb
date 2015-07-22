@@ -2,6 +2,7 @@ ACCT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env][
 GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['group_cat_name']
 GROUP_CATEGORY = GroupCategory.find_by_name(GROUP_CAT_NAME)
 MAILLIST_TOKEN = YAML.load_file("#{Rails.root}/config/sfu.yml")['maillist_ckid_token']
+REST_TOKEN = YAML.load_file("#{Rails.root}/config/sfu.yml")['sfu_rest_token']
 
 require Pathname("#{Rails.root}/vendor/plugins/sfu_api/app/model/sfu/sfu")
 
