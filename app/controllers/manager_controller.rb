@@ -168,7 +168,7 @@ end
                                 leader: leader,
                                 join_level: join_type,
                                 description: description_param )
-    group.add_user(leader) if !leader.nil?
+    group.add_user(leader)
     group.save
     members.each { |member| group.add_user(member) } unless members.empty?
 
