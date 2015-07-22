@@ -119,14 +119,10 @@ end
       return
     end
 
-    # all maillists must be valid
-    maillists_param.each do | maillist |
-      if (!maillist_is_valid? maillist)
-        render json: { field: 'maillists', error: "\"#{maillist}\" is not a valid maillist" }, status: :bad_request
-        return
-      end
+    if (!params[:maillist].empty? && !maillist_is_valid?(params[:maillist]))
+      render json: { field: 'maillist', error: "\"#{params[:maillist]}\" is not a valid maillist" }, status: :bad_request
+      return
     end
-    maillists_param.uniq!
 
     # all users must be valid
     members = members_param.map do | member |
