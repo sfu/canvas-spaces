@@ -125,14 +125,13 @@ end
       return
     end
 
-    # all users must be valid
+    # concat maillist members into the members array so they get added for the initial load
+    members_param.concat maillist_members(params[:maillist]) unless params[:maillist].empty?
+
+    # filter out non-canvas users
     members = members_param.map do | member |
-      pseudonym = user_for_sfu_username(member)
-      if pseudonym.nil?
-        render json: { field: 'members', error: "\"#{member}\" is not a valid Canvas user" }, status: :bad_request
-        return
-      end
-      pseudonym.user
+      pseudonym = Pseudonym.find_by_unique_id member
+      pseudonym.user unless pseudonym.nil?
     end
     members.uniq!
 
