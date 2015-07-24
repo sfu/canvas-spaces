@@ -510,17 +510,15 @@ end
     includes = options[:include] || []
     image = group.avatar_attachment
     avatar_url = image && image.thumbnail_url
-    users = []
-    if includes.include?('users')
-      users = group.users.map{ |u| user_json(u, @current_user, session) }
-    end
-
+    users = group.users.map { |u| user_json(u, @current_user, session) }
+    is_member = group.users.map { |u| u.id }.include? @current_user.id
     group.as_json(only: [:id, :name, :created_at, :description, :leader_id], include_root: false).merge({
       member_count: group.users.count,
       join_type: display_join_type(group.join_level),
       is_leader: group.leader_id == @current_user.id,
       avatar_url: avatar_url,
-      users: users
+      users: (if includes.include?('users') then users else [] end),
+      is_member: is_member
     })
   end
 
