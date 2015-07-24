@@ -1,9 +1,3 @@
-ACCT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['acct_name']
-GROUP_CAT_NAME = YAML.load_file("#{Rails.root}/config/canvas_spaces.yml")[Rails.env]['group_cat_name']
-GROUP_CATEGORY = GroupCategory.find_by_name(GROUP_CAT_NAME)
-MAILLIST_TOKEN = YAML.load_file("#{Rails.root}/config/sfu.yml")['maillist_ckid_token']
-REST_TOKEN = YAML.load_file("#{Rails.root}/config/sfu.yml")['sfu_rest_token']
-
 require Pathname("#{Rails.root}/vendor/plugins/sfu_api/app/model/sfu/sfu")
 
 require "rest-client"
@@ -63,7 +57,7 @@ end
   # special account.
   #
   def list_groups
-    groups = GROUP_CATEGORY.groups.active.order(:name)
+    groups = CanvasSpaces.GroupCategory.groups.active.order(:name)
     # filter out non-public groups for non-admins
     groups = groups.where(join_level: 'parent_context_auto_join') unless @current_user.account.site_admin?
     groups_json = Api.paginate(groups, self, api_v1_canvasspaces_groups_url).map do |g|
@@ -80,8 +74,7 @@ end
       render_json_unauthorized
       return
     end
-
-    groups = User.find(user_id).current_groups.where(group_category_id: GROUP_CATEGORY.id, workflow_state: 'available').order(:name)
+    groups = User.find(user_id).current_groups.where(group_category_id: CanvasSpaces.GroupCategory.id, workflow_state: 'available').order(:name)
     groups_json = Api.paginate(groups, self, api_v1_canvasspaces_user_groups_url).map do |g|
       include = @current_user.account.site_admin? || @current_user.id == g.leader_id ? ['users'] : []
       group_formatter(g, { include: include })
@@ -98,8 +91,6 @@ end
   # join_type is either: 'request', free_to_join' or 'invite_only'
   #
   def create_group
-    acct = Account.find_by_name(ACCT_NAME)
-
     name_param = params[:name]
     description_param = params[:description]
     members_param = params[:members] || []
@@ -170,8 +161,8 @@ end
       return
     end
 
-    group = acct.groups.create( name: name_param,
-                                group_category: GROUP_CATEGORY,
+    group = @domain_root_account.groups.create( name: name_param,
+                                group_category: CanvasSpaces.GroupCategory,
                                 leader: leader,
                                 join_level: join_type,
                                 description: description_param )
@@ -196,7 +187,7 @@ end
       return
     end
 
-    group = GROUP_CATEGORY
+    group = CanvasSpaces.GroupCategory
             .groups
             .where('groups.id = ?', group_id_param)
             .eager_load(:users)
@@ -260,7 +251,7 @@ end
       return
     end
 
-    group = GROUP_CATEGORY.groups.where('groups.id = ?', group_id_param).first
+    group = CanvasSpaces.GroupCategory.groups.where('groups.id = ?', group_id_param).first
     if group.nil?
       render json: { error: 'No such group found.' }, status: :not_found
     else
@@ -284,7 +275,7 @@ end
       return
     end
 
-    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
+    group = CanvasSpaces.GroupCategory.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -325,7 +316,7 @@ end
       return
     end
 
-    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
+    group = CanvasSpaces.GroupCategory.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -372,7 +363,7 @@ end
       return
     end
 
-    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
+    group = CanvasSpaces.GroupCategory.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -415,7 +406,7 @@ end
       return
     end
 
-    group = GROUP_CATEGORY.groups.find_by_id(group_id_param)
+    group = CanvasSpaces.GroupCategory.groups.find_by_id(group_id_param)
     if group.nil?
       render json: { error: 'No such group found.' }, status: :bad_request
     else
@@ -488,7 +479,7 @@ end
   end
 
   def group_name_is_unique?(name)
-    GROUP_CATEGORY.groups.first(conditions: [ "lower(name) = ? AND workflow_state != ?", name.downcase, 'deleted' ]).nil?
+    CanvasSpaces.GroupCategory.groups.first(conditions: [ "lower(name) = ? AND workflow_state != ?", name.downcase, 'deleted' ]).nil?
   end
 
   def sfu_user_is_valid?(sfu_username)
@@ -496,7 +487,7 @@ end
   end
 
   def maillist_is_valid?(maillist)
-    rest_url = "https://rest.maillist.sfu.ca/maillists?sfu_token=#{MAILLIST_TOKEN}&name=#{maillist}"
+    rest_url = "https://rest.maillist.sfu.ca/maillists?sfu_token=#{CanvasSpaces.RequestTokens[:maillist]}&name=#{maillist}"
     # TODO: remove SSL verify none when fixed
     client = RestClient::Resource.new(rest_url, :verify_ssl => OpenSSL::SSL::VERIFY_NONE)
     client.get do | response, request, result |
@@ -505,7 +496,7 @@ end
   end
 
   def maillist_members(maillist)
-    rest_url = "https://rest.its.sfu.ca/cgi-bin/WebObjects/AOBRestServer.woa/rest/maillist/members.js?listname=#{maillist}&art=#{REST_TOKEN}"
+    rest_url = "https://rest.its.sfu.ca/cgi-bin/WebObjects/AOBRestServer.woa/rest/maillist/members.js?listname=#{maillist}&art=#{CanvasSpaces.RequestTokens[:rest]}"
     client = RestClient::Resource.new(rest_url)
     client.get do | response, request, result |
       Rails.logger.info(response)
