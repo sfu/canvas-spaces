@@ -1,0 +1,18 @@
+<%= fields_for :settings, OpenObject.new(settings) do |f| %>
+  <table style="width: 500px;" class="formtable">
+    <tr>
+      <td><%= f.blabel :groupset_name, :en => "Group Set Name" %></td>
+      <td>
+        <%= f.text_field :groupset_name,:size => "90" %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :public_spaces_enabled, "Enable Public Spaces" %></td>
+      <td>
+        <%= f.check_box "public_spaces_enabled", {}, 'yes', 'no' %>
+      </td>
+    </tr>
+
+  </table>
+<% end %>
