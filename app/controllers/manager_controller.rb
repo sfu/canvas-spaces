@@ -505,7 +505,6 @@ end
     rest_url = "https://rest.its.sfu.ca/cgi-bin/WebObjects/AOBRestServer.woa/rest/maillist/members.js?listname=#{maillist}&art=#{CanvasSpaces.RequestTokens[:rest]}"
     client = RestClient::Resource.new(rest_url)
     client.get do | response, request, result |
-      Rails.logger.info(response)
       JSON.parse(response)
     end
   end
