@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   # Render the entry point for the UI
   get '/canvasspaces(/:route)', to: 'manager#index'
 
+  # Test if the plugin is enabled
+  get '/api/v1/canvasspaces/enabled', to: 'manager#enabled?'
+
   # Canvas looks for '/api/v' to determine if this is an api request.
   # We could override the bool method for determining if the route is an api call or not.
   get '/api/v1/canvasspaces/groups', to: 'manager#list_groups'

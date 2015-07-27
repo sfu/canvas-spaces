@@ -4,7 +4,7 @@ require "rest-client"
 require 'uri'
 
 class ManagerController < ApplicationController
-  before_filter :require_user
+  before_filter :require_user, :except => :enabled?
 
   def canvas_spaces_enabled
     raise ActiveRecord::RecordNotFound if PluginSetting.find_by_name(:canvas_spaces).disabled?
@@ -20,6 +20,12 @@ class ManagerController < ApplicationController
   # Render the entry point for the UI
   def index
     js_env(:CANVAS_SPACES => CanvasSpaces.config)
+  end
+
+  def enabled?
+    render :json => {
+      canvas_spaces_enabled: !!PluginSetting.find_by_name(:canvas_spaces)
+    }
   end
 
   #
