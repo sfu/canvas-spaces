@@ -26,7 +26,7 @@
 		{
 			"id": "3cd16d5a-a967-1257-d9fd-ddc14ae64fd6",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/users",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups/:group_id/users",
 			"preRequestScript": "",
 			"pathVariables": {
 				"group_id": "40"
@@ -55,7 +55,7 @@
 		{
 			"id": "51738e77-d78a-807d-9f02-02359c859fc1",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups/:group_id",
 			"preRequestScript": "",
 			"pathVariables": {
 				"group_id": ""
@@ -90,7 +90,7 @@
 		{
 			"id": "6dbca76b-502a-1c1b-8ba8-f9ebcb654827",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups/:group_id",
 			"preRequestScript": "",
 			"pathVariables": {
 				"group_id": ""
@@ -137,7 +137,7 @@
 		{
 			"id": "81dd4499-7378-806f-a976-3809b87d8320",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -182,7 +182,7 @@
 		{
 			"id": "90fb2a1d-2e59-4bd4-99d8-3fac8e3b50de",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/users",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups/:group_id/users",
 			"preRequestScript": "",
 			"pathVariables": {
 				"group_id": ""
@@ -204,7 +204,7 @@
 		{
 			"id": "a7778775-6058-9b14-3519-d168794bd9d6",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups/:group_id",
 			"preRequestScript": "",
 			"pathVariables": {
 				"group_id": ""
@@ -226,7 +226,7 @@
 		{
 			"id": "aec651b0-69b5-003f-7227-b6d360111f9a",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/test/users",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/test/users",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "GET",
@@ -253,7 +253,7 @@
 		{
 			"id": "bf890083-3efc-f86c-57bb-18b2609f051d",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/leader",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups/:group_id/leader",
 			"preRequestScript": "",
 			"pathVariables": {
 				"group_id": "40"
@@ -282,7 +282,7 @@
 		{
 			"id": "c186d786-74d1-9319-2ae1-1b261a200138",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
@@ -327,7 +327,7 @@
 		{
 			"id": "dfb18aa4-a802-e300-b838-b68370f88cc6",
 			"headers": "Authorization: Bearer 11GCPvBR0rKdTc1it9tGngozWvaQEt4ohapWGdX6pXODz0WRgafzRZZhqlWhW7i0\n",
-			"url": "http://localhost:3000/api/v1/canvasspaces/groups/:group_id/users/:user_id",
+			"url": "http://localhost:3000/api/v1/canvas_spaces/groups/:group_id/users/:user_id",
 			"preRequestScript": "",
 			"pathVariables": {
 				"group_id": "40",

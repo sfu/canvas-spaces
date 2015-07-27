@@ -66,7 +66,7 @@ end
     groups = CanvasSpaces.GroupCategory.groups.active.order(:name)
     # filter out non-public groups for non-admins
     groups = groups.where(join_level: 'parent_context_auto_join') unless @current_user.account.site_admin?
-    groups_json = Api.paginate(groups, self, api_v1_canvasspaces_groups_url).map do |g|
+    groups_json = Api.paginate(groups, self, api_v1_canvas_spaces_groups_url).map do |g|
       include = @current_user.account.site_admin? || @current_user.id == g.leader_id ? ['users'] : []
       group_formatter(g, { include: include })
     end
@@ -81,7 +81,7 @@ end
       return
     end
     groups = User.find(user_id).current_groups.where(group_category_id: CanvasSpaces.GroupCategory.id, workflow_state: 'available').order(:name)
-    groups_json = Api.paginate(groups, self, api_v1_canvasspaces_user_groups_url).map do |g|
+    groups_json = Api.paginate(groups, self, api_v1_canvas_spaces_user_groups_url).map do |g|
       include = @current_user.account.site_admin? || @current_user.id == g.leader_id ? ['users'] : []
       group_formatter(g, { include: include })
     end

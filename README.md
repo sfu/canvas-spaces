@@ -5,40 +5,40 @@ REST API for managing Canvas Spaces (student organized groups)
 ##Routes Summary:
 
 ####[Show login page.](#show-login-page)
-  GET /canvasspaces/login
+  GET /canvas_spaces/login
 ####[List all the groups.](#list-all-groups)
-  GET /api/v1/canvasspaces/groups
+  GET /api/v1/canvas_spaces/groups
 ####[List all groups for a user](#list-all-groups-for-user)
 ####[Create a group.](#create-group)
-  POST /api/v1/canvasspaces/groups
+  POST /api/v1/canvas_spaces/groups
 ####[Delete a group.](#delete-group)
-  DELETE /api/v1/canvasspaces/groups/:group_id
+  DELETE /api/v1/canvas_spaces/groups/:group_id
 ####[Get group info.](#get-group-info)
-  GET /api/v1/canvasspaces/groups/:group_id
+  GET /api/v1/canvas_spaces/groups/:group_id
 ####[Modify group info](#modify-group)
-  PUT /api/v1/canvasspaces/groups/:group_id
+  PUT /api/v1/canvas_spaces/groups/:group_id
 ####[List users in group.](#list-users)
-  GET /api/v1/canvasspaces/groups/:group_id/users
+  GET /api/v1/canvas_spaces/groups/:group_id/users
 ####[Add user to group.](#add-user)
-  POST /api/v1/canvasspaces/groups/:group_id/users
+  POST /api/v1/canvas_spaces/groups/:group_id/users
 ####[Remove user from group.](#remove-user)
-  DELETE /api/v1/canvasspaces/groups/:group_id/users/:user_id
+  DELETE /api/v1/canvas_spaces/groups/:group_id/users/:user_id
 ####[Set leader of a group.](#set-leader)
-  PUT /api/v1/canvasspaces/groups/:group_id/leader
+  PUT /api/v1/canvas_spaces/groups/:group_id/leader
 ####[Validate group name.](#validate-group-name)
-  GET /api/v1/canvasspaces/validate/name/:name
+  GET /api/v1/canvas_spaces/validate/name/:name
 ####[Validate SFU Username is a valid Canvas user.](#validate-sfu-user)
-  GET /api/v1/canvasspaces/validate/user/:username
+  GET /api/v1/canvas_spaces/validate/user/:username
 ####[Validate SFU Maillist name.](#validate-maillist)
-  GET /api/v1/canvasspaces/validate/maillist/:maillist
+  GET /api/v1/canvas_spaces/validate/maillist/:maillist
 ####[Test: get all users in the system.](#get-all-users)
-  GET /api/v1/canvasspaces/test/users
+  GET /api/v1/canvas_spaces/test/users
 ##Routes:
 
 ###<a name="show-login-page"></a>Show a login page and also let the user authenticate. Test page. To be removed in the future.
 
 
-  `GET /canvasspaces/login`
+  `GET /canvas_spaces/login`
 
 Params:
 
@@ -50,7 +50,7 @@ Returns:
 
 ###<a name="list-all-groups"></a>List all the groups.
 
-  `GET /api/v1/canvasspaces/groups`
+  `GET /api/v1/canvas_spaces/groups`
 
 Params:
 
@@ -92,7 +92,7 @@ Notes:
 
 ###<a name="list-all-groups-for-user"></a>List all groups for a user.
 
-    GET /api/v1/canvasspaces/users/:user_id/groups
+    GET /api/v1/canvas_spaces/users/:user_id/groups
 
 Params:
 
@@ -128,7 +128,7 @@ Notes:
 
 ###<a name="create-group"></a>Create a group.
 
-    POST /api/v1/canvasspaces/groups
+    POST /api/v1/canvas_spaces/groups
 
 Form Params or JSON:
 
@@ -159,7 +159,7 @@ Notes:
 
 ###<a name="delete-group"></a>Delete a group.
 
-    DELETE /api/v1/canvasspaces/groups/:group_id
+    DELETE /api/v1/canvas_spaces/groups/:group_id
 
 Url Params:
 
@@ -171,7 +171,7 @@ Returns:
 
 ###<a name="get-group-info"></a>Get group info.
 
-    GET /api/v1/canvasspaces/groups/:group_id
+    GET /api/v1/canvas_spaces/groups/:group_id
 
 Url Params:
 
@@ -190,7 +190,7 @@ Returns (Note: all successful operations return HTTP status 200 OK):
 
 ###<a name="modify-group"></a>Modify group info (description or join type (invite\_only, request, free\_to_join) )
 
-    PUT /api/v1/canvasspaces/groups/:group_id
+    PUT /api/v1/canvas_spaces/groups/:group_id
 
 Url Params:
 
@@ -208,7 +208,7 @@ Returns:
 
 ###<a name="list-users"></a>List users in group.
 
-    GET /api/v1/canvasspaces/groups/:group_id/users
+    GET /api/v1/canvas_spaces/groups/:group_id/users
 
 Url Params:
 
@@ -229,7 +229,7 @@ Returns:
 
 ###<a name="add-user"></a>Add user to group.
 
-  POST /api/v1/canvasspaces/groups/:group_id/users
+  POST /api/v1/canvas_spaces/groups/:group_id/users
 
 Url Params:
 
@@ -245,7 +245,7 @@ Returns:
 
 ###<a name="remove-user"></a>Remove user from group.
 
-    DELETE /api/v1/canvasspaces/groups/:group_id/users/:user_id
+    DELETE /api/v1/canvas_spaces/groups/:group_id/users/:user_id
 
 Url Params:
 
@@ -262,7 +262,7 @@ Notes:
 
 ###<a name="set-leader"></a>Set leader of a group.
 
-    PUT /api/v1/canvasspaces/groups/:group_id/leader
+    PUT /api/v1/canvas_spaces/groups/:group_id/leader
 
 Url Params:
 
@@ -282,7 +282,7 @@ Notes:
 
 ###<a name="validate-group-name"></a>Check that a group name is valid (e.g. unique)
 
-    GET /api/v1/canvasspaces/validate/name/:name
+    GET /api/v1/canvas_spaces/validate/name/:name
 
 Url Params:
 
@@ -296,7 +296,7 @@ Returns:
 
 ###<a name="validate-sfu-user"></a>Validate that a given SFU computing ID or alias is a valid Canvas user
 
-    GET /api/v1/canvasspaces/validate/user/:username
+    GET /api/v1/canvas_spaces/validate/user/:username
 
 Url Params:
 
@@ -308,7 +308,7 @@ Returns:
 
 ###<a name="validate-maillist"></a>Validate that a given SFU maillist name is a valid maillist
 
-    GET /api/v1/canvasspaces/validate/maillist/:maillist
+    GET /api/v1/canvas_spaces/validate/maillist/:maillist
 
 Url Params:
 
@@ -320,7 +320,7 @@ Returns:
 
 ###<a name="get-all-users"></a>Test: get all users in the system (dev environment only)
 
-    GET /api/v1/canvasspaces/test/users
+    GET /api/v1/canvas_spaces/test/users
 
 Params:
 
