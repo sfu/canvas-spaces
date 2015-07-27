@@ -1,6 +1,15 @@
 module CanvasSpaces
   class Engine < ::Rails::Engine
     initializer "canvas_spaces.canvas_plugin" do
+      Rails.configuration.to_prepare do
+        ApplicationController.class_eval do
+          def add_canvas_spaces_to_jsenv
+            js_env(:CANVAS_SPACES_ENABLED => PluginSetting.find_by_name(:canvas_spaces).disabled.!)
+          end
+          before_filter :add_canvas_spaces_to_jsenv
+        end
+      end
+      
       Canvas::Plugin.register :canvas_spaces, nil, {
         :name => 'Canvas Spaces',
         :description => '',
