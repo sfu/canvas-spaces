@@ -259,13 +259,13 @@ end
 
     group = CanvasSpaces.GroupCategory.groups.where('groups.id = ?', group_id_param).first
     if group.nil?
-      render json: { error: 'No such group found.' }, status: :not_found
+      render json: { error: 'No such group found' }, status: :not_found
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
         group.destroy
-        render json: { message: "Group is destroyed." }, status: :ok
+        render json: { message: "Group #{group_id_param} deleted" }, status: :ok
       else
-        render json: { error: "Can't delete group. Not owner." }, status: :forbidden
+        render json: { error: "Can't delete group #{group_id_param}: not owner" }, status: :forbidden
       end
     end
   end
