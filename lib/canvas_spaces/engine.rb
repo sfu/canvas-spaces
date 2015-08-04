@@ -19,7 +19,9 @@ module CanvasSpaces
         :hide_from_users => true,
         :settings => {
           :groupset_name => 'Canvas Spaces',
-          :public_spaces_enabled => false
+          :public_spaces_enabled => false,
+          :maillist_store_url => nil,
+          :maillist_store_token => nil
         }
       }
     end
