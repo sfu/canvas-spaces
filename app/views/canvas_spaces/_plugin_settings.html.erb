@@ -8,6 +8,20 @@
     </tr>
 
     <tr>
+      <td><%= f.blabel :maillist_store_url, :en => "Maillist Store Server URL Base" %></td>
+      <td>
+        <%= f.text_field :maillist_store_url,:size => "90" %>
+      </td>
+    </tr>
+
+    <tr>
+      <td><%= f.blabel :maillist_store_token, :en => "Maillist Store Access Token" %></td>
+      <td>
+        <%= f.text_field :maillist_store_token,:size => "90" %>
+      </td>
+    </tr>
+
+    <tr>
       <td><%= f.label :public_spaces_enabled, "Enable Public Spaces" %></td>
       <td>
         <%= f.check_box "public_spaces_enabled", {}, 'yes', 'no' %>
