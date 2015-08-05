@@ -549,6 +549,7 @@ end
     avatar_url = image && image.thumbnail_url
     users = group.users.map { |u| user_json(u, @current_user, session) }
     is_member = group.users.map { |u| u.id }.include? @current_user.id
+    maillist = get_maillist_for_space(group.id)
     group.as_json(only: [:id, :name, :created_at, :description, :leader_id], include_root: false).merge({
       member_count: group.users.count,
       join_type: display_join_type(group.join_level),
