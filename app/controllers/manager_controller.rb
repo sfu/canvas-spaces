@@ -517,6 +517,17 @@ end
     end
   end
 
+  def get_maillist_for_space(space)
+    begin
+      response = RestClient.get "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+    rescue => e
+      nil
+    else
+      response = JSON.parse(response)
+      response['maillist']
+    end
+  end
+
   def group_formatter(group, options = {})
     includes = options[:include] || []
     image = group.avatar_attachment
