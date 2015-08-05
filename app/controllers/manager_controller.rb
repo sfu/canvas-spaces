@@ -533,6 +533,16 @@ end
     JSON.parse(response)
   end
 
+  def delete_maillist_for_space(space, maillist)
+    begin
+      r = RestClient.delete "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+    rescue => e
+      nil
+    else
+      JSON.parse(r)
+    end
+  end
+
   def group_formatter(group, options = {})
     includes = options[:include] || []
     image = group.avatar_attachment
