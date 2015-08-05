@@ -217,23 +217,22 @@ end
   # Change group properties: description or join type.
   #
   def modify_group
-    attrs = params
-    group = Group.find_by_id attrs[:group_id]
+    group = Group.find_by_id params[:group_id]
+    current_maillist = get_maillist_for_space(group.id)
 
-    if attrs[:join_type]
-      attrs[:join_level] = convert_join_type_to_join_level(attrs[:join_type])
+    if params[:join_type]
+      params[:join_level] = convert_join_type_to_join_level(params[:join_type])
     end
 
-    if attrs[:leader_id] && attrs[:leader_id] != group.leader_id
-      membership = group.group_memberships.where(user_id: attrs[:leader_id]).first
+    if params[:leader_id] && params[:leader_id] != group.leader_id
+      membership = group.group_memberships.where(user_id: params[:leader_id]).first
       return render :json => {}, :status => :bad_request unless membership
-      attrs[:leader] = membership.user
-    end
+      params[:leader] = membership.user
 
     if authorized_action(group, @current_user, :update)
       respond_to do |format|
         group.transaction do
-          group.update_attributes(attrs.slice(*SETTABLE_GROUP_ATTRIBUTES))
+          group.update_attributes(params.slice(*SETTABLE_GROUP_ATTRIBUTES))
         end
 
         if !group.errors.any?
