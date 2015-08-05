@@ -179,6 +179,8 @@ end
     group.save
     members.each { |member| group.add_user(member) } unless members.empty?
 
+    add_maillist = set_maillist_for_space(group.id, params[:maillist])
+
     render json: group.as_json(only: [ :id, :name, :description, :leader_id, :created_at ],
                                include_root: false)
                       .merge({ size: 0, join_type: join_type_param }), status: :ok
