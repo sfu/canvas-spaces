@@ -19,7 +19,10 @@ class ManagerController < ApplicationController
   #
   # Render the entry point for the UI
   def index
-    js_env(:CANVAS_SPACES_CONFIG => CanvasSpaces.config)
+    canvas_spaces_config = {
+      :public_spaces_enabled => CanvasSpaces.config[:public_spaces_enabled]
+    }
+    js_env(:CANVAS_SPACES_CONFIG => canvas_spaces_config)
   end
 
   def enabled?
