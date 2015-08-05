@@ -508,6 +508,15 @@ end
     end
   end
 
+  def maillist_owner(maillist)
+    rest_url = "https://rest.maillist.sfu.ca/maillists?sfu_token=#{CanvasSpaces.RequestTokens[:maillist]}&name=#{maillist}"
+    # TODO: remove SSL verify none when fixed
+    client = RestClient::Resource.new(rest_url, :verify_ssl => OpenSSL::SSL::VERIFY_NONE)
+    client.get do | response, request, result |
+      return JSON.parse(response)['owner']
+    end
+  end
+
   def group_formatter(group, options = {})
     includes = options[:include] || []
     image = group.avatar_attachment
