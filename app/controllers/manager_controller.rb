@@ -201,9 +201,11 @@ end
     if group.nil?
       render json: { error: 'No such group found.' }, status: :not_found
     else
+      maillist = get_maillist_for_space(group.id)
       render json: { id: group.id,
                      name: group.name,
                      description: group.description,
+                     maillist: maillist,
                      leader_id: group.leader_id,
                      created_at: group.created_at,
                      join_type: display_join_type(group.join_level),
