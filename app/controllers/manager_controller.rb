@@ -551,6 +551,7 @@ end
     is_member = group.users.map { |u| u.id }.include? @current_user.id
     maillist = get_maillist_for_space(group.id)
     group.as_json(only: [:id, :name, :created_at, :description, :leader_id], include_root: false).merge({
+      maillist: maillist,
       member_count: group.users.count,
       join_type: display_join_type(group.join_level),
       is_leader: group.leader_id == @current_user.id,
