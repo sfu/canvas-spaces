@@ -280,6 +280,7 @@ end
     else
       if @current_user.account.site_admin? || group.leader_id == @current_user.id
         group.destroy
+        delete_maillist_for_space(params[:group_id])
         render json: { message: "Group #{group_id_param} deleted" }, status: :ok
       else
         render json: { error: "Can't delete group #{group_id_param}: not owner" }, status: :forbidden
