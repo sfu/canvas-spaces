@@ -235,6 +235,7 @@ end
       membership = group.group_memberships.where(user_id: params[:leader_id]).first
       return render :json => {}, :status => :bad_request unless membership
       params[:leader] = membership.user
+    end
 
     if authorized_action(group, @current_user, :update)
       respond_to do |format|
