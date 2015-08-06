@@ -237,15 +237,25 @@ end
       params[:leader] = membership.user
     end
 
+    if params[:maillist] != current_maillist
+      render json: { valid_maillist: false }, status: :ok unless params[:maillist].empty? || maillist_is_valid?(params[:maillist])
+      params[:new_membership] = maillist_members(params[:maillist]).map { |member| Pseudonym.find_by_unique_id(member).user rescue nil}.compact
+    end
+
     if authorized_action(group, @current_user, :update)
       respond_to do |format|
         group.transaction do
           group.update_attributes(params.slice(*SETTABLE_GROUP_ATTRIBUTES))
+          if params.has_key?(:new_membership) && params[:new_membership].empty?
+            group.group_memberships.where("user_id NOT IN (?)", [group.leader]).destroy_all
+            delete_maillist_for_space(group.id, params[:maillist])
+          end
+          group.set_users(params[:new_membership]) if params.has_key?(:new_membership)
+          set_maillist_for_space(group.id, params[:maillist]) unless params[:maillist].empty?
         end
 
         if !group.errors.any?
-          format.json { render :json => group_formatter(group), :status => :ok }
-          # render json: group_formatter(group), status: :ok
+          format.json { render :json => group_formatter(group, { include: ['users'] }), :status => :ok }
         else
           format.json { render :json => @group.errors, :status => :bad_request }
         end
