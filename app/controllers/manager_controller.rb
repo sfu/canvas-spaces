@@ -565,7 +565,7 @@ end
     JSON.parse(response)
   end
 
-  def delete_maillist_for_space(space, maillist)
+  def delete_maillist_for_space(space)
     begin
       r = RestClient.delete "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
     rescue => e
