@@ -476,7 +476,19 @@ end
   #
   def validate_maillist
     listname = params[:maillist]
-    render json: { valid_maillist: maillist_is_valid?(listname) }, status: :ok
+
+    valid = maillist_is_valid? listname
+    is_member = valid && maillist_members(params[:maillist]).include?(@current_user.pseudonym.unique_id)
+
+    if !valid
+      payload = { valid_maillist: false, reason: "#{params[:maillist]} is not a valid SFU Maillist" }
+    elsif !is_member
+      payload = { valid_maillist: false, reason: "You are not a member of #{params[:maillist]}. You must be a member of a list to add it to your Space." }
+    else
+      payload = { valid_maillist: true }
+    end
+
+    render json: payload, status: :ok
   end
 
   #
