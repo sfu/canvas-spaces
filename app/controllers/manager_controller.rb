@@ -248,7 +248,7 @@ end
           group.update_attributes(params.slice(*SETTABLE_GROUP_ATTRIBUTES))
           if params.has_key?(:new_membership) && params[:new_membership].empty?
             group.group_memberships.where("user_id NOT IN (?)", [group.leader]).destroy_all
-            delete_maillist_for_space(group.id, params[:maillist])
+            delete_maillist_for_space(group.id)
           end
           group.set_users(params[:new_membership]) if params.has_key?(:new_membership)
           set_maillist_for_space(group.id, params[:maillist]) unless params[:maillist].empty?
