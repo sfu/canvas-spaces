@@ -251,7 +251,7 @@ end
             delete_maillist_for_space(group.id)
           end
           group.set_users(params[:new_membership]) if params.has_key?(:new_membership)
-          set_maillist_for_space(group.id, params[:maillist]) unless params[:maillist].empty?
+          set_maillist_for_space(group.id, params[:maillist]) unless params[:maillist].nil? || params[:maillist].empty?
         end
 
         if !group.errors.any?
