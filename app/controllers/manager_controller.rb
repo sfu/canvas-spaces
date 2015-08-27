@@ -479,7 +479,7 @@ end
     listname = params[:maillist]
 
     valid = maillist_is_valid? listname
-    is_member = valid && maillist_members(params[:maillist]).include?(@current_user.pseudonym.unique_id)
+    is_member = valid && maillist_members(params[:maillist]).include?(@current_user.pseudonym.unique_id.split('@')[0])
 
     if !valid
       payload = { valid_maillist: false, reason: "#{params[:maillist]} is not a valid SFU Maillist" }
