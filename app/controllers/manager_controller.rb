@@ -1,6 +1,7 @@
 require Pathname("#{Rails.root}/vendor/plugins/sfu_api/app/model/sfu/sfu")
 
 require "rest-client"
+require 'socket'
 require 'uri'
 
 class ManagerController < ApplicationController
@@ -551,7 +552,7 @@ end
 
   def get_maillist_for_space(space)
     begin
-      response = RestClient.get "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+      response = RestClient.get "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :'x-canvas-env': ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
     rescue => e
       nil
     else
@@ -561,13 +562,13 @@ end
   end
 
   def set_maillist_for_space(space, maillist)
-    response = RestClient.post "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :maillist => maillist }, { :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+    response = RestClient.post "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :maillist => maillist }, { :'x-canvas-env': ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
     JSON.parse(response)
   end
 
   def delete_maillist_for_space(space)
     begin
-      r = RestClient.delete "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+      r = RestClient.delete "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :'x-canvas-env': ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
     rescue => e
       nil
     else
