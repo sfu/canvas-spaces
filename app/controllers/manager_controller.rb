@@ -23,7 +23,7 @@ class ManagerController < ApplicationController
     canvas_spaces_config = {
       :public_spaces_enabled => CanvasSpaces.config[:public_spaces_enabled]
     }
-    js_env(:CANVAS_SPACES_CONFIG => canvas_spaces_config)
+    js_env(:CANVAS_SPACES_CONFIG => canvas_spaces_config)g
   end
 
   def enabled?
@@ -552,7 +552,7 @@ end
 
   def get_maillist_for_space(space)
     begin
-      response = RestClient.get "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :'x-canvas-env': ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+      response = RestClient.get "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :'x-canvas-env' => ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
     rescue => e
       nil
     else
@@ -562,13 +562,13 @@ end
   end
 
   def set_maillist_for_space(space, maillist)
-    response = RestClient.post "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :maillist => maillist }, { :'x-canvas-env': ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+    response = RestClient.post "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :maillist => maillist }, { :'x-canvas-env' => ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
     JSON.parse(response)
   end
 
   def delete_maillist_for_space(space)
     begin
-      r = RestClient.delete "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :'x-canvas-env': ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
+      r = RestClient.delete "#{CanvasSpaces.config[:maillist_store_url]}/spaces/#{space}", { :'x-canvas-env' => ENV['CANVAS_ENV'] || 'dev', :accept => :json, :authorization => "Bearer #{CanvasSpaces.config[:maillist_store_token]}"}
     rescue => e
       nil
     else
