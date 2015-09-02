@@ -23,7 +23,7 @@ class ManagerController < ApplicationController
     canvas_spaces_config = {
       :public_spaces_enabled => CanvasSpaces.config[:public_spaces_enabled]
     }
-    js_env(:CANVAS_SPACES_CONFIG => canvas_spaces_config)g
+    js_env(:CANVAS_SPACES_CONFIG => canvas_spaces_config)
   end
 
   def enabled?
