@@ -138,10 +138,10 @@ end
 
     # filter out non-canvas users
     members = members_param.map do | member |
-      pseudonym = Pseudonym.find_by_unique_id member
-      pseudonym.user unless pseudonym.nil?
+      pseudonym = Pseudonym_unique_id member
+      pseudonym.first.user unless pseudonym.empty?
     end
-    members.uniq!
+    members.compact!.uniq!
 
     if @current_user.account.site_admin?
       if leader_id_param && !leader_id_param.blank?
@@ -240,7 +240,12 @@ end
 
     if params[:maillist] != current_maillist
       render json: { valid_maillist: false }, status: :ok unless params[:maillist].empty? || maillist_is_valid?(params[:maillist])
-      params[:new_membership] = maillist_members(params[:maillist]).map { |member| Pseudonym.find_by_unique_id(member).user rescue nil}.compact
+      # params[:new_membership] = maillist_members(params[:maillist]).map { |member| Pseudonym.find_by_unique_id(member).user rescue nil}.compact
+      params[:new_membership] = maillist_members(params[:maillist]).map do |member|
+        pseudonym = Pseudonym.active.by_unique_id member
+        pseudonym.first.user unless pseudonym.empty?
+      end
+      params[:new_membership].compact!.uniq!
     end
 
     if authorized_action(group, @current_user, :update)
