@@ -138,10 +138,10 @@ end
 
     # filter out non-canvas users
     members = members_param.map do | member |
-      pseudonym = Pseudonym_unique_id member
+      pseudonym = Pseudonym.active.by_unique_id member
       pseudonym.first.user unless pseudonym.empty?
     end
-    members.compact!.uniq!
+    members.compact.uniq!
 
     if @current_user.account.site_admin?
       if leader_id_param && !leader_id_param.blank?
