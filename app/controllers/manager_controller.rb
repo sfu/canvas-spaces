@@ -245,7 +245,8 @@ end
         pseudonym = Pseudonym.active.by_unique_id member
         pseudonym.first.user unless pseudonym.empty?
       end
-      params[:new_membership].compact!.uniq!
+      params[:new_membership].compact!
+      params[:new_membership].uniq!
     end
 
     if authorized_action(group, @current_user, :update)
