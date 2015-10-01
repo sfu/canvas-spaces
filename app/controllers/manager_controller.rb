@@ -1,4 +1,4 @@
-require Pathname("#{Rails.root}/vendor/plugins/sfu_api/app/model/sfu/sfu")
+require Pathname("#{Rails.root}/gems/plugins/sfu_api/app/model/sfu/sfu")
 
 require "rest-client"
 require 'socket'
