@@ -522,7 +522,7 @@ end
   end
 
   def group_name_is_unique?(name)
-    CanvasSpaces.GroupCategory.groups.first(conditions: [ "lower(name) = ? AND workflow_state != ?", name.downcase, 'deleted' ]).nil?
+    CanvasSpaces.GroupCategory.groups.where("lower(name) = ? AND workflow_state != ?", name.downcase, 'deleted').first.nil?
   end
 
   def sfu_user_is_valid?(sfu_username)
