@@ -5,13 +5,13 @@ require 'socket'
 require 'uri'
 
 class ManagerController < ApplicationController
-  before_filter :require_user, :except => :enabled?
+  before_action :require_user, :except => :enabled?
 
   def canvas_spaces_enabled
     raise ActiveRecord::RecordNotFound if PluginSetting.find_by_name(:canvas_spaces).disabled?
     return true
   end
-  before_filter :canvas_spaces_enabled
+  before_action :canvas_spaces_enabled
 
   SETTABLE_GROUP_ATTRIBUTES = %w(
     name description join_level leader
