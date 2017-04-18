@@ -14,7 +14,7 @@ class ManagerController < ApplicationController
   before_action :canvas_spaces_enabled
 
   SETTABLE_GROUP_ATTRIBUTES = %w(
-    name description join_level leader
+    name description join_level
   ).freeze
 
   #
@@ -253,6 +253,9 @@ end
       respond_to do |format|
         group.transaction do
           group.update_attributes(params.slice(*SETTABLE_GROUP_ATTRIBUTES))
+          if params.has_key?(:leader)
+            group.leader = params[:leader]
+          end
           if params.has_key?(:new_membership) && params[:new_membership].empty?
             group.group_memberships.where("user_id NOT IN (?)", [group.leader]).destroy_all
             delete_maillist_for_space(group.id)
