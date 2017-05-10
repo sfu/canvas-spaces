@@ -252,7 +252,7 @@ end
     if authorized_action(group, @current_user, :update)
       respond_to do |format|
         group.transaction do
-          group.update_attributes(params.slice(*SETTABLE_GROUP_ATTRIBUTES))
+          group.update_attributes(params.permit(*SETTABLE_GROUP_ATTRIBUTES))
           if params.has_key?(:leader)
             group.leader = params[:leader]
           end
