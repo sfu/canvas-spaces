@@ -1,0 +1,61 @@
+.SpaceTile {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  border-radius: .5em;
+  width: 40em;
+  height: 11em;
+  overflow: hidden;
+  border: 1px solid $ic-brand-primary;
+  background-color: rgba($ic-brand-primary, 0.02);
+  margin: 1em;
+  margin-right: 5em;
+  color: #000;
+}
+
+.SpaceTile--SpaceInformation {
+  width: 30em;
+  margin-right: 1em;
+  padding: .8em 1.6em 0 1.2em;
+  h1, h2 {
+    margin: 0;
+    line-height: 1.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: normal;
+    margin-bottom: .3em;
+    max-width: 13em;
+  }
+  h2 {
+    font-size: .9em;
+    max-width: 25em;
+  }
+}
+
+.SpaceTile--SpaceInformation-leaderNote {
+  font-size: .9em;
+  font-style: italic;
+  margin: 0;
+}
+
+.SpaceTile--SpaceInformation-editButton {
+  margin: .8em 0;
+  padding-left: .3em;
+  i {
+    margin-right: .125em;
+  }
+}
+
+.SpaceTile--SpaceAvatar {
+  align-self: center;
+  width: 10em;
+  margin-right: 1em;
+  img {
+    width: 100%;
+    border-radius: .5em;
+  }
+}

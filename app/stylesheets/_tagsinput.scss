@@ -1,0 +1,96 @@
+.SFU-tagsinput-wrapper {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.SFU-tagsinput {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 5px;
+  overflow-y: auto;
+  border-radius: 3px;
+}
+
+.SFU-tagsinput-tag {
+  display: block;
+  background: $ic-color-success;
+  color: #fff;
+  font-size: 14px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  float: left;
+  padding: 8px 12px 8px 5px;
+  margin-right: 5px;
+  text-decoration: none;
+  border-radius: 2px;
+  border: 1px solid $ic-color-success;
+  span {
+    padding: 5px;
+  }
+}
+
+.SFU-tagsinput-validating {
+  background: #FFFACD !important;
+}
+
+.SFU-tagsinput-invalid {
+  background: #a03536 !important;
+  color: #fff !important;
+  border-color: #ad393a;
+}
+
+.SFU-tagsinput-remove {
+  font-weight: normal;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.SFU-tagsinput-remove:before {
+  content: " x";
+}
+
+input.SFU-tagsinput-input {
+  width: 20%; height:auto;
+  display: block;
+  margin: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+
+  // Establish the basic styles for Canvas text-type inputs
+  transition: all 0.2s ease-out;
+  border: 1px solid #ccc;
+  border-width: 1px;
+  border-style: solid;
+  outline-color: transparent;
+  outline-offset: -$ic-sp;
+  background: $ic-color-light;
+  padding: 8px 12px;
+  -webkit-appearance: none;
+
+  @if $use_high_contrast {
+    outline-style: dotted;
+    outline-width: 1px;
+  }
+  @else {
+    outline-style: solid;
+    outline-width: $ic-sp;
+  }
+
+  // Focus state
+  &:focus {
+    @if $use_high_contrast {
+      outline-width: 1px;
+      outline-offset: -3px;
+      outline-color: $ic-color-dark;
+    }
+    @else {
+      outline-width: 2px;
+      outline-offset: -2px;
+    }
+  }
+}

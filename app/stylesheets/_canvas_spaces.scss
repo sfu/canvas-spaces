@@ -1,0 +1,42 @@
+#main {
+  max-width: none;
+}
+
+.canvas_spaces {
+  padding: 25px 35px 55px 35px;
+
+  h1 {
+    margin-top: 0;
+  }
+
+  fieldset legend {
+    font-size: 1.25em;
+  }
+
+  .ic-Form-actions button {
+    margin-left: 5px;
+  }
+
+  .header-bar {
+    padding: 0;
+  }
+
+  .SpaceList {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+
+    a:hover {
+      text-decoration: none;
+    }
+    a:hover h1 {
+      text-decoration: underline;
+    }
+  }
+}
+
+@import 'tagsinput';
+@import 'space_tile';
+@import 'load_more_dingus';

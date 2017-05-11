@@ -1,7 +1,8 @@
-<% js_bundle :canvas_spaces %>
-<% css_bundle :canvas_spaces %>
+<%
+  content_for :page_title, "Canvas Spaces"
+  css_bundle :spaces, :plugin => :canvas_spaces
+%>
 
-<% content_for :page_title do %>
-  Canvas Spaces
-<% end %>
 <div id="CanvasSpacesApp" class="canvas_spaces"></div>
+
+<% js_bundle :spaces, :plugin => :canvas_spaces %>
