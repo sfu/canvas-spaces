@@ -13,7 +13,6 @@ const App = () => (
         <Route path="/create" component={CreateSpace} />
         <Route component={NotFound} />
       </Switch>
-
     </div>
   </Router>
 )
