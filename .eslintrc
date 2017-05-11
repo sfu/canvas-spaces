@@ -1,0 +1,38 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "globals": {
+    "$": true
+    },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "rules": {
+    "no-console": ["error", { allow: ["warn", "error"] }],
+    "space-before-function-paren": [ 2, "never" ],
+    "semi": [2, "never"],
+    "comma-dangle": [2, "never"],
+    "react/jsx-uses-react": 1,
+    "react/jsx-no-undef": 2,
+    "react/jsx-wrap-multilines": 2,
+    "react/no-deprecated": 0,
+    "react/no-unescaped-entities": 0,
+    "import/no-unresolved": [ 2, { ignore: ['react', 'react-dom'] } ],
+    "jsx-a11y/no-autofocus": 0
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y"
+  ],
+  "settings": {
+    "import/resolver": "webpack",
+    "import/extensions": [".js", ".jsx"]
+    }
+}
