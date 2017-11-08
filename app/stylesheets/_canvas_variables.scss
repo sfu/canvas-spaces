@@ -10,52 +10,53 @@ $use_new_styles: false;
 // These are the new colors that we would like to start rebranding
 // all the canvas pages in. All of the app variables that denote a
 // color should use or be based off of one of these variables
-$ic-brand-primary:                  #0096db !default; // light blue
-@if $use_high_contrast { $ic-brand-primary: #0073ac; }
 
-$ic-brand-secondary:                #5b6c79 !default; // dark blue
-@if $use_new_styles { $ic-brand-secondary: #384a58; }
-@if $use_high_contrast { $ic-brand-secondary: #343c44; }
+$ic-color-success: #008a14; // green
+@if $use_high_contrast {
+  $ic-color-success: #007a12;
+}
 
-$ic-color-success:                  #008a14; // green
-@if $use_high_contrast { $ic-color-success: #007a12; }
+$ic-color-neutral: hsl(0, 0, 90%);
 
-$ic-color-neutral:                  hsl(0,0,90%);
+$ic-color-action: #ba3fa5; // magenta
+@if $use_high_contrast {
+  $ic-color-action: #a23891;
+}
 
-$ic-color-action:                   #ba3fa5; // magenta
-@if $use_high_contrast { $ic-color-action: #a23891; }
+$ic-color-danger: #ad393a; // red
+@if $use_high_contrast {
+  $ic-color-danger: #a03536;
+}
 
-$ic-color-danger:                   #ad393a; // red
-@if $use_high_contrast { $ic-color-danger: #a03536; }
+$ic-color-alert: #bc8006; // gold
+@if $use_high_contrast {
+  $ic-color-alert: #946405;
+}
 
-$ic-color-alert:                    #bc8006; // gold
-@if $use_high_contrast { $ic-color-alert: #946405; }
+$ic-color-light: #fff; // white
 
-$ic-color-light:                    #fff; // white
-
-$ic-color-dark:                     #333;
+$ic-color-dark: #333;
 
 //==================
 // Layout Variables
 //==================
-$right_side_width:          286px;
-$right_side_margin:         13px;
-$left_side_width:           175px;
-$min_main_width:            510px;
-$max_main_width:            1100px;
-$ic-sp:                     12px;
-$ic-border-radius:          $ic-sp/2;
-$spacing-width:             20px; // TODO - would be nice to phase this one out for $ic-sp
-$borderRadius:              4px;
-$contentBoxPadding:         8px;
-
+$right_side_width: 286px;
+$right_side_margin: 13px;
+$left_side_width: 175px;
+$min_main_width: 510px;
+$max_main_width: 1100px;
+$ic-sp: 12px;
+$ic-border-radius: $ic-sp/2;
+$spacing-width: 20px; // TODO - would be nice to phase this one out for $ic-sp
+$borderRadius: 4px;
+$contentBoxPadding: 8px;
 
 //=====================
 // Global border colors
 //=====================
 
-$ic-border-color:         $ic-color-neutral;
+$ic-border-color: $ic-color-neutral;
 // If it's a light border, it should be this color.
-$ic-border-light:         darken($ic-color-neutral, 6);
+$ic-border-light: darken($ic-color-neutral, 6);
 // If it's a dark border, it should be this color.
-$ic-border-dark:          darken($ic-color-neutral, 23);
+$ic-border-dark: darken($ic-color-neutral, 23);
