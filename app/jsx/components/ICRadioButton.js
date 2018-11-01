@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import createReactClass from 'create-react-class'
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 const ICRadioButton = createReactClass({
   propTypes: {
@@ -9,7 +9,7 @@ const ICRadioButton = createReactClass({
     value: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
   },
 
   render() {
@@ -27,8 +27,8 @@ const ICRadioButton = createReactClass({
           {this.props.label}
         </label>
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default ICRadioButton
+export default ICRadioButton;

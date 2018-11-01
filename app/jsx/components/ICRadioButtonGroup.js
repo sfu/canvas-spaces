@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import createReactClass from 'create-react-class'
-import ICRadioButton from './ICRadioButton'
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import ICRadioButton from './ICRadioButton';
 
 const ICRadioButtonGroup = createReactClass({
   propTypes: {
@@ -14,29 +14,29 @@ const ICRadioButtonGroup = createReactClass({
       if (props.checked && props.defaultChecked) {
         return new Error(
           `both 'checked' and 'defaultChecked' are present on ${componentName}.`
-        )
+        );
       }
-    }
+    },
   },
 
   getRadioButtons() {
-    return this.getDOMNode().querySelectorAll('input[type="radio"]')
+    return this.getDOMNode().querySelectorAll('input[type="radio"]');
   },
 
   getChecked() {
-    const radioButtons = this.getRadioButtons()
+    const radioButtons = this.getRadioButtons();
     for (var i = 0; i < radioButtons.length; i++) {
       if (radioButtons[i].checked) {
-        return radioButtons[i]
+        return radioButtons[i];
       }
     }
   },
 
   renderRadioButtons() {
     return this.props.buttonItems.map((buttonItem, index) => {
-      const id = `${this.props.name}-${index}`
+      const id = `${this.props.name}-${index}`;
 
-      const checked = this.props.checked === buttonItem.value ? true : false
+      const checked = this.props.checked === buttonItem.value ? true : false;
       return (
         <ICRadioButton
           label={buttonItem.label}
@@ -47,8 +47,8 @@ const ICRadioButtonGroup = createReactClass({
           checked={checked}
           onChange={this.props.onChange}
         />
-      )
-    })
+      );
+    });
   },
 
   render() {
@@ -56,8 +56,8 @@ const ICRadioButtonGroup = createReactClass({
       <div ref={this.name} className="ic-Form-control ic-Form-control--radio">
         {this.renderRadioButtons()}
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default ICRadioButtonGroup
+export default ICRadioButtonGroup;

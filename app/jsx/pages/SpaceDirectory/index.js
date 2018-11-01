@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import createReactClass from 'create-react-class'
+import createReactClass from 'create-react-class';
 import Router from 'react-router';
 import CommonHeader from 'Shared/CommonHeader';
 import SpaceStore from './stores';
@@ -13,7 +13,6 @@ import ErrorBox from 'Shared/ErrorBox';
 const { Link } = Router;
 
 const MySpaces = createReactClass({
-
   getInitialState() {
     return SpaceStore.getState();
   },
@@ -50,7 +49,10 @@ const MySpaces = createReactClass({
           </div>
         </div>
       );
-      if (this.state.loading || (this.state.links && this.state.links.hasOwnProperty('next'))) {
+      if (
+        this.state.loading ||
+        (this.state.links && this.state.links.hasOwnProperty('next'))
+      ) {
         return dingus;
       } else {
         return null;
@@ -63,15 +65,23 @@ const MySpaces = createReactClass({
           <div className="content-box">
             <div className="grid-row center-md">
               <div className="col-xs-12 col-md-8">
-                <img style={{width: '25%', margin: 'auto'}} src="/images/sadpanda.svg" alt="The panda is sad because it couldn't find the page you wanted" />
-                <p style={{marginTop: '2em'}}>There do not appear to be any public Canvas Spaces.</p><p>Why not <Link to="create">create a new space</Link> now?</p>
+                <img
+                  style={{ width: '25%', margin: 'auto' }}
+                  src="/images/sadpanda.svg"
+                  alt="The panda is sad because it couldn't find the page you wanted"
+                />
+                <p style={{ marginTop: '2em' }}>
+                  There do not appear to be any public Canvas Spaces.
+                </p>
+                <p>
+                  Why not <Link to="create">create a new space</Link> now?
+                </p>
               </div>
             </div>
           </div>
-
         );
       }
-      const tiles = this.state.spaces.map((space) => {
+      const tiles = this.state.spaces.map(space => {
         return (
           <SpaceTile
             key={`space_${space.id}`}
@@ -81,12 +91,7 @@ const MySpaces = createReactClass({
           />
         );
       });
-      return (
-        <div className="SpaceList">
-          {tiles}
-        </div>
-      );
-
+      return <div className="SpaceList">{tiles}</div>;
     };
 
     return (
@@ -98,8 +103,7 @@ const MySpaces = createReactClass({
         {load_more_dingus()}
       </div>
     );
-  }
-
+  },
 });
 
 export default MySpaces;

@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import createReactClass from 'create-react-class'
-const controlClass = 'ic-Form-control'
-const labelClass = 'ic-Label'
-const inputClass = 'ic-Input'
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+const controlClass = 'ic-Form-control';
+const labelClass = 'ic-Label';
+const inputClass = 'ic-Input';
 
 const ICInputField = createReactClass({
   propTypes: {
@@ -16,17 +16,17 @@ const ICInputField = createReactClass({
     error: PropTypes.string,
     onChange: PropTypes.func,
     onBlur: PropTypes.func,
-    autoFocus: PropTypes.bool
+    autoFocus: PropTypes.bool,
   },
 
   getDefaultProps() {
     return {
       onBlur: () => {},
-      autoFocus: false
-    }
+      autoFocus: false,
+    };
   },
   getValue() {
-    return this.getDOMNode().querySelector('input[type="text"]').value
+    return this.getDOMNode().querySelector('input[type="text"]').value;
   },
 
   error() {
@@ -38,28 +38,28 @@ const ICInputField = createReactClass({
             {this.props.error}
           </div>
         </div>
-      )
+      );
     } else {
-      return null
+      return null;
     }
   },
 
   render() {
     const labelClasses = this.props.labelClasses
       ? `${labelClass} ${this.props.labelClasses}`
-      : labelClass
+      : labelClass;
     const controlClasses = this.props.error
       ? `${controlClass} ${controlClass}--has-error`
-      : controlClass
+      : controlClass;
 
     const inputClasses = () => {
       const baseClass = this.props.error
         ? `${inputClass} ${inputClass}--has-error`
-        : inputClass
+        : inputClass;
       return this.props.inputClasses
         ? `${baseClass} ${this.props.inputClasses}`
-        : baseClass
-    }
+        : baseClass;
+    };
 
     return (
       <div className={controlClasses}>
@@ -78,8 +78,8 @@ const ICInputField = createReactClass({
         />
         {this.error()}
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default ICInputField
+export default ICInputField;

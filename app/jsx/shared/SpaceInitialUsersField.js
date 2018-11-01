@@ -1,53 +1,53 @@
-import React from 'react/addons'
-import createReactClass from 'create-react-class'
-import PropTypes from 'prop-types'
-import TagsInput from 'react-tagsinput'
-import api from '../utils/api'
-import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
-import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
-import ReactTagsInputHelpersMixin from '../mixins/ReactTagsInputHelpersMixin'
+import React from 'react/addons';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import TagsInput from 'react-tagsinput';
+import api from '../utils/api';
+import HandleErrorsMixin from '../mixins/HandleErrorsMixin';
+import GetValueLinkMixin from '../mixins/GetValueLinkMixin';
+import ReactTagsInputHelpersMixin from '../mixins/ReactTagsInputHelpersMixin';
 
 const SpaceInitialUsersField = createReactClass({
   mixins: [
     React.addons.LinkedStateMixin,
     HandleErrorsMixin,
     GetValueLinkMixin,
-    ReactTagsInputHelpersMixin
+    ReactTagsInputHelpersMixin,
   ],
 
   propTypes: {
     valueLink: PropTypes.shape({
       value: PropTypes.array.isRequired,
-      requestChange: PropTypes.func.isRequired
+      requestChange: PropTypes.func.isRequired,
     }).isRequired,
     errorLink: PropTypes.shape({
       value: PropTypes.string.isRequired,
-      requestChange: PropTypes.func.isRequired
-    }).isRequired
+      requestChange: PropTypes.func.isRequired,
+    }).isRequired,
   },
 
   getInitialState() {
     return {
-      tags: []
-    }
+      tags: [],
+    };
   },
 
   validate(tag, done) {
-    const unique = this.state.tags.indexOf(tag) === -1
+    const unique = this.state.tags.indexOf(tag) === -1;
 
     if (!unique) {
-      this.setError(`"${tag}" already exists`)
-      return done(false)
+      this.setError(`"${tag}" already exists`);
+      return done(false);
     }
 
     if (tag !== '') {
       api.validate_field('user', tag, result => {
-        const valid_user = result.valid_user
+        const valid_user = result.valid_user;
         if (!valid_user) {
-          this.setError(`"${tag}" is not a valid Canvas user`)
+          this.setError(`"${tag}" is not a valid Canvas user`);
         }
-        done(valid_user)
-      })
+        done(valid_user);
+      });
     }
   },
 
@@ -76,8 +76,8 @@ const SpaceInitialUsersField = createReactClass({
         </div>
         {this.renderError()}
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default SpaceInitialUsersField
+export default SpaceInitialUsersField;

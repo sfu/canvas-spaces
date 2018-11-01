@@ -1,11 +1,11 @@
-'use strict'
+'use strict';
 
-import React from 'react'
-import createReactClass from 'create-react-class'
-import PropTypes from 'prop-types'
-import ICInputField from '../components/ICInputField'
-import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
-import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
+import React from 'react';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import ICInputField from '../components/ICInputField';
+import HandleErrorsMixin from '../mixins/HandleErrorsMixin';
+import GetValueLinkMixin from '../mixins/GetValueLinkMixin';
 
 const SpaceMaillistField = createReactClass({
   mixins: [HandleErrorsMixin, GetValueLinkMixin],
@@ -15,53 +15,53 @@ const SpaceMaillistField = createReactClass({
     validate: PropTypes.func,
     valueLink: PropTypes.shape({
       value: PropTypes.string,
-      requestChange: PropTypes.func.isRequired
+      requestChange: PropTypes.func.isRequired,
     }).isRequired,
     errorLink: PropTypes.shape({
       value: PropTypes.string,
-      requestChange: PropTypes.func.isRequired
-    }).isRequired
+      requestChange: PropTypes.func.isRequired,
+    }).isRequired,
   },
 
   getDirtyLink(props) {
     return (
       props.dirtyLink || {
         value: props.value,
-        requestChange: props.onChange
+        requestChange: props.onChange,
       }
-    )
+    );
   },
 
   getDefaultProps() {
     return {
       value: '',
       error: '',
-      onChange: () => { },
+      onChange: () => {},
       valueLink: null,
       errorLink: null,
-      validate: () => { }
-    }
+      validate: () => {},
+    };
   },
 
   handleChange(event) {
-    const maillist = event.target.value
-    this.clearError()
-    this.getDirtyLink(this.props).requestChange(maillist === '' ? false : true)
-    this.getValueLink(this.props).requestChange(maillist)
+    const maillist = event.target.value;
+    this.clearError();
+    this.getDirtyLink(this.props).requestChange(maillist === '' ? false : true);
+    this.getValueLink(this.props).requestChange(maillist);
   },
 
   validate(event) {
-    const maillist = event.target.value.trim().replace('@sfu.ca', '')
+    const maillist = event.target.value.trim().replace('@sfu.ca', '');
 
     if (!maillist || maillist === '') {
-      return
+      return;
     }
 
     this.props.validate(maillist, err => {
       if (err) {
-        this.setError(err)
+        this.setError(err);
       }
-    })
+    });
   },
 
   render() {
@@ -76,8 +76,8 @@ const SpaceMaillistField = createReactClass({
         error={this.getErrorLink(this.props).value}
         onBlur={this.validate}
       />
-    )
-  }
-})
+    );
+  },
+});
 
-export default SpaceMaillistField
+export default SpaceMaillistField;

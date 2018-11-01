@@ -1,15 +1,15 @@
-import React from 'react'
-import createReactClass from 'create-react-class'
-import PropTypes from 'prop-types'
-import Modal from 'react-modal'
-import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin'
-import api from '../../utils/api'
-import SpaceNameField from '../../shared/SpaceNameField'
-import SpaceDescriptionField from '../../shared/SpaceDescriptionField'
-import SpaceJoinLevelField from '../../shared/SpaceJoinLevelField'
-import SpaceMaillistField from '../../shared/SpaceMaillistField'
-import SpaceLeaderField from '../../shared/SpaceLeaderField'
-import SpaceActions from '../../pages/MySpaces/actions'
+import React from 'react';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import Modal from 'react-modal';
+import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin';
+import api from '../../utils/api';
+import SpaceNameField from '../../shared/SpaceNameField';
+import SpaceDescriptionField from '../../shared/SpaceDescriptionField';
+import SpaceJoinLevelField from '../../shared/SpaceJoinLevelField';
+import SpaceMaillistField from '../../shared/SpaceMaillistField';
+import SpaceLeaderField from '../../shared/SpaceLeaderField';
+import SpaceActions from '../../pages/MySpaces/actions';
 
 const initialErrorState = {
   name: '',
@@ -17,10 +17,10 @@ const initialErrorState = {
   join_type: '',
   members: '',
   maillist: '',
-  leader_id: ''
-}
+  leader_id: '',
+};
 
-Modal.setAppElement(document.getElementById('CanvasSpacesApp'))
+Modal.setAppElement(document.getElementById('CanvasSpacesApp'));
 
 const SpaceSettingsModal = createReactClass({
   linkState: DeepLinkedStateMixin,
@@ -29,7 +29,7 @@ const SpaceSettingsModal = createReactClass({
     modalIsOpen: PropTypes.bool.isRequired,
     onRequestClose: PropTypes.func.isRequired,
     className: PropTypes.string,
-    overlayClassName: PropTypes.string
+    overlayClassName: PropTypes.string,
   },
 
   getInitialState() {
@@ -42,9 +42,9 @@ const SpaceSettingsModal = createReactClass({
       delete_button: {
         show_field: false,
         deletable: false,
-        disabled: false
-      }
-    }
+        disabled: false,
+      },
+    };
   },
 
   componentWillReceiveProps(nextProps) {
@@ -54,36 +54,36 @@ const SpaceSettingsModal = createReactClass({
       delete_button: {
         show_field: false,
         deletable: false,
-        disabled: false
-      }
-    })
+        disabled: false,
+      },
+    });
   },
 
   disableSubmit() {
     const emptyFields =
-      this.state.space.name === '' || this.state.space.description === ''
+      this.state.space.name === '' || this.state.space.description === '';
     const hasErrors =
-      JSON.stringify(initialErrorState) !== JSON.stringify(this.state.errors)
+      JSON.stringify(initialErrorState) !== JSON.stringify(this.state.errors);
     return (
       emptyFields ||
       hasErrors ||
       this.state.maillistFieldDirty ||
       this.state.submitButtonState === 'saving'
-    )
+    );
   },
 
   handleSubmit() {
     this.setState({
-      submitButtonState: 'saving'
-    })
+      submitButtonState: 'saving',
+    });
     // do the validations and whatnot, and if everything is all good, pass it up the chain
     // ...validate...
     SpaceActions.updateSpace(this.state.space, () => {
       this.setState({
-        submitButtonState: 'submit'
-      })
-      this.props.onRequestClose()
-    })
+        submitButtonState: 'submit',
+      });
+      this.props.onRequestClose();
+    });
   },
 
   deleteSpace() {
@@ -92,68 +92,68 @@ const SpaceSettingsModal = createReactClass({
         delete_button: {
           show_field: true,
           deletable: false,
-          disabled: true
-        }
-      })
-      return
+          disabled: true,
+        },
+      });
+      return;
     }
 
     if (this.state.delete_button.deletable) {
-      SpaceActions.deleteSpace(this.state.space, () => { })
+      SpaceActions.deleteSpace(this.state.space, () => {});
     }
   },
 
   validateSpaceName(space_name, cb) {
     // // validate name against api
     if (this.state.space.name.toLowerCase() === space_name.toLowerCase()) {
-      return
+      return;
     }
     api.validate_field('name', space_name, result => {
       if (!result.valid_group_name) {
-        cb(result.message)
+        cb(result.message);
       }
-    })
+    });
   },
 
   validateMaillist(maillist, cb) {
-    this.setState({ maillistFieldDirty: true })
+    this.setState({ maillistFieldDirty: true });
     api.validate_field('maillist', maillist, result => {
       if (!result.valid_maillist) {
-        cb(result.reason)
+        cb(result.reason);
       } else {
-        this.setState({ maillistFieldDirty: false })
+        this.setState({ maillistFieldDirty: false });
       }
-    })
+    });
   },
 
   validateDeleteSpace(ev) {
-    let delete_state
+    let delete_state;
     if (ev.target.value === this.state.space.name) {
       delete_state = {
         delete_button: {
           show_field: true,
           deletable: true,
-          disabled: false
-        }
-      }
+          disabled: false,
+        },
+      };
     } else {
       delete_state = {
         delete_button: {
           show_field: true,
           deletable: false,
-          disabled: true
-        }
-      }
+          disabled: true,
+        },
+      };
     }
-    this.setState(delete_state)
+    this.setState(delete_state);
   },
 
   render() {
-    const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {}
+    const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
 
     const join_type_field = () => {
-      return serverConfig.public_spaces_enabled === 'yes'
-        ? <fieldset>
+      return serverConfig.public_spaces_enabled === 'yes' ? (
+        <fieldset>
           <legend>Privacy Options</legend>
 
           <SpaceJoinLevelField
@@ -161,12 +161,14 @@ const SpaceSettingsModal = createReactClass({
             valueLink={this.linkState('space.join_type')}
           />
         </fieldset>
-        : ''
-    }
+      ) : (
+        ''
+      );
+    };
 
     const delete_space_field = () => {
-      return this.state.delete_button.show_field
-        ? <div style={{ textAlign: 'center' }}>
+      return this.state.delete_button.show_field ? (
+        <div style={{ textAlign: 'center' }}>
           <input
             type="text"
             className="ic-Input"
@@ -175,22 +177,27 @@ const SpaceSettingsModal = createReactClass({
             onChange={this.validateDeleteSpace}
           />
         </div>
-        : ''
-    }
+      ) : (
+        ''
+      );
+    };
 
-    const submitButtonContent = this.state.submitButtonState === 'submit'
-      ? 'Save Changes'
-      : (<div>
-        <div
-          style={{ display: 'inline' }}
-          className="LoadMoreDingus--LoadingIndicator"
-        >
-          <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-          <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-          <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+    const submitButtonContent =
+      this.state.submitButtonState === 'submit' ? (
+        'Save Changes'
+      ) : (
+        <div>
+          <div
+            style={{ display: 'inline' }}
+            className="LoadMoreDingus--LoadingIndicator"
+          >
+            <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+            <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+            <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+          </div>
+          <span style={{ marginLeft: '1em' }}>Saving Changes</span>
         </div>
-        <span style={{ marginLeft: '1em' }}>Saving Changes</span>
-      </div>)
+      );
 
     return (
       <Modal
@@ -200,9 +207,7 @@ const SpaceSettingsModal = createReactClass({
         overlayClassName={this.props.overlayClassName}
         contentLabel={this.props.contentLabel}
       >
-
         <div className="ReactModal__Layout">
-
           <div className="ReactModal__InnerSection ReactModal__Header">
             <div className="ReactModal__Header-Title">
               <h4>Edit Space Settings</h4>
@@ -221,7 +226,6 @@ const SpaceSettingsModal = createReactClass({
 
           <div className="ReactModal__InnerSection ReactModal__Body">
             <div className="ic-Form-group ic-Form-group--horizontal">
-
               <fieldset>
                 <legend>Name and Description</legend>
                 <SpaceNameField
@@ -250,11 +254,14 @@ const SpaceSettingsModal = createReactClass({
               <fieldset>
                 <legend>Space Leader</legend>
                 <p>
-                  The Space Leader is the administrator of a Space. Only the Space Leader can modify a Space's settings. There can be only one Space Leader at a time.
+                  The Space Leader is the administrator of a Space. Only the
+                  Space Leader can modify a Space's settings. There can be only
+                  one Space Leader at a time.
                 </p>
                 <p>
                   <strong>
-                    If you reassign leadership of this Space to another member, you will no longer be able to modify this Space's settings.
+                    If you reassign leadership of this Space to another member,
+                    you will no longer be able to modify this Space's settings.
                   </strong>
                 </p>
                 <SpaceLeaderField
@@ -266,7 +273,6 @@ const SpaceSettingsModal = createReactClass({
               </fieldset>
 
               {join_type_field()}
-
             </div>
 
             <hr />
@@ -279,7 +285,6 @@ const SpaceSettingsModal = createReactClass({
             >
               Delete Space
             </button>
-
           </div>
 
           <div className="ReactModal__InnerSection ReactModal__Footer">
@@ -301,12 +306,10 @@ const SpaceSettingsModal = createReactClass({
               </button>
             </div>
           </div>
-
         </div>
-
       </Modal>
-    )
-  }
-})
+    );
+  },
+});
 
-export default SpaceSettingsModal
+export default SpaceSettingsModal;

@@ -8,8 +8,10 @@ import DefaultAvatars from 'Shared/DefaultAvatars';
 let defaultAvatars = new DefaultAvatars();
 
 const errors = {
-  default: 'An unknown error occured while trying to save your changes. Please try again later.',
-  unauthorized: 'You are not authoized to modify this Space. Only the Space Leader can make changes.'
+  default:
+    'An unknown error occured while trying to save your changes. Please try again later.',
+  unauthorized:
+    'You are not authoized to modify this Space. Only the Space Leader can make changes.',
 };
 
 class SpaceStore {
@@ -23,13 +25,13 @@ class SpaceStore {
       handleUpdateSpaces: SpaceActions.UPDATE_SPACES,
       handleUpdateSpace: SpaceActions.UPDATE_SPACE,
       handleFetchSpaces: SpaceActions.FETCH_SPACES,
-      handleSpacesFailed: SpaceActions.SPACES_FAILED
+      handleSpacesFailed: SpaceActions.SPACES_FAILED,
     });
   }
 
   handleUpdateSpaces(payload) {
     this.loading = false;
-    payload.spaces.forEach((space) => {
+    payload.spaces.forEach(space => {
       if (!space.avatar_url) {
         space.avatar_url = defaultAvatars.next();
       }
@@ -40,7 +42,9 @@ class SpaceStore {
 
   handleUpdateSpace(payload) {
     // find the space in this.spaces, and replace it?
-    const index = this.spaces.findIndex(function(e) { return e.id === payload.id; });
+    const index = this.spaces.findIndex(function(e) {
+      return e.id === payload.id;
+    });
     if (!payload.avatar_url) {
       payload.avatar_url = defaultAvatars.next();
     }
@@ -53,7 +57,9 @@ class SpaceStore {
 
   handleSpacesFailed(error) {
     const errorKey = error.status;
-    this.error = errors.hasOwnProperty(errorKey) ? errors[errorKey] : errors.default;
+    this.error = errors.hasOwnProperty(errorKey)
+      ? errors[errorKey]
+      : errors.default;
     window.setTimeout(() => {
       this.setState({ error: null });
     }, 5000);

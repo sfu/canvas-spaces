@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import createReactClass from 'create-react-class'
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
-const controlClass = 'ic-Form-control'
-const labelClass = 'ic-Label'
-const inputClass = 'ic-Input'
+const controlClass = 'ic-Form-control';
+const labelClass = 'ic-Label';
+const inputClass = 'ic-Input';
 
 const ICSelect = createReactClass({
   propTypes: {
@@ -19,24 +19,28 @@ const ICSelect = createReactClass({
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     autoFocus: PropTypes.string,
-    defaultValue: PropTypes.string
+    defaultValue: PropTypes.string,
   },
 
   getDefaultProps() {
     return {
-      onBlur: () => { },
+      onBlur: () => {},
       autoFocus: false,
-      options: []
-    }
+      options: [],
+    };
   },
   getValue() {
-    return this.getDOMNode().querySelector('input[type="text"]').value
+    return this.getDOMNode().querySelector('input[type="text"]').value;
   },
 
   options() {
     return this.props.options.map((o, i) => {
-      return <option key={i} value={o.value}>{o.name}</option>
-    })
+      return (
+        <option key={i} value={o.value}>
+          {o.name}
+        </option>
+      );
+    });
   },
 
   error() {
@@ -48,28 +52,28 @@ const ICSelect = createReactClass({
             {this.props.error}
           </div>
         </div>
-      )
+      );
     } else {
-      return null
+      return null;
     }
   },
 
   render() {
     const labelClasses = this.props.labelClasses
       ? `${labelClass} ${this.props.labelClasses}`
-      : labelClass
+      : labelClass;
     const controlClasses = this.props.error
       ? `${controlClass} ${controlClass}--has-error`
-      : controlClass
+      : controlClass;
 
     const inputClasses = () => {
       const baseClass = this.props.error
         ? `${inputClass} ${inputClass}--has-error`
-        : inputClass
+        : inputClass;
       return this.props.inputClasses
         ? `${baseClass} ${this.props.inputClasses}`
-        : baseClass
-    }
+        : baseClass;
+    };
 
     return (
       <div className={controlClasses}>
@@ -89,8 +93,8 @@ const ICSelect = createReactClass({
         </select>
         {this.error()}
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default ICSelect
+export default ICSelect;

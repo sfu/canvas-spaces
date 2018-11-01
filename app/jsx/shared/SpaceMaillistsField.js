@@ -1,62 +1,64 @@
-'use strict'
+'use strict';
 
-import React from 'react'
-import PropTypes from 'prop-types'
-import createReactClass from 'create-react-class'
-import TagsInput from 'react-tagsinput'
-import api from '../utils/api'
-import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
-import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
-import ReactTagsInputHelpersMixin from '../mixins/ReactTagsInputHelpersMixin'
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
+import TagsInput from 'react-tagsinput';
+import api from '../utils/api';
+import HandleErrorsMixin from '../mixins/HandleErrorsMixin';
+import GetValueLinkMixin from '../mixins/GetValueLinkMixin';
+import ReactTagsInputHelpersMixin from '../mixins/ReactTagsInputHelpersMixin';
 
 const SpaceMaillistField = createReactClass({
   mixins: [
     React.addons.LinkedStateMixin,
     HandleErrorsMixin,
     GetValueLinkMixin,
-    ReactTagsInputHelpersMixin
+    ReactTagsInputHelpersMixin,
   ],
 
   propTypes: {
     valueLink: PropTypes.shape({
       value: PropTypes.array.isRequired,
-      requestChange: PropTypes.func.isRequired
+      requestChange: PropTypes.func.isRequired,
     }).isRequired,
     errorLink: PropTypes.shape({
       value: PropTypes.string.isRequired,
-      requestChange: PropTypes.func.isRequired
-    }).isRequired
+      requestChange: PropTypes.func.isRequired,
+    }).isRequired,
   },
 
   getInitialState() {
     return {
-      tags: []
-    }
+      tags: [],
+    };
   },
 
   validate(tag, done) {
-    const unique = this.state.tags.indexOf(tag) === -1
+    const unique = this.state.tags.indexOf(tag) === -1;
 
     if (!unique) {
-      this.setError(`"${tag}" already exists`)
-      return done(false)
+      this.setError(`"${tag}" already exists`);
+      return done(false);
     }
 
     if (tag !== '') {
       api.validate_field('maillist', tag, result => {
-        const valid = result.valid_maillist
+        const valid = result.valid_maillist;
         if (!valid) {
-          this.setError(`"${tag}" is not a valid maillist`)
+          this.setError(`"${tag}" is not a valid maillist`);
         }
-        done(valid)
-      })
+        done(valid);
+      });
     }
   },
 
   render() {
     return (
       <div onClick={this.focusInput} className={this.controlClasses()}>
-        <label htmlFor="space_maillists" className="ic-Label">Maillists</label>
+        <label htmlFor="space_maillists" className="ic-Label">
+          Maillists
+        </label>
         <div className="SFU-tagsinput-wrapper">
           <TagsInput
             name="space_maillists"
@@ -76,8 +78,8 @@ const SpaceMaillistField = createReactClass({
         </div>
         {this.renderError()}
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default SpaceMaillistField
+export default SpaceMaillistField;

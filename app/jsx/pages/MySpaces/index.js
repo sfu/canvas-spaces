@@ -1,37 +1,37 @@
-import React from 'react'
-import createReactClass from 'create-react-class'
-import { Link } from 'react-router-dom'
-import CommonHeader from '../../shared/CommonHeader'
-import SpaceStore from './stores'
-import SpaceActions from './actions'
-import SpaceTile from '../../shared/SpaceTile'
-import LoadMoreDingus from '../../shared/LoadMoreDingus'
-import ErrorBox from '../../shared/ErrorBox'
+import React from 'react';
+import createReactClass from 'create-react-class';
+import { Link } from 'react-router-dom';
+import CommonHeader from '../../shared/CommonHeader';
+import SpaceStore from './stores';
+import SpaceActions from './actions';
+import SpaceTile from '../../shared/SpaceTile';
+import LoadMoreDingus from '../../shared/LoadMoreDingus';
+import ErrorBox from '../../shared/ErrorBox';
 
 const MySpaces = createReactClass({
   getInitialState() {
-    return SpaceStore.getState()
+    return SpaceStore.getState();
   },
 
   componentDidMount() {
-    SpaceStore.listen(this.onChange)
-    SpaceActions.fetchSpaces()
+    SpaceStore.listen(this.onChange);
+    SpaceActions.fetchSpaces();
   },
 
   componentWillUnmount() {
-    SpaceStore.unlisten(this.onChange)
+    SpaceStore.unlisten(this.onChange);
   },
 
   onChange(state) {
-    this.setState(state)
+    this.setState(state);
   },
 
   loadMore() {
-    SpaceActions.fetchSpaces(this.state.links.next)
+    SpaceActions.fetchSpaces(this.state.links.next);
   },
 
   render() {
-    const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {}
+    const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
     const load_more_dingus = () => {
       const dingus = (
         <div className="content-box">
@@ -45,16 +45,16 @@ const MySpaces = createReactClass({
             </div>
           </div>
         </div>
-      )
+      );
       if (
         this.state.loading ||
         (this.state.links && this.state.links.hasOwnProperty('next'))
       ) {
-        return dingus
+        return dingus;
       } else {
-        return null
+        return null;
       }
-    }
+    };
 
     const spaceTiles = () => {
       if (this.state.spaces.length === 0 && !this.state.loading) {
@@ -70,11 +70,13 @@ const MySpaces = createReactClass({
                 <p style={{ marginTop: '2em' }}>
                   You don't appear to be a member of any Canvas Spaces.
                 </p>
-                <p>Why not <Link to="/create">create a new space</Link> now?</p>
+                <p>
+                  Why not <Link to="/create">create a new space</Link> now?
+                </p>
               </div>
             </div>
           </div>
-        )
+        );
       }
       const tiles = this.state.spaces.map(space => {
         return (
@@ -85,14 +87,10 @@ const MySpaces = createReactClass({
             context="mine"
             serverConfig={serverConfig}
           />
-        )
-      })
-      return (
-        <div className="SpaceList">
-          {tiles}
-        </div>
-      )
-    }
+        );
+      });
+      return <div className="SpaceList">{tiles}</div>;
+    };
 
     return (
       <div>
@@ -102,8 +100,8 @@ const MySpaces = createReactClass({
         {spaceTiles()}
         {load_more_dingus()}
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default MySpaces
+export default MySpaces;

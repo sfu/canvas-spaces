@@ -1,9 +1,9 @@
-import React from 'react'
-import createReactClass from 'create-react-class'
-import PropTypes from 'prop-types'
-import ICSelect from '../components/ICSelect'
-import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
-import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
+import React from 'react';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import ICSelect from '../components/ICSelect';
+import HandleErrorsMixin from '../mixins/HandleErrorsMixin';
+import GetValueLinkMixin from '../mixins/GetValueLinkMixin';
 
 const SpaceLeaderField = createReactClass({
   mixins: [HandleErrorsMixin, GetValueLinkMixin],
@@ -13,34 +13,34 @@ const SpaceLeaderField = createReactClass({
     users: PropTypes.array.isRequired,
     valueLink: PropTypes.shape({
       value: PropTypes.number,
-      requestChange: PropTypes.func.isRequired
+      requestChange: PropTypes.func.isRequired,
     }).isRequired,
     errorLink: PropTypes.shape({
       value: PropTypes.string,
-      requestChange: PropTypes.func.isRequired
-    }).isRequired
+      requestChange: PropTypes.func.isRequired,
+    }).isRequired,
   },
 
   getDefaultProps() {
     return {
       value: '',
       error: '',
-      onChange: () => { },
+      onChange: () => {},
       valueLink: null,
-      errorLink: null
-    }
+      errorLink: null,
+    };
   },
 
   handleChange(event) {
-    const space_description = event.target.value
-    this.clearError()
-    this.getValueLink(this.props).requestChange(space_description)
+    const space_description = event.target.value;
+    this.clearError();
+    this.getValueLink(this.props).requestChange(space_description);
   },
 
   render() {
     const options = this.props.users.map(user => {
-      return { value: user.id, name: user.name }
-    })
+      return { value: user.id, name: user.name };
+    });
     return (
       <ICSelect
         ref="leader_id"
@@ -52,8 +52,8 @@ const SpaceLeaderField = createReactClass({
         onBlur={this.validate}
         options={options}
       />
-    )
-  }
-})
+    );
+  },
+});
 
-export default SpaceLeaderField
+export default SpaceLeaderField;

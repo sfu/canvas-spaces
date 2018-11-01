@@ -1,21 +1,21 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import createReactClass from 'create-react-class'
+import React from 'react';
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
 const LoadMoreDingus = createReactClass({
   propTypes: {
     title: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
   },
 
   getDefaultProps() {
     return {
       title: 'Load More',
-      onClick: () => { },
-      loading: false
-    }
+      onClick: () => {},
+      loading: false,
+    };
   },
 
   render() {
@@ -25,11 +25,11 @@ const LoadMoreDingus = createReactClass({
         <div className="LoadMoreDingus--LoadingIndicator-bounce" />
         <div className="LoadMoreDingus--LoadingIndicator-bounce" />
       </div>
-    )
+    );
 
-    const static_icon = <i className="icon-more" />
+    const static_icon = <i className="icon-more" />;
 
-    const icon = this.props.loading ? loading_icon : static_icon
+    const icon = this.props.loading ? loading_icon : static_icon;
 
     return (
       <button
@@ -40,8 +40,8 @@ const LoadMoreDingus = createReactClass({
       >
         {icon}
       </button>
-    )
-  }
-})
+    );
+  },
+});
 
-export default LoadMoreDingus
+export default LoadMoreDingus;

@@ -1,62 +1,62 @@
-import alt from '../alt'
-import api from '../../../utils/api'
+import alt from '../alt';
+import api from '../../../utils/api';
 
 class SpaceActions {
   updateSpaces(spaces, links) {
-    return { spaces, links }
+    return { spaces, links };
   }
 
   fetchSpaces(next_link) {
     return dispatch => {
-      dispatch()
+      dispatch();
 
       if (!next_link) {
         // initial load
         api.get_spaces_for_user('self', (spaces, links) => {
-          this.updateSpaces(spaces, links)
-        })
+          this.updateSpaces(spaces, links);
+        });
       } else {
         // load next pages
         api.load_url(next_link, (spaces, links) => {
-          this.updateSpaces(spaces, links)
-        })
+          this.updateSpaces(spaces, links);
+        });
       }
-    }
+    };
   }
 
   updateSpace(space, cb) {
     return dispatch => {
       api.update_space(space, (err, newspace) => {
         if (err) {
-          this.spacesFailed(err)
+          this.spacesFailed(err);
         } else {
-          dispatch(newspace)
+          dispatch(newspace);
         }
         if (cb) {
-          cb()
+          cb();
         }
-      })
-    }
+      });
+    };
   }
 
   deleteSpace(space, cb) {
     return dispatch => {
       api.delete_space(space, err => {
         if (err) {
-          this.spacesFailed(err)
+          this.spacesFailed(err);
         } else {
-          dispatch(space.id)
+          dispatch(space.id);
         }
         if (cb) {
-          cb()
+          cb();
         }
-      })
-    }
+      });
+    };
   }
 
   spacesFailed(error) {
-    return error
+    return error;
   }
 }
 
-export default alt.createActions(SpaceActions)
+export default alt.createActions(SpaceActions);

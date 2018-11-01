@@ -1,43 +1,43 @@
-'use strict'
+'use strict';
 
-import React from 'react'
-import createReactClass from 'create-react-class'
-import PropTypes from 'prop-types'
+import React from 'react';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 
-import SpaceTile_Information from './SpaceTile_Information'
-import SpaceTile_Avatar from './SpaceTile_Avatar'
-import SpaceSettingsModal from '../SpaceSettingsModal'
+import SpaceTile_Information from './SpaceTile_Information';
+import SpaceTile_Avatar from './SpaceTile_Avatar';
+import SpaceSettingsModal from '../SpaceSettingsModal';
 
 const SpaceTile = createReactClass({
   propTypes: {
     space: PropTypes.object.isRequired,
     avatar: PropTypes.string,
-    context: PropTypes.string.isRequired
+    context: PropTypes.string.isRequired,
   },
 
   getInitialState() {
     return {
-      modalIsOpen: false
-    }
+      modalIsOpen: false,
+    };
   },
 
   openModal(e) {
-    e.preventDefault()
+    e.preventDefault();
     this.setState({
-      modalIsOpen: true
-    })
+      modalIsOpen: true,
+    });
   },
 
   closeModal() {
     this.setState({
-      modalIsOpen: false
-    })
+      modalIsOpen: false,
+    });
   },
 
   render() {
-    const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {}
-    const space_url = `/groups/${this.props.space.id}`
-    const space = this.props.space
+    const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
+    const space_url = `/groups/${this.props.space.id}`;
+    const space = this.props.space;
     return (
       <div>
         <div className="SpaceTile">
@@ -60,8 +60,8 @@ const SpaceTile = createReactClass({
           contentLabel={space.name}
         />
       </div>
-    )
-  }
-})
+    );
+  },
+});
 
-export default SpaceTile
+export default SpaceTile;

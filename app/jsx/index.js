@@ -1,9 +1,9 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import MySpaces from './pages/MySpaces'
-import CreateSpace from './pages/CreateSpace'
-import NotFound from './pages/NotFound'
+import MySpaces from './pages/MySpaces';
+import CreateSpace from './pages/CreateSpace';
+import NotFound from './pages/NotFound';
 
 const App = () => (
   <Router basename="/canvas_spaces">
@@ -15,6 +15,6 @@ const App = () => (
       </Switch>
     </div>
   </Router>
-)
+);
 
-export default App
+export default App;
