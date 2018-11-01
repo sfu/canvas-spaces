@@ -1,6 +1,6 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
-const { PropTypes } = React
+import PropTypes from 'prop-types'
 import ICRadioButtonGroup from '../components/ICRadioButtonGroup'
 
 const radioButtons = [
@@ -28,7 +28,7 @@ const SpaceJoinLevelField = createReactClass({
     return {
       value: '',
       error: '',
-      onChange: () => {},
+      onChange: () => { },
       valueLink: null,
       errorLink: null
     }

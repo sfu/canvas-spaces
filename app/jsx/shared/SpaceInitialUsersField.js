@@ -1,12 +1,11 @@
 import React from 'react/addons'
 import createReactClass from 'create-react-class'
+import PropTypes from 'prop-types'
 import TagsInput from 'react-tagsinput'
 import api from '../utils/api'
 import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
 import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
 import ReactTagsInputHelpersMixin from '../mixins/ReactTagsInputHelpersMixin'
-
-const { PropTypes } = React
 
 const SpaceInitialUsersField = createReactClass({
   mixins: [

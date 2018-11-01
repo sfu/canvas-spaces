@@ -1,6 +1,7 @@
 'use strict'
 
-import React, { PropTypes } from 'react/addons'
+import React from 'react'
+import PropTypes from 'prop-types'
 import createReactClass from 'create-react-class'
 import TagsInput from 'react-tagsinput'
 import api from '../utils/api'

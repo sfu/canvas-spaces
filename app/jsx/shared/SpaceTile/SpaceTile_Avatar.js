@@ -1,8 +1,8 @@
 'use strict';
 
 import React from 'react';
-const {PropTypes} = React;
 import createReactClass from 'create-react-class'
+import PropTypes from 'prop-types'
 
 const SpaceTile_Avatar = createReactClass({
   propTypes: {

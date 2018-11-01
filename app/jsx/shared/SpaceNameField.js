@@ -2,11 +2,11 @@
 
 import React from 'react'
 import createReactClass from 'create-react-class'
+import PropTypes from 'prop-types'
 import ICInputField from '../components/ICInputField'
 import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
 import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
 
-const { PropTypes } = React
 const SpaceNameField = createReactClass({
   mixins: [HandleErrorsMixin, GetValueLinkMixin],
 
@@ -27,10 +27,10 @@ const SpaceNameField = createReactClass({
     return {
       value: '',
       error: '',
-      onChange: () => {},
+      onChange: () => { },
       valueLink: null,
       errorLink: null,
-      validate: () => {},
+      validate: () => { },
       autoFocus: true
     }
   },
