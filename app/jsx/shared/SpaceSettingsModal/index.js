@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin'
 import api from '../../utils/api'
@@ -97,7 +98,7 @@ const SpaceSettingsModal = React.createClass({
     }
 
     if (this.state.delete_button.deletable) {
-      SpaceActions.deleteSpace(this.state.space, () => {})
+      SpaceActions.deleteSpace(this.state.space, () => { })
     }
   },
 
@@ -152,43 +153,43 @@ const SpaceSettingsModal = React.createClass({
     const join_type_field = () => {
       return serverConfig.public_spaces_enabled === 'yes'
         ? <fieldset>
-            <legend>Privacy Options</legend>
+          <legend>Privacy Options</legend>
 
-            <SpaceJoinLevelField
-              checked={this.state.space.join_type}
-              valueLink={this.linkState('space.join_type')}
-            />
-          </fieldset>
+          <SpaceJoinLevelField
+            checked={this.state.space.join_type}
+            valueLink={this.linkState('space.join_type')}
+          />
+        </fieldset>
         : ''
     }
 
     const delete_space_field = () => {
       return this.state.delete_button.show_field
         ? <div style={{ textAlign: 'center' }}>
-            <input
-              type="text"
-              className="ic-Input"
-              style={{ marginBottom: '1em' }}
-              placeholder="Type the name of your space to confirm deletion"
-              onChange={this.validateDeleteSpace}
-            />
-          </div>
+          <input
+            type="text"
+            className="ic-Input"
+            style={{ marginBottom: '1em' }}
+            placeholder="Type the name of your space to confirm deletion"
+            onChange={this.validateDeleteSpace}
+          />
+        </div>
         : ''
     }
 
     const submitButtonContent = this.state.submitButtonState === 'submit'
       ? 'Save Changes'
       : (<div>
-          <div
-            style={{ display: 'inline' }}
-            className="LoadMoreDingus--LoadingIndicator"
-          >
-            <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-            <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-            <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-          </div>
-          <span style={{ marginLeft: '1em' }}>Saving Changes</span>
-        </div>)
+        <div
+          style={{ display: 'inline' }}
+          className="LoadMoreDingus--LoadingIndicator"
+        >
+          <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+          <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+          <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+        </div>
+        <span style={{ marginLeft: '1em' }}>Saving Changes</span>
+      </div>)
 
     return (
       <Modal

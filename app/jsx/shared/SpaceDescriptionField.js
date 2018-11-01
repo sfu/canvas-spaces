@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import createReactClass from 'create-react-class'
 import ICInputField from '../components/ICInputField'
 import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
@@ -24,7 +25,7 @@ const SpaceDescriptionField = createReactClass({
     return {
       value: '',
       error: '',
-      onChange: () => {},
+      onChange: () => { },
       valueLink: null,
       errorLink: null
     }

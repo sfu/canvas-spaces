@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import createReactClass from 'create-react-class'
 
 const LoadMoreDingus = createReactClass({
@@ -12,7 +13,7 @@ const LoadMoreDingus = createReactClass({
   getDefaultProps() {
     return {
       title: 'Load More',
-      onClick: () => {},
+      onClick: () => { },
       loading: false
     }
   },
