@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import createReactClass from 'create-react-class'
 import Router from 'react-router';
 import CommonHeader from 'Shared/CommonHeader';
 import SpaceStore from './stores';
@@ -9,9 +10,9 @@ import SpaceTile from 'Shared/SpaceTile';
 import LoadMoreDingus from 'Shared/LoadMoreDingus';
 import ErrorBox from 'Shared/ErrorBox';
 
-const {Link} = Router;
+const { Link } = Router;
 
-const MySpaces = React.createClass({
+const MySpaces = createReactClass({
 
   getInitialState() {
     return SpaceStore.getState();

@@ -2,12 +2,13 @@
 
 import React from 'react'
 const { PropTypes } = React
+import createReactClass from 'create-react-class'
 
 import SpaceTile_Information from './SpaceTile_Information'
 import SpaceTile_Avatar from './SpaceTile_Avatar'
 import SpaceSettingsModal from '../SpaceSettingsModal'
 
-const SpaceTile = React.createClass({
+const SpaceTile = createReactClass({
   propTypes: {
     space: PropTypes.object.isRequired,
     avatar: PropTypes.string,

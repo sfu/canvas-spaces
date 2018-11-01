@@ -1,12 +1,13 @@
 'use strict'
 
 import React from 'react'
+import createReactClass from 'create-react-class'
 import ICInputField from '../components/ICInputField'
 import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
 import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
 
 const { PropTypes } = React
-const SpaceNameField = React.createClass({
+const SpaceNameField = createReactClass({
   mixins: [HandleErrorsMixin, GetValueLinkMixin],
 
   propTypes: {

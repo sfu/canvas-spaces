@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin'
@@ -21,7 +22,7 @@ const initialErrorState = {
 
 Modal.setAppElement(document.getElementById('CanvasSpacesApp'))
 
-const SpaceSettingsModal = React.createClass({
+const SpaceSettingsModal = createReactClass({
   linkState: DeepLinkedStateMixin,
 
   propTypes: {

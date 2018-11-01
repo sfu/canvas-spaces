@@ -1,10 +1,11 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import ICSelect from '../components/ICSelect'
 import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
 import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
 
 const { PropTypes } = React
-const SpaceLeaderField = React.createClass({
+const SpaceLeaderField = createReactClass({
   mixins: [HandleErrorsMixin, GetValueLinkMixin],
 
   propTypes: {

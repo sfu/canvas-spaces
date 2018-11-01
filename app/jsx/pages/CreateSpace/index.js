@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin'
 
 import api from '../../utils/api'
@@ -14,7 +15,7 @@ const initialErrorState = {
   maillist: ''
 }
 
-const CreateSpace = React.createClass({
+const CreateSpace = createReactClass({
   linkState: DeepLinkedStateMixin,
 
   getInitialState() {

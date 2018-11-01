@@ -1,13 +1,14 @@
 'use strict'
 
 import React, { PropTypes } from 'react/addons'
+import createReactClass from 'create-react-class'
 import TagsInput from 'react-tagsinput'
 import api from '../utils/api'
 import HandleErrorsMixin from '../mixins/HandleErrorsMixin'
 import GetValueLinkMixin from '../mixins/GetValueLinkMixin'
 import ReactTagsInputHelpersMixin from '../mixins/ReactTagsInputHelpersMixin'
 
-const SpaceMaillistField = React.createClass({
+const SpaceMaillistField = createReactClass({
   mixins: [
     React.addons.LinkedStateMixin,
     HandleErrorsMixin,

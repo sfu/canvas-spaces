@@ -2,8 +2,9 @@
 
 import React from 'react';
 const {PropTypes} = React;
+import createReactClass from 'create-react-class'
 
-const SpaceTile_Avatar = React.createClass({
+const SpaceTile_Avatar = createReactClass({
   propTypes: {
     avatar: PropTypes.string.isRequired
   },

@@ -1,8 +1,9 @@
 'use strict';
 
 import React from 'react';
+import createReactClass from 'create-react-class'
 import PropTypes from 'prop-types'
-const SpaceTile_Information = React.createClass({
+const SpaceTile_Information = createReactClass({
 
   propTypes: {
     name: PropTypes.string.isRequired,
