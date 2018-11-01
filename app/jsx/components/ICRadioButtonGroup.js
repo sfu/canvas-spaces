@@ -9,7 +9,7 @@ const ICRadioButtonGroup = createReactClass({
     checked: PropTypes.bool.isRequired,
     defaultChecked: PropTypes.bool.isRequired,
     onChange: PropTypes.func.isRequired,
-    buttonItems: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    buttonItems: PropTypes.arrayOf(PropTypes.object).isRequired,
     checkedAndDefaultChecked: (props, propName, componentName) => {
       if (props.checked && props.defaultChecked) {
         return new Error(
