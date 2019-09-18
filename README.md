@@ -280,7 +280,7 @@ Notes:
 
 - If leader is not a member of the group then he/she is added to the group.
 
-### a name="validate-group-name"></a>Check that a group name is valid (e.g. unique)
+### <a name="validate-group-name"></a>Check that a group name is valid (e.g. unique)
 
     GET /api/v1/canvas_spaces/validate/name/:name
 
@@ -294,7 +294,7 @@ Returns:
 
   Invalid group name: `{ "valid_group_name": false, "message": "Some error message that describes the problem" }`
 
-### a name="validate-sfu-user"></a>Validate that a given SFU computing ID or alias is a valid Canvas user
+### <a name="validate-sfu-user"></a>Validate that a given SFU computing ID or alias is a valid Canvas user
 
     GET /api/v1/canvas_spaces/validate/user/:username
 
@@ -306,7 +306,7 @@ Returns:
 
     { "valid_user": boolean }
 
-### a name="validate-maillist"></a>Validate that a given SFU maillist name is a valid maillist
+### <a name="validate-maillist"></a>Validate that a given SFU maillist name is a valid maillist
 
     GET /api/v1/canvas_spaces/validate/maillist/:maillist
 
@@ -318,7 +318,7 @@ Returns:
 
     { "valid_maillist": boolean }
 
-### a name="get-all-users"></a>Test: get all users in the system (dev environment only)
+### <a name="get-all-users"></a>Test: get all users in the system (dev environment only)
 
     GET /api/v1/canvas_spaces/test/users
 
