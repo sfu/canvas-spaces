@@ -1,42 +1,42 @@
-#CanvasSpaces
+# CanvasSpaces
 
 REST API for managing Canvas Spaces (student organized groups)
 
-##Routes Summary:
+## Routes Summary:
 
-####[Show login page.](#show-login-page)
+#### [Show login page.](#show-login-page)
   GET /canvas_spaces/login
-####[List all the groups.](#list-all-groups)
+#### [List all the groups.](#list-all-groups)
   GET /api/v1/canvas_spaces/groups
-####[List all groups for a user](#list-all-groups-for-user)
-####[Create a group.](#create-group)
+#### [List all groups for a user](#list-all-groups-for-user)
+#### [Create a group.](#create-group)
   POST /api/v1/canvas_spaces/groups
-####[Delete a group.](#delete-group)
+#### [Delete a group.](#delete-group)
   DELETE /api/v1/canvas_spaces/groups/:group_id
-####[Get group info.](#get-group-info)
+#### [Get group info.](#get-group-info)
   GET /api/v1/canvas_spaces/groups/:group_id
-####[Modify group info](#modify-group)
+#### [Modify group info](#modify-group)
   PUT /api/v1/canvas_spaces/groups/:group_id
-####[List users in group.](#list-users)
+#### [List users in group.](#list-users)
   GET /api/v1/canvas_spaces/groups/:group_id/users
-####[Add user to group.](#add-user)
+#### [Add user to group.](#add-user)
   POST /api/v1/canvas_spaces/groups/:group_id/users
-####[Remove user from group.](#remove-user)
+#### [Remove user from group.](#remove-user)
   DELETE /api/v1/canvas_spaces/groups/:group_id/users/:user_id
-####[Set leader of a group.](#set-leader)
+#### [Set leader of a group.](#set-leader)
   PUT /api/v1/canvas_spaces/groups/:group_id/leader
-####[Validate group name.](#validate-group-name)
+#### [Validate group name.](#validate-group-name)
   GET /api/v1/canvas_spaces/validate/name/:name
-####[Validate SFU Username is a valid Canvas user.](#validate-sfu-user)
+#### [Validate SFU Username is a valid Canvas user.](#validate-sfu-user)
   GET /api/v1/canvas_spaces/validate/user/:username
-####[Validate SFU Maillist name.](#validate-maillist)
+#### [Validate SFU Maillist name.](#validate-maillist)
   GET /api/v1/canvas_spaces/validate/maillist/:maillist
-####[Test: get all users in the system.](#get-all-users)
+#### [Test: get all users in the system.](#get-all-users)
   GET /api/v1/canvas_spaces/test/users
-##Routes:
 
-###<a name="show-login-page"></a>Show a login page and also let the user authenticate. Test page. To be removed in the future.
+## Routes:
 
+### <a name="show-login-page"></a>Show a login page and also let the user authenticate. Test page. To be removed in the future.
 
   `GET /canvas_spaces/login`
 
@@ -48,7 +48,7 @@ Returns:
 
   HTML
 
-###<a name="list-all-groups"></a>List all the groups.
+### <a name="list-all-groups"></a>List all the groups.
 
   `GET /api/v1/canvas_spaces/groups`
 
@@ -90,7 +90,7 @@ Returns:
 Notes:
   * when called by a non-admin user, this endpoint only returns public groups (`join_level: 'parent_context_auto_join'`)
 
-###<a name="list-all-groups-for-user"></a>List all groups for a user.
+### <a name="list-all-groups-for-user"></a>List all groups for a user.
 
     GET /api/v1/canvas_spaces/users/:user_id/groups
 
@@ -126,7 +126,7 @@ Notes:
   * a non-admin user can only retreive their own groups
   * an admin user can retreive groups for any user
 
-###<a name="create-group"></a>Create a group.
+### <a name="create-group"></a>Create a group.
 
     POST /api/v1/canvas_spaces/groups
 
@@ -157,7 +157,7 @@ Notes:
 
 - Any leader chosen for the group automatically becomes a member of the group.
 
-###<a name="delete-group"></a>Delete a group.
+### <a name="delete-group"></a>Delete a group.
 
     DELETE /api/v1/canvas_spaces/groups/:group_id
 
@@ -169,7 +169,7 @@ Returns:
 
    {"message":"Group is destroyed."}
 
-###<a name="get-group-info"></a>Get group info.
+### <a name="get-group-info"></a>Get group info.
 
     GET /api/v1/canvas_spaces/groups/:group_id
 
@@ -188,7 +188,7 @@ Returns (Note: all successful operations return HTTP status 200 OK):
       "size":4
     }
 
-###<a name="modify-group"></a>Modify group info (description or join type (invite\_only, request, free\_to_join) )
+### <a name="modify-group"></a>Modify group info (description or join type (invite\_only, request, free\_to_join) )
 
     PUT /api/v1/canvas_spaces/groups/:group_id
 
@@ -206,7 +206,7 @@ Returns:
 
     the modified group object
 
-###<a name="list-users"></a>List users in group.
+### <a name="list-users"></a>List users in group.
 
     GET /api/v1/canvas_spaces/groups/:group_id/users
 
@@ -227,7 +227,7 @@ Returns:
       ]
     }
 
-###<a name="add-user"></a>Add user to group.
+### <a name="add-user"></a>Add user to group.
 
   POST /api/v1/canvas_spaces/groups/:group_id/users
 
@@ -243,7 +243,7 @@ Returns:
 
     {"message":"Successfully added user."}
 
-###<a name="remove-user"></a>Remove user from group.
+### <a name="remove-user"></a>Remove user from group.
 
     DELETE /api/v1/canvas_spaces/groups/:group_id/users/:user_id
 
@@ -260,7 +260,7 @@ Notes:
 
 - If the user is the leader of the group he/she cannot be removed from the group until another leader has been chosen.
 
-###<a name="set-leader"></a>Set leader of a group.
+### <a name="set-leader"></a>Set leader of a group.
 
     PUT /api/v1/canvas_spaces/groups/:group_id/leader
 
@@ -280,7 +280,7 @@ Notes:
 
 - If leader is not a member of the group then he/she is added to the group.
 
-###<a name="validate-group-name"></a>Check that a group name is valid (e.g. unique)
+### a name="validate-group-name"></a>Check that a group name is valid (e.g. unique)
 
     GET /api/v1/canvas_spaces/validate/name/:name
 
@@ -294,7 +294,7 @@ Returns:
 
   Invalid group name: `{ "valid_group_name": false, "message": "Some error message that describes the problem" }`
 
-###<a name="validate-sfu-user"></a>Validate that a given SFU computing ID or alias is a valid Canvas user
+### a name="validate-sfu-user"></a>Validate that a given SFU computing ID or alias is a valid Canvas user
 
     GET /api/v1/canvas_spaces/validate/user/:username
 
@@ -306,7 +306,7 @@ Returns:
 
     { "valid_user": boolean }
 
-###<a name="validate-maillist"></a>Validate that a given SFU maillist name is a valid maillist
+### a name="validate-maillist"></a>Validate that a given SFU maillist name is a valid maillist
 
     GET /api/v1/canvas_spaces/validate/maillist/:maillist
 
@@ -318,7 +318,7 @@ Returns:
 
     { "valid_maillist": boolean }
 
-###<a name="get-all-users"></a>Test: get all users in the system (dev environment only)
+### a name="get-all-users"></a>Test: get all users in the system (dev environment only)
 
     GET /api/v1/canvas_spaces/test/users
 
@@ -333,13 +333,13 @@ Returns:
    {"id":5,"name":"patchin+canvastwo@gmail.com"},
    {"id":4,"name":"patchin+canvas2@gmail.com"}]
 ```
-##Errors:
+# Errors:
 
 The REST call will return with a non-200 OK status code. And the body will contain a JSON message with more information like the following:
 
     { "error":"Something bad happened." }
 
-##Installation:
+# Installation:
 
 1. Download the source to a directory
 2. Edit the Gemfile of the Canvas rails application, add the following entry:
@@ -371,6 +371,6 @@ Notes:
 
 - No change is needed to the Canvas config/routes.rb file.
 
-##Authentication Notes:
+# Authentication Notes:
 
 - Authorization is done either through developer token transmitted in the Authorization header ('Bearer <token>') or cookies set by logging into Canvas through the browser (_csrf_token, _normandy_session).
