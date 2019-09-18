@@ -11,21 +11,21 @@
   "dependencies": {
     "cookies-js": "^1.2.1",
     "create-react-class": "^15.5.2",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.2",
     "react-modal": "^0.2.0",
-    "react-router-dom": "^4.1.1",
+    "react-router-dom": "4.3.1",
     "react-tagsinput": "^1.2.0",
     "superagent": "^1.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
+    "eslint": "^6.4.0",
     "eslint-config-unobtrusive": "^1.2.2",
-    "eslint-import-resolver-webpack": "^0.10.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.14.3"
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "prettier": "^1.18.2"
   },
   "prettier": {
     "singleQuote": true,
