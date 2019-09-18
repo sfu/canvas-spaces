@@ -9,8 +9,6 @@
     "lint": "eslint app/jsx/**/*.js"
   },
   "dependencies": {
-    "alt": "0.18.5",
-    "alt-utils": "1.0.0",
     "cookies-js": "^1.2.1",
     "create-react-class": "^15.5.2",
     "prop-types": "^15.6.2",
