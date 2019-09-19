@@ -67,7 +67,6 @@ const SpaceMaillistField = createReactClass({
   render() {
     return (
       <ICInputField
-        ref="space_maillist"
         name="space_maillist"
         label="Maillist"
         placeholder="A SFU Maillist containing the members of your Space"

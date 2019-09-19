@@ -21,6 +21,7 @@ const SpaceNameField = createReactClass({
       value: PropTypes.string.isRequired,
       requestChange: PropTypes.func.isRequired,
     }).isRequired,
+    autoFocus: PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -60,7 +61,6 @@ const SpaceNameField = createReactClass({
   render() {
     return (
       <ICInputField
-        ref="space_name"
         name="space_name"
         label="Space Name"
         placeholder="A short, descriptive name for your group (e.g. Basket Weaving Club)"

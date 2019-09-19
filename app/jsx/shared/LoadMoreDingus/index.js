@@ -1,47 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 
-const LoadMoreDingus = createReactClass({
-  propTypes: {
-    title: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    disabled: PropTypes.bool.isRequired,
-  },
+const LoadMoreDingus = props => {
+  const loading_icon = (
+    <div className="LoadMoreDingus--LoadingIndicator">
+      <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+      <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+      <div className="LoadMoreDingus--LoadingIndicator-bounce" />
+    </div>
+  );
 
-  getDefaultProps() {
-    return {
-      title: 'Load More',
-      onClick: () => {},
-      loading: false,
-    };
-  },
+  const static_icon = <i className="icon-more" />;
 
-  render() {
-    const loading_icon = (
-      <div className="LoadMoreDingus--LoadingIndicator">
-        <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-        <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-        <div className="LoadMoreDingus--LoadingIndicator-bounce" />
-      </div>
-    );
+  const icon = props.loading ? loading_icon : static_icon;
 
-    const static_icon = <i className="icon-more" />;
+  return (
+    <button
+      title={props.title}
+      onClick={props.onClick}
+      className="Button Button--primary LoadMoreDingus"
+      disabled={props.disabled}
+    >
+      {icon}
+    </button>
+  );
+};
 
-    const icon = this.props.loading ? loading_icon : static_icon;
+LoadMoreDingus.propTypes = {
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
+};
 
-    return (
-      <button
-        title={this.props.title}
-        onClick={this.props.onClick}
-        className="Button Button--primary LoadMoreDingus"
-        disabled={this.props.disabled}
-      >
-        {icon}
-      </button>
-    );
-  },
-});
+LoadMoreDingus.defaultProps = {
+  title: 'Load More',
+  onClick: () => {},
+  loading: false,
+};
 
 export default LoadMoreDingus;

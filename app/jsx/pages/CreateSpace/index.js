@@ -1,5 +1,4 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
+import React, { Component } from 'react';
 import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin';
 
 import api from '../../utils/api';
@@ -15,11 +14,11 @@ const initialErrorState = {
   maillist: '',
 };
 
-const CreateSpace = createReactClass({
-  linkState: DeepLinkedStateMixin,
-
-  getInitialState() {
-    return {
+class CreateSpace extends Component {
+  constructor(props) {
+    super(props);
+    this.linkState = DeepLinkedStateMixin;
+    this.state = {
       submitButtonState: 'submit',
       maillistFieldDirty: false,
       space: {
@@ -30,7 +29,13 @@ const CreateSpace = createReactClass({
       },
       errors: Object.assign({}, initialErrorState),
     };
-  },
+
+    this.disableSubmit = this.disableSubmit.bind(this);
+    this.flashError = this.flashError.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateSpaceName = this.validateSpaceName.bind(this);
+    this.validateMaillist = this.validateMaillist.bind(this);
+  }
 
   disableSubmit() {
     const emptyFields =
@@ -43,13 +48,14 @@ const CreateSpace = createReactClass({
       this.state.maillistFieldDirty ||
       this.state.submitButtonState === 'saving'
     );
-  },
+  }
 
   flashError(error_message) {
     $.flashError(error_message);
-  },
+  }
 
   handleSubmit() {
+    debugger;
     const error_message =
       'There was a problem creating your space. Please check the form for errors and try again.';
     if (this.disableSubmit()) {
@@ -75,7 +81,7 @@ const CreateSpace = createReactClass({
         window.location = space_url;
       }
     });
-  },
+  }
 
   validateSpaceName(space_name, cb) {
     // // validate name against api
@@ -84,7 +90,7 @@ const CreateSpace = createReactClass({
         cb(result.message);
       }
     });
-  },
+  }
 
   validateMaillist(maillist, cb) {
     this.setState({ maillistFieldDirty: true });
@@ -95,7 +101,7 @@ const CreateSpace = createReactClass({
         this.setState({ maillistFieldDirty: false });
       }
     });
-  },
+  }
 
   render() {
     const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
@@ -210,7 +216,7 @@ const CreateSpace = createReactClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
 export default CreateSpace;

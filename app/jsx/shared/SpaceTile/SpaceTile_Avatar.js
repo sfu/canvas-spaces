@@ -1,21 +1,16 @@
 'use strict';
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 
-const SpaceTile_Avatar = createReactClass({
-  propTypes: {
-    avatar: PropTypes.string.isRequired,
-  },
+const SpaceTile_Avatar = ({ avatar }) => (
+  <div className="SpaceTile--SpaceAvatar">
+    <img alt="" src={avatar} />
+  </div>
+);
 
-  render() {
-    return (
-      <div className="SpaceTile--SpaceAvatar">
-        <img src={this.props.avatar} />
-      </div>
-    );
-  },
-});
+SpaceTile_Avatar.propTypes = {
+  avatar: PropTypes.string.isRequired,
+};
 
 export default SpaceTile_Avatar;

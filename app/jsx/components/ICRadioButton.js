@@ -1,34 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import createReactClass from 'create-react-class';
 
-const ICRadioButton = createReactClass({
-  propTypes: {
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    checked: PropTypes.bool.isRequired,
-    onChange: PropTypes.func,
-  },
+const ICRadioButton = props => (
+  <div className="ic-Radio">
+    <input
+      id={props.id}
+      type="radio"
+      name={props.name}
+      value={props.value}
+      checked={props.checked}
+      onChange={props.onChange}
+    />
+    <label htmlFor={props.id} className="ic-Label">
+      {props.label}
+    </label>
+  </div>
+);
 
-  render() {
-    return (
-      <div className="ic-Radio">
-        <input
-          id={this.props.id}
-          type="radio"
-          name={this.props.name}
-          value={this.props.value}
-          checked={this.props.checked}
-          onChange={this.props.onChange}
-        />
-        <label htmlFor={this.props.id} className="ic-Label">
-          {this.props.label}
-        </label>
-      </div>
-    );
-  },
-});
+ICRadioButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  checked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func,
+};
 
 export default ICRadioButton;

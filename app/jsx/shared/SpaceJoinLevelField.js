@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import ICRadioButtonGroup from '../components/ICRadioButtonGroup';
 
@@ -15,51 +14,47 @@ const radioButtons = [
   },
 ];
 
-const SpaceJoinLevelField = createReactClass({
-  propTypes: {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    valueLink: PropTypes.shape({
-      value: PropTypes.string.isRequired,
-      requestChange: PropTypes.func.isRequired,
-    }).isRequired,
-  },
-
-  getDefaultProps() {
-    return {
-      value: '',
-      error: '',
-      onChange: () => {},
-      valueLink: null,
-      errorLink: null,
-    };
-  },
-
-  getValueLink(props) {
+const SpaceJoinLevelField = props => {
+  const getValueLink = props => {
     return (
       props.valueLink || {
         value: props.value,
         requestChange: props.onChange,
       }
     );
-  },
+  };
 
-  handleChange(event) {
+  const handleChange = event => {
     const space_join_level = event.target.value;
-    this.getValueLink(this.props).requestChange(space_join_level);
-  },
+    getValueLink(props).requestChange(space_join_level);
+  };
 
-  render() {
-    return (
-      <ICRadioButtonGroup
-        ref="join_level_radio_group"
-        name="join_level"
-        onChange={this.handleChange}
-        checked={this.props.checked}
-        buttonItems={radioButtons}
-      />
-    );
-  },
-});
+  return (
+    <ICRadioButtonGroup
+      name="join_level"
+      onChange={handleChange}
+      checked={props.checked}
+      buttonItems={radioButtons}
+    />
+  );
+};
+
+SpaceJoinLevelField.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  checked: PropTypes.string,
+  valueLink: PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    requestChange: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+SpaceJoinLevelField.defaultProps = {
+  value: '',
+  error: '',
+  onChange: () => {},
+  valueLink: null,
+  errorLink: null,
+};
 
 export default SpaceJoinLevelField;

@@ -43,7 +43,6 @@ const SpaceLeaderField = createReactClass({
     });
     return (
       <ICSelect
-        ref="leader_id"
         name="leader_id"
         label="Leader"
         onChange={this.handleChange}

@@ -50,7 +50,6 @@ const SpaceDescriptionField = createReactClass({
   render() {
     return (
       <ICInputField
-        ref="space_description"
         name="space_description"
         label="Description"
         placeholder="A longer description of the purpose of your group"
