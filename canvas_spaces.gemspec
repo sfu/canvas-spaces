@@ -7,8 +7,8 @@ require "canvas_spaces/version"
 Gem::Specification.new do |s|
   s.name        = "canvas_spaces"
   s.version     = CanvasSpaces::VERSION
-  s.authors     = ["Patrick Chin"]
-  s.email       = ["patchin@sfu.ca"]
+  s.authors     = ["Patrick Chin", "Graham Ballantyne"]
+  s.email       = ["patchin@sfu.ca", "grahamb@sfu.ca"]
   s.description = "Canvas Spaces manager plugin for canvas-lms"
   s.summary = "Canvas Spaces manager plugin for canvas-lms"
 
