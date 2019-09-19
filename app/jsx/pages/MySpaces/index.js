@@ -17,6 +17,8 @@ class MySpaces extends Component {
       links: [],
     };
     this.loadMore = this.loadMore.bind(this);
+    this.updateSpace = this.updateSpace.bind(this);
+    this.deleteSpace = this.deleteSpace.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +49,57 @@ class MySpaces extends Component {
       loading: false,
       links,
       spaces: newSpaces,
+    });
+  }
+
+  updateSpace(space, cb = () => {}) {
+    // call the API to update the space
+    // if successful, patch the state space list with the new space
+    api.update_space(space, (err, newspace) => {
+      if (err) {
+        this.handleFailure(err);
+      } else {
+        // update the space list
+        const newSpaces = this.state.spaces.map(s => {
+          if (s.id === newspace.id) {
+            if (!newspace.avatar_url) {
+              newspace.avatar_url = s.avatar_url;
+            }
+            return newspace;
+          } else {
+            return s;
+          }
+        });
+        this.setState({ spaces: newSpaces }, cb);
+      }
+    });
+  }
+
+  deleteSpace(space, cb = () => {}) {
+    // call the API to remove the space
+    // if successful, remove the space from state
+    api.delete_space(space, err => {
+      if (err) {
+        this.handleFailure(err);
+      } else {
+        const newSpaces = this.state.spaces.filter(s => s.id !== space.id);
+        this.setState({ spaces: newSpaces }, cb);
+      }
+    });
+  }
+
+  handleFailure(error) {
+    const errors = {
+      default:
+        'An unknown error occured while trying to save your changes. Please try again later.',
+      unauthorized:
+        'You are not authoized to modify this Space. Only the Space Leader can make changes.',
+    };
+    const errorKey = error.status;
+    this.setState({
+      error: errors.hasOwnProperty(errorKey)
+        ? errors[errorKey]
+        : errors.default,
     });
   }
 
@@ -106,6 +159,8 @@ class MySpaces extends Component {
             avatar={space.avatar_url}
             context="mine"
             serverConfig={serverConfig}
+            updateSpace={this.updateSpace}
+            deleteSpace={this.deleteSpace}
           />
         );
       });

@@ -13,6 +13,8 @@ const SpaceTile = createReactClass({
     space: PropTypes.object.isRequired,
     avatar: PropTypes.string,
     context: PropTypes.string.isRequired,
+    updateSpace: PropTypes.func.isRequired,
+    deleteSpace: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -58,6 +60,8 @@ const SpaceTile = createReactClass({
           onRequestClose={this.closeModal}
           serverConfig={serverConfig}
           contentLabel={space.name}
+          updateSpace={this.props.updateSpace}
+          deleteSpace={this.props.deleteSpace}
         />
       </div>
     );

@@ -9,7 +9,6 @@ import SpaceDescriptionField from '../../shared/SpaceDescriptionField';
 import SpaceJoinLevelField from '../../shared/SpaceJoinLevelField';
 import SpaceMaillistField from '../../shared/SpaceMaillistField';
 import SpaceLeaderField from '../../shared/SpaceLeaderField';
-import SpaceActions from '../../pages/MySpaces/actions';
 
 const initialErrorState = {
   name: '',
@@ -30,6 +29,10 @@ const SpaceSettingsModal = createReactClass({
     onRequestClose: PropTypes.func.isRequired,
     className: PropTypes.string,
     overlayClassName: PropTypes.string,
+    space: PropTypes.object,
+    contentLabel: PropTypes.string,
+    updateSpace: PropTypes.func.isRequired,
+    deleteSpace: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -78,7 +81,7 @@ const SpaceSettingsModal = createReactClass({
     });
     // do the validations and whatnot, and if everything is all good, pass it up the chain
     // ...validate...
-    SpaceActions.updateSpace(this.state.space, () => {
+    this.props.updateSpace(this.state.space, () => {
       this.setState({
         submitButtonState: 'submit',
       });
@@ -99,7 +102,7 @@ const SpaceSettingsModal = createReactClass({
     }
 
     if (this.state.delete_button.deletable) {
-      SpaceActions.deleteSpace(this.state.space, () => {});
+      this.props.deleteSpace(this.state.space, () => {});
     }
   },
 
