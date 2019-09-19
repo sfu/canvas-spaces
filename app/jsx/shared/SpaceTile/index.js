@@ -1,40 +1,35 @@
 'use strict';
 
-import React from 'react';
-import createReactClass from 'create-react-class';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SpaceTile_Information from './SpaceTile_Information';
 import SpaceTile_Avatar from './SpaceTile_Avatar';
 import SpaceSettingsModal from '../SpaceSettingsModal';
 
-const SpaceTile = createReactClass({
-  propTypes: {
-    space: PropTypes.object.isRequired,
-    avatar: PropTypes.string,
-    context: PropTypes.string.isRequired,
-    updateSpace: PropTypes.func.isRequired,
-    deleteSpace: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
+class SpaceTile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       modalIsOpen: false,
     };
-  },
+
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
 
   openModal(e) {
     e.preventDefault();
     this.setState({
       modalIsOpen: true,
     });
-  },
+  }
 
   closeModal() {
     this.setState({
       modalIsOpen: false,
     });
-  },
+  }
 
   render() {
     const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
@@ -65,7 +60,15 @@ const SpaceTile = createReactClass({
         />
       </div>
     );
-  },
-});
+  }
+}
+
+SpaceTile.propTypes = {
+  space: PropTypes.object.isRequired,
+  avatar: PropTypes.string,
+  context: PropTypes.string.isRequired,
+  updateSpace: PropTypes.func.isRequired,
+  deleteSpace: PropTypes.func.isRequired,
+};
 
 export default SpaceTile;
