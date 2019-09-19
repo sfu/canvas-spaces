@@ -1,34 +1,54 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../../utils/api';
 import CommonHeader from '../../shared/CommonHeader';
-import SpaceStore from './stores';
-import SpaceActions from './actions';
 import SpaceTile from '../../shared/SpaceTile';
 import LoadMoreDingus from '../../shared/LoadMoreDingus';
 import ErrorBox from '../../shared/ErrorBox';
+import DefaultAvatars from '../../shared/DefaultAvatars';
 
-const MySpaces = createReactClass({
-  getInitialState() {
-    return SpaceStore.getState();
-  },
+class MySpaces extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      loading: true,
+      spaces: [],
+      links: [],
+    };
+    this.loadMore = this.loadMore.bind(this);
+  }
 
   componentDidMount() {
-    SpaceStore.listen(this.onChange);
-    SpaceActions.fetchSpaces();
-  },
-
-  componentWillUnmount() {
-    SpaceStore.unlisten(this.onChange);
-  },
-
-  onChange(state) {
-    this.setState(state);
-  },
+    api.get_spaces_for_user('self', (spaces, links) => {
+      this.updateSpaces(spaces, links);
+    });
+  }
 
   loadMore() {
-    SpaceActions.fetchSpaces(this.state.links.next);
-  },
+    const { next } = this.state.links;
+    this.setState({ loading: true }, () => {
+      api.load_url(next, (spaces, links) => {
+        this.updateSpaces(spaces, links);
+      });
+    });
+  }
+
+  updateSpaces(spaces, links) {
+    const defaultAvatars = new DefaultAvatars();
+    const currentSpaces = this.state.spaces;
+    const newSpaces = currentSpaces.concat(
+      spaces.map(s => ({
+        ...s,
+        avatar_url: s.avatar_url || defaultAvatars.next(),
+      }))
+    );
+    this.setState({
+      loading: false,
+      links,
+      spaces: newSpaces,
+    });
+  }
 
   render() {
     const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
@@ -101,7 +121,7 @@ const MySpaces = createReactClass({
         {load_more_dingus()}
       </div>
     );
-  },
-});
+  }
+}
 
 export default MySpaces;
