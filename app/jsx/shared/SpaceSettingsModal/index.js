@@ -1,5 +1,5 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
+import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin';
@@ -21,22 +21,12 @@ const initialErrorState = {
 
 Modal.setAppElement(document.getElementById('CanvasSpacesApp'));
 
-const SpaceSettingsModal = createReactClass({
-  linkState: DeepLinkedStateMixin,
+class SpaceSettingsModal extends Component {
+  constructor(props) {
+    super(props);
+    this.linkState = DeepLinkedStateMixin;
 
-  propTypes: {
-    modalIsOpen: PropTypes.bool.isRequired,
-    onRequestClose: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    overlayClassName: PropTypes.string,
-    space: PropTypes.object,
-    contentLabel: PropTypes.string,
-    updateSpace: PropTypes.func.isRequired,
-    deleteSpace: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
+    this.state = {
       submitButtonState: 'submit',
       maillistFieldDirty: false,
       showSpinner: false,
@@ -48,7 +38,14 @@ const SpaceSettingsModal = createReactClass({
         disabled: false,
       },
     };
-  },
+
+    this.disableSubmit = this.disableSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteSpace = this.deleteSpace.bind(this);
+    this.validateSpaceName = this.validateSpaceName.bind(this);
+    this.validateMaillist = this.validateMaillist.bind(this);
+    this.validateDeleteSpace = this.validateDeleteSpace.bind(this);
+  }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -60,7 +57,7 @@ const SpaceSettingsModal = createReactClass({
         disabled: false,
       },
     });
-  },
+  }
 
   disableSubmit() {
     const emptyFields =
@@ -73,7 +70,7 @@ const SpaceSettingsModal = createReactClass({
       this.state.maillistFieldDirty ||
       this.state.submitButtonState === 'saving'
     );
-  },
+  }
 
   handleSubmit() {
     this.setState({
@@ -87,7 +84,7 @@ const SpaceSettingsModal = createReactClass({
       });
       this.props.onRequestClose();
     });
-  },
+  }
 
   deleteSpace() {
     if (!this.state.delete_button.show_field) {
@@ -104,7 +101,7 @@ const SpaceSettingsModal = createReactClass({
     if (this.state.delete_button.deletable) {
       this.props.deleteSpace(this.state.space, () => {});
     }
-  },
+  }
 
   validateSpaceName(space_name, cb) {
     // // validate name against api
@@ -116,7 +113,7 @@ const SpaceSettingsModal = createReactClass({
         cb(result.message);
       }
     });
-  },
+  }
 
   validateMaillist(maillist, cb) {
     this.setState({ maillistFieldDirty: true });
@@ -127,7 +124,7 @@ const SpaceSettingsModal = createReactClass({
         this.setState({ maillistFieldDirty: false });
       }
     });
-  },
+  }
 
   validateDeleteSpace(ev) {
     let delete_state;
@@ -149,7 +146,7 @@ const SpaceSettingsModal = createReactClass({
       };
     }
     this.setState(delete_state);
-  },
+  }
 
   render() {
     const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
@@ -312,7 +309,18 @@ const SpaceSettingsModal = createReactClass({
         </div>
       </Modal>
     );
-  },
-});
+  }
+}
+
+SpaceSettingsModal.propTypes = {
+  modalIsOpen: PropTypes.bool.isRequired,
+  onRequestClose: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  overlayClassName: PropTypes.string,
+  space: PropTypes.object,
+  contentLabel: PropTypes.string,
+  updateSpace: PropTypes.func.isRequired,
+  deleteSpace: PropTypes.func.isRequired,
+};
 
 export default SpaceSettingsModal;
