@@ -35,6 +35,8 @@ class CreateSpace extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateSpaceName = this.validateSpaceName.bind(this);
     this.validateMaillist = this.validateMaillist.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.setError = this.setError.bind(this);
   }
 
   disableSubmit() {
@@ -54,8 +56,20 @@ class CreateSpace extends Component {
     $.flashError(error_message);
   }
 
+  handleChange(event) {
+    const { name, value } = event.target;
+    if (!name || !this.state.space.hasOwnProperty(name)) {
+      return;
+    }
+    this.setState({
+      space: {
+        ...this.state.space,
+        [name]: value,
+      },
+    });
+  }
+
   handleSubmit() {
-    debugger;
     const error_message =
       'There was a problem creating your space. Please check the form for errors and try again.';
     if (this.disableSubmit()) {
@@ -100,6 +114,16 @@ class CreateSpace extends Component {
       } else {
         this.setState({ maillistFieldDirty: false });
       }
+    });
+  }
+
+  setError(field, error) {
+    const { errors } = this.state;
+    this.setState({
+      errors: {
+        ...errors,
+        [field]: error,
+      },
     });
   }
 
@@ -163,14 +187,18 @@ class CreateSpace extends Component {
           <fieldset>
             <legend>Name and Description</legend>
             <SpaceNameField
-              valueLink={this.linkState('space.name')}
-              errorLink={this.linkState('errors.name')}
+              onChange={this.handleChange}
+              value={this.state.space.name}
               validate={this.validateSpaceName}
+              setError={this.setError}
+              error={this.state.errors.name}
             />
 
             <SpaceDescriptionField
-              valueLink={this.linkState('space.description')}
-              errorLink={this.linkState('errors.description')}
+              onChange={this.handleChange}
+              value={this.state.space.description}
+              setError={this.setError}
+              error={this.state.errors.description}
             />
           </fieldset>
 

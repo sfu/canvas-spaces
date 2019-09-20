@@ -43,7 +43,7 @@ const ICInputField = props => {
       </label>
       <input
         type="text"
-        id={props.name}
+        name={props.name}
         className={inputClasses()}
         placeholder={props.placeholder}
         value={props.value || ''}
