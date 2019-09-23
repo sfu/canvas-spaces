@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin';
 
 import api from '../../utils/api';
 import SpaceNameField from '../../shared/SpaceNameField';
@@ -16,7 +15,6 @@ const initialErrorState = {
 class CreateSpace extends Component {
   constructor(props) {
     super(props);
-    this.linkState = DeepLinkedStateMixin;
     this.state = {
       submitButtonState: 'submit',
       maillistFieldDirty: false,
@@ -82,9 +80,7 @@ class CreateSpace extends Component {
       this.setState({ submitButtonState: 'saving' });
       if (response.status !== 200) {
         if (response.body.hasOwnProperty('field')) {
-          this.linkState(`errors.${response.body.field}`).requestChange(
-            response.body.error
-          );
+          this.setError(response.body.field, response.body.error);
         }
         this.flashError(error_message);
       } else {

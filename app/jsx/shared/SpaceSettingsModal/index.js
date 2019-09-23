@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin';
 import api from '../../utils/api';
 import SpaceNameField from '../../shared/SpaceNameField';
 import SpaceDescriptionField from '../../shared/SpaceDescriptionField';
@@ -23,7 +22,6 @@ Modal.setAppElement('#CanvasSpacesApp');
 class SpaceSettingsModal extends Component {
   constructor(props) {
     super(props);
-    this.linkState = DeepLinkedStateMixin;
 
     this.state = {
       submitButtonState: 'submit',
