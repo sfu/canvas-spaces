@@ -1,82 +1,53 @@
 'use strict';
 
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import ICInputField from '../components/ICInputField';
-import HandleErrorsMixin from '../mixins/HandleErrorsMixin';
-import GetValueLinkMixin from '../mixins/GetValueLinkMixin';
 
-const SpaceMaillistField = createReactClass({
-  mixins: [HandleErrorsMixin, GetValueLinkMixin],
-
-  propTypes: {
-    onChange: PropTypes.func,
-    validate: PropTypes.func,
-    valueLink: PropTypes.shape({
-      value: PropTypes.string,
-      requestChange: PropTypes.func.isRequired,
-    }).isRequired,
-    errorLink: PropTypes.shape({
-      value: PropTypes.string,
-      requestChange: PropTypes.func.isRequired,
-    }).isRequired,
-  },
-
-  getDirtyLink(props) {
-    return (
-      props.dirtyLink || {
-        value: props.value,
-        requestChange: props.onChange,
-      }
-    );
-  },
-
-  getDefaultProps() {
-    return {
-      value: '',
-      error: '',
-      onChange: () => {},
-      valueLink: null,
-      errorLink: null,
-      validate: () => {},
-    };
-  },
-
-  handleChange(event) {
-    const maillist = event.target.value;
-    this.clearError();
-    this.getDirtyLink(this.props).requestChange(maillist === '' ? false : true);
-    this.getValueLink(this.props).requestChange(maillist);
-  },
-
-  validate(event) {
+const SpaceMaillistField = props => {
+  const validate = event => {
+    props.setError('maillist', '');
     const maillist = event.target.value.trim().replace('@sfu.ca', '');
 
     if (!maillist || maillist === '') {
       return;
     }
 
-    this.props.validate(maillist, err => {
+    props.validate(maillist, err => {
       if (err) {
-        this.setError(err);
+        props.setError('maillist', err);
       }
     });
-  },
+  };
 
-  render() {
-    return (
-      <ICInputField
-        name="space_maillist"
-        label="Maillist"
-        placeholder="A SFU Maillist containing the members of your Space"
-        onChange={this.handleChange}
-        value={this.getValueLink(this.props).value}
-        error={this.getErrorLink(this.props).value}
-        onBlur={this.validate}
-      />
-    );
-  },
-});
+  return (
+    <ICInputField
+      name="maillist"
+      label="Maillist"
+      placeholder="A SFU Maillist containing the members of your Space"
+      onChange={props.onChange}
+      value={props.value}
+      error={props.error}
+      onBlur={validate}
+    />
+  );
+};
+
+SpaceMaillistField.propTypes = {
+  onChange: PropTypes.func,
+  validate: PropTypes.func,
+  value: PropTypes.string,
+  error: PropTypes.string,
+  setError: PropTypes.func,
+};
+
+SpaceMaillistField.defaultProps = {
+  value: '',
+  error: '',
+  onChange: () => {},
+  valueLink: null,
+  errorLink: null,
+  validate: () => {},
+};
 
 export default SpaceMaillistField;

@@ -223,10 +223,11 @@ class CreateSpace extends Component {
             <legend>Space Membership</legend>
 
             <SpaceMaillistField
-              valueLink={this.linkState('space.maillist')}
-              errorLink={this.linkState('errors.maillist')}
-              dirtyLink={this.linkState('maillistFieldDirty')}
+              onChange={this.handleChange}
+              value={this.state.space.maillist}
+              setError={this.setError}
               validate={this.validateMaillist}
+              error={this.state.errors.maillist}
             />
             {maillist_help_text()}
           </fieldset>
