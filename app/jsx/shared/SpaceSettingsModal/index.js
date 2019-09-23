@@ -19,7 +19,7 @@ const initialErrorState = {
   leader_id: '',
 };
 
-Modal.setAppElement(document.getElementById('CanvasSpacesApp'));
+Modal.setAppElement('#CanvasSpacesApp');
 
 class SpaceSettingsModal extends Component {
   constructor(props) {
@@ -45,18 +45,8 @@ class SpaceSettingsModal extends Component {
     this.validateSpaceName = this.validateSpaceName.bind(this);
     this.validateMaillist = this.validateMaillist.bind(this);
     this.validateDeleteSpace = this.validateDeleteSpace.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      space: Object.assign({}, nextProps.space),
-      errors: Object.assign({}, initialErrorState),
-      delete_button: {
-        show_field: false,
-        deletable: false,
-        disabled: false,
-      },
-    });
+    this.handleChange = this.handleChange.bind(this);
+    this.setError = this.setError.bind(this);
   }
 
   disableSubmit() {
@@ -70,6 +60,29 @@ class SpaceSettingsModal extends Component {
       this.state.maillistFieldDirty ||
       this.state.submitButtonState === 'saving'
     );
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    if (!name || !this.state.space.hasOwnProperty(name)) {
+      return;
+    }
+    this.setState({
+      space: {
+        ...this.state.space,
+        [name]: value,
+      },
+    });
+  }
+
+  setError(field, error) {
+    const { errors } = this.state;
+    this.setState({
+      errors: {
+        ...errors,
+        [field]: error,
+      },
+    });
   }
 
   handleSubmit() {
@@ -105,7 +118,7 @@ class SpaceSettingsModal extends Component {
 
   validateSpaceName(space_name, cb) {
     // // validate name against api
-    if (this.state.space.name.toLowerCase() === space_name.toLowerCase()) {
+    if (this.props.space.name.toLowerCase() === space_name.toLowerCase()) {
       return;
     }
     api.validate_field('name', space_name, result => {
@@ -229,14 +242,18 @@ class SpaceSettingsModal extends Component {
               <fieldset>
                 <legend>Name and Description</legend>
                 <SpaceNameField
+                  onChange={this.handleChange}
+                  value={this.state.space.name}
                   validate={this.validateSpaceName}
-                  valueLink={this.linkState('space.name')}
-                  errorLink={this.linkState('errors.name')}
+                  setError={this.setError}
+                  error={this.state.errors.name}
                 />
 
                 <SpaceDescriptionField
-                  valueLink={this.linkState('space.description')}
-                  errorLink={this.linkState('errors.description')}
+                  onChange={this.handleChange}
+                  value={this.state.space.description}
+                  setError={this.setError}
+                  error={this.state.errors.description}
                 />
               </fieldset>
 
@@ -244,10 +261,11 @@ class SpaceSettingsModal extends Component {
                 <legend>Space Membership</legend>
 
                 <SpaceMaillistField
-                  valueLink={this.linkState('space.maillist')}
-                  errorLink={this.linkState('errors.maillist')}
-                  dirtyLink={this.linkState('maillistFieldDirty')}
+                  onChange={this.handleChange}
+                  value={this.state.space.maillist}
+                  setError={this.setError}
                   validate={this.validateMaillist}
+                  error={this.state.errors.maillist}
                 />
               </fieldset>
 
@@ -265,10 +283,11 @@ class SpaceSettingsModal extends Component {
                   </strong>
                 </p>
                 <SpaceLeaderField
-                  valueLink={this.linkState('space.leader_id')}
-                  errorLink={this.linkState('errors.leader_id')}
+                  onChange={this.handleChange}
+                  setError={this.setError}
                   current={this.state.space.leader_id}
                   users={this.state.space.users}
+                  error={this.state.errors.leader_id}
                 />
               </fieldset>
 
