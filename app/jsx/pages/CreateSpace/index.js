@@ -4,7 +4,6 @@ import DeepLinkedStateMixin from '../../mixins/DeepLinkedStateMixin';
 import api from '../../utils/api';
 import SpaceNameField from '../../shared/SpaceNameField';
 import SpaceDescriptionField from '../../shared/SpaceDescriptionField';
-import SpaceJoinLevelField from '../../shared/SpaceJoinLevelField';
 import SpaceMaillistField from '../../shared/SpaceMaillistField';
 
 const initialErrorState = {
@@ -128,22 +127,6 @@ class CreateSpace extends Component {
   }
 
   render() {
-    const serverConfig = window.ENV.CANVAS_SPACES_CONFIG || {};
-    const join_type_field = () => {
-      return serverConfig.public_spaces_enabled === 'yes' ? (
-        <fieldset>
-          <legend>Privacy Options</legend>
-
-          <SpaceJoinLevelField
-            checked={this.state.space.join_type}
-            valueLink={this.linkState('space.join_type')}
-          />
-        </fieldset>
-      ) : (
-        ''
-      );
-    };
-
     const maillist_help_text = () => {
       if (this.state.space.join_type === 'invite_only') {
         return (
@@ -201,8 +184,6 @@ class CreateSpace extends Component {
               error={this.state.errors.description}
             />
           </fieldset>
-
-          {join_type_field()}
 
           <fieldset>
             <p>
