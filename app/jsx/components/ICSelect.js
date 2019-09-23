@@ -54,6 +54,7 @@ const ICSelect = props => {
       </label>
       <select
         id={props.name}
+        name={props.name}
         className={inputClasses()}
         value={props.value}
         onChange={props.onChange}
@@ -72,7 +73,7 @@ ICSelect.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   label: PropTypes.string.isRequired,
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   placeholder: PropTypes.string,
   labelClasses: PropTypes.string,
   inputClasses: PropTypes.string,
